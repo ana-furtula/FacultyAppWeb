@@ -1,0 +1,17 @@
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.deps.json
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\bin\Debug\net6.0\ref\FacultyAppWeb.RepositoryServices.InMemory.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.pdb
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\bin\Debug\net6.0\FacultyAppWeb.Domains.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.pdb
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\bin\Debug\net6.0\FacultyAppWeb.Domains.pdb
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.csproj.AssemblyReference.cache
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.AssemblyInfoInputs.cache
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.AssemblyInfo.cs
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.csproj.CoreCompileInputs.cache
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.csproj.CopyComplete
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\obj\Debug\net6.0\ref\FacultyAppWeb.RepositoryServices.InMemory.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.InMemory\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.InMemory.pdb

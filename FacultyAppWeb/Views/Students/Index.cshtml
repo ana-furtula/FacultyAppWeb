@@ -1,0 +1,65 @@
+﻿@using FacultyAppWeb.Models.Students
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model StudentsViewModel
+
+
+<h2>Students</h2>
+
+@if (Model!=null && Model.Message != null)
+{
+    <div class="alert alert-success">@Model.Message</div>
+}
+
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control" name="searchTerm" value="@Model.SearchTerm" placeholder="Index" />
+            <span class="input-group-append">
+                <button class="btn btn-primary">
+                    Search
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Index</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>JMBG</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.Students)
+        {
+            <tr>
+                <td>@student.Index</td>
+                <td>@student.FirstName</td>
+                <td>@student.LastName</td>
+                <td>@student.JMBG</td>
+                <td>
+                    <a class="btn btn-secondary" asp-area="" asp-route-id="@student.Id" asp-controller="Students" asp-action="Edit">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-secondary" asp-area="" asp-route-id="@student.Id" asp-controller="Students" asp-action="Delete">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div style="padding:1rem 1rem 1rem 1rem">
+    <a class="btn btn-primary" asp-controller="Students" asp-action="Create">
+        New
+    </a>
+</div>

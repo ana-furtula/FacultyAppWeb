@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "FacultyAppWeb.RepositoryServices.Interfaces/1.0.0": {
+        "dependencies": {
+          "FacultyAppWeb.Domains": "1.0.0"
+        },
+        "runtime": {
+          "FacultyAppWeb.RepositoryServices.Interfaces.dll": {}
+        }
+      },
+      "FacultyAppWeb.Domains/1.0.0": {
+        "runtime": {
+          "FacultyAppWeb.Domains.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FacultyAppWeb.RepositoryServices.Interfaces/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FacultyAppWeb.Domains/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

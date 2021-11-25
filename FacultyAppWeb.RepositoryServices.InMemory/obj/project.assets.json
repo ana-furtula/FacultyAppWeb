@@ -1,0 +1,115 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "FacultyAppWeb.Domains/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/FacultyAppWeb.Domains.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FacultyAppWeb.Domains.dll": {}
+        }
+      },
+      "FacultyAppWeb.RepositoryServices.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "FacultyAppWeb.Domains": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FacultyAppWeb.RepositoryServices.Interfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FacultyAppWeb.RepositoryServices.Interfaces.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FacultyAppWeb.Domains/1.0.0": {
+      "type": "project",
+      "path": "../FacultyAppWeb.Domains/FacultyAppWeb.Domains.csproj",
+      "msbuildProject": "../FacultyAppWeb.Domains/FacultyAppWeb.Domains.csproj"
+    },
+    "FacultyAppWeb.RepositoryServices.Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../FacultyAppWeb.Data/FacultyAppWeb.RepositoryServices.Interfaces.csproj",
+      "msbuildProject": "../FacultyAppWeb.Data/FacultyAppWeb.RepositoryServices.Interfaces.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "FacultyAppWeb.RepositoryServices.Interfaces >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\ANA\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\ANA\\Code\\FacultyAppWeb\\FacultyAppWeb.RepositoryServices.InMemory\\FacultyAppWeb.RepositoryServices.InMemory.csproj",
+      "projectName": "FacultyAppWeb.RepositoryServices.InMemory",
+      "projectPath": "C:\\Users\\ANA\\Code\\FacultyAppWeb\\FacultyAppWeb.RepositoryServices.InMemory\\FacultyAppWeb.RepositoryServices.InMemory.csproj",
+      "packagesPath": "C:\\Users\\ANA\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ANA\\Code\\FacultyAppWeb\\FacultyAppWeb.RepositoryServices.InMemory\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\ANA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "C:\\Users\\ANA\\Code\\FacultyAppWeb\\FacultyAppWeb.Data\\FacultyAppWeb.RepositoryServices.Interfaces.csproj": {
+              "projectPath": "C:\\Users\\ANA\\Code\\FacultyAppWeb\\FacultyAppWeb.Data\\FacultyAppWeb.RepositoryServices.Interfaces.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.deps.json
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\bin\Debug\net6.0\ref\FacultyAppWeb.RepositoryServices.Interfaces.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.pdb
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\bin\Debug\net6.0\FacultyAppWeb.Domains.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\bin\Debug\net6.0\FacultyAppWeb.Domains.pdb
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.csproj.AssemblyReference.cache
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.AssemblyInfoInputs.cache
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.AssemblyInfo.cs
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.csproj.CoreCompileInputs.cache
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.csproj.CopyComplete
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\obj\Debug\net6.0\ref\FacultyAppWeb.RepositoryServices.Interfaces.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Data\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.pdb

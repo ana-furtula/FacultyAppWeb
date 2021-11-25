@@ -38,7 +38,7 @@ namespace FacultyAppWeb.Controllers
             {
                 Console.Error.WriteLine(ex);
             }
-            return View(null);
+            return RedirectToAction(nameof(HomeController.Error));
         }
 
         [HttpGet("editStudent")]

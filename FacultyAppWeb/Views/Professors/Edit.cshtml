@@ -1,0 +1,28 @@
+﻿@using FacultyAppWeb.Domains
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@model Professor
+
+
+<h1>Editing professor @Model.FirstName @Model.LastName</h1>
+
+<form method="post">
+    <input type="hidden" asp-for = "@Model.Id" />
+    <input type="hidden" asp-for = "@Model.JMBG" />
+    <div class="form-group">
+        <label asp-for="@Model.FirstName"></label>
+        <input asp-for = "@Model.FirstName" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.FirstName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.LastName"></label>
+        <input asp-for = "@Model.LastName" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.LastName"></span>
+    </div>
+    <br />
+    <div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>

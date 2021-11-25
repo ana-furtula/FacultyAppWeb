@@ -1,0 +1,75 @@
+﻿@using FacultyAppWeb.Models.Professors
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model ProfessorsViewModel
+
+
+<h2>Professors</h2>
+
+@if (Model!=null)
+{
+    if (Model.MessageSuccess != null)
+    {
+        <div class="alert alert-success">@Model.MessageSuccess</div>
+    }
+    else
+    {
+        if(Model.MessageError != null)
+        {
+             <div class="alert alert-danger">@Model.MessageError</div>
+        }
+    }
+
+}
+
+<form method="get" asp-controller="Professors">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control" name="searchTerm" value="@Model.SearchTerm" placeholder="Name" />
+            <span class="input-group-append">
+                <button class="btn btn-primary">
+                    Search
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>JMBG</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var professor in Model.Professors)
+        {
+            <tr>
+                <td>@professor.FirstName</td>
+                <td>@professor.LastName</td>
+                <td>@professor.JMBG</td>
+                <td>
+                    <a class="btn btn-secondary" asp-area="" asp-route-id="@professor.Id" asp-controller="Professors" asp-action="Edit">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-secondary" asp-area="" asp-route-id="@professor.Id" asp-controller="Professors" asp-action="Delete">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div style="padding:1rem 1rem 1rem 1rem">
+    <a class="btn btn-primary" asp-controller="Professors" asp-action="Create">
+        New
+    </a>
+</div>

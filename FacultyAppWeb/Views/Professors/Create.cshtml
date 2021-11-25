@@ -1,0 +1,34 @@
+﻿@using FacultyAppWeb.Domains
+@using FacultyAppWeb.Models.Professors
+@using FacultyAppWeb.Models.Students
+@{
+}
+
+@model CreateProfessorViewModel
+
+@if (Model!=null && Model.MessageCreate != null)
+{
+    <div class="alert alert-danger">@Model.MessageCreate</div>
+}
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Professor.FirstName"></label>
+        <input asp-for = "@Model.Professor.FirstName" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.Professor.FirstName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Professor.LastName"></label>
+        <input asp-for = "@Model.Professor.LastName" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.Professor.LastName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Professor.JMBG"></label>
+        <input asp-for = "@Model.Professor.JMBG" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.Professor.JMBG"></span>
+    </div>
+        <br />
+    <div class="form-group">
+    <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace FacultyAppWeb.RepositoryServices.MySQL
 {
-    public class ProfessorRepository : IProfessorRepository
+    public class MySqlProfessorRepository : IProfessorRepository
     {
-        public String TableName { get; set; } = "professors";
+        public string TableName { get; set; } = "professors";
         public MySqlConnection Connection { get; set; }
         public MySqlTransaction Transaction { get; set; }
         public Professor Add(Professor professor)
@@ -102,11 +102,13 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
                 {
                     dataReader.Read();
 
-                    professor = new Professor();
-                    professor.Id = (long)dataReader.GetUInt64("Id");
-                    professor.FirstName = dataReader.GetString("FirstName");
-                    professor.LastName = dataReader.GetString("LastName");
-                    professor.JMBG = dataReader.GetString("JMBG");
+                    professor = new Professor
+                    {
+                        Id = (long)dataReader.GetUInt64("Id"),
+                        FirstName = dataReader.GetString("FirstName"),
+                        LastName = dataReader.GetString("LastName"),
+                        JMBG = dataReader.GetString("JMBG")
+                    };
                 }
 
                 dataReader.Close();
@@ -148,11 +150,13 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
                 {
                     dataReader.Read();
 
-                    professor = new Professor();
-                    professor.Id = (long)dataReader.GetUInt64("Id");
-                    professor.FirstName = dataReader.GetString("FirstName");
-                    professor.LastName = dataReader.GetString("LastName");
-                    professor.JMBG = dataReader.GetString("JMBG");
+                    professor = new Professor
+                    {
+                        Id = (long)dataReader.GetUInt64("Id"),
+                        FirstName = dataReader.GetString("FirstName"),
+                        LastName = dataReader.GetString("LastName"),
+                        JMBG = dataReader.GetString("JMBG")
+                    };
 
                 }
 
@@ -193,12 +197,14 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
                 List<Professor> professors= new List<Professor>();
 
                 while (dataReader.Read())
-                {   
-                    Professor professor = new Professor();
-                    professor.Id = (long)dataReader.GetUInt64("Id");
-                    professor.FirstName = dataReader.GetString("FirstName");
-                    professor.LastName = dataReader.GetString("LastName");
-                    professor.JMBG = dataReader.GetString("JMBG");
+                {
+                    Professor professor = new Professor
+                    {
+                        Id = (long)dataReader.GetUInt64("Id"),
+                        FirstName = dataReader.GetString("FirstName"),
+                        LastName = dataReader.GetString("LastName"),
+                        JMBG = dataReader.GetString("JMBG")
+                    };
 
                     professors.Add(professor);
 

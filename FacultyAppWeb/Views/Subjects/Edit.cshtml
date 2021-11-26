@@ -1,0 +1,32 @@
+﻿@using FacultyAppWeb.Domains
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@model Subject
+
+
+<h1>Editing subject @Model.Name</h1>
+
+<form method="post" asp-controller="Subjects">
+    <input type="hidden" asp-for = "@Model.Id" />
+    <div class="form-group">
+        <label asp-for="@Model.Name"></label>
+        <input asp-for = "@Model.Name" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.ESPB"></label>
+        <input asp-for = "@Model.ESPB" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.ESPB"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Semester"></label>
+        <input asp-for = "@Model.Semester" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.Semester"></span>
+    </div>
+    <br />
+    <div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>

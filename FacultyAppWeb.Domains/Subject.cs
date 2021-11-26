@@ -12,10 +12,16 @@ namespace FacultyAppWeb.Domains
         [Required]
         public string Name { get; set; }
         [Required]
+        [Range(1, 7, ErrorMessage = "Please enter valid ESPB number")]
         public int ESPB { get; set; }
         [Required]
+        [Range(1, 8, ErrorMessage = "Please enter valid semester")]
         public int Semester { get; set; }
-        public long Id { get; }
+        public long Id { get; set; }
+
+        public Subject()
+        {
+        }
 
         public Subject(string name, int espb, int semester)
         {

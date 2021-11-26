@@ -6,8 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<IStudentRepository, StudentRepository>();
-builder.Services.AddSingleton<IProfessorRepository, ProfessorRepository>();
+builder.Services.AddSingleton<IStudentRepository, MySqlStudentRepository>();
+builder.Services.AddSingleton<IProfessorRepository, MySqlProfessorRepository>();
+builder.Services.AddSingleton<ISubjectRepository, MySqlSubjectRepository>();
+builder.Services.AddSingleton<ILectureRepository, MySqlLectureRepository>();
 builder.Services.AddSingleton<DbBroker, DbBroker>();
 
 var app = builder.Build();

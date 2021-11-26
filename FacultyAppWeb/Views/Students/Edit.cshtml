@@ -13,12 +13,12 @@
     <input type="hidden" asp-for = "@Model.Index" />
     <input type="hidden" asp-for = "@Model.JMBG" />
     <div class="form-group">
-        <label asp-for="@Model.FirstName"></label>
-        <input asp-for = "@Model.FirstName" class="form-control" />
+        <label asp-for="@Model.FirstName">First name</label>
+        <input asp-for = "@Model.FirstName" class="form-control">
         <span class="text-danger" asp-validation-for="@Model.FirstName"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.LastName"></label>
+        <label asp-for="@Model.LastName">Last name</label>
         <input asp-for = "@Model.LastName" class="form-control" />
         <span class="text-danger" asp-validation-for="@Model.LastName"></span>
     </div>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FacultyAppWeb.RepositoryServices.MySQL
 {
-    public class StudentRepository : IStudentRepository
+    public class MySqlStudentRepository : IStudentRepository
     {
 
         public String TableName { get; set; } = "Students";

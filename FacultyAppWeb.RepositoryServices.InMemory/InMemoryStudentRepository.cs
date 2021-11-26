@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FacultyAppWeb.RepositoryServices.InMemory
 {
-    public class StudentRepository : IStudentRepository
+    public class InMemoryStudentRepository : IStudentRepository
     {
         List<Student> students;
 
-        public StudentRepository()
+        public InMemoryStudentRepository()
         {
             students = new List<Student>()
             {

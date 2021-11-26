@@ -8,7 +8,7 @@ namespace FacultyAppWeb.Domains
 {
     public class ExamRegistration
     {
-        public long Id { get; }
+        public long Id { get; set; }
         public Student Student { get; set; }
         public Subject Subject { get; set; }
         public Professor Professor { get; set; }

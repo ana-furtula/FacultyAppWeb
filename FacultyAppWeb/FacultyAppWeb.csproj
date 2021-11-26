@@ -19,9 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Models\ExamRegistrations\" />
-    <Folder Include="Models\Subjects\" />
     <Folder Include="Views\ExamRegistrations\" />
-    <Folder Include="Views\Subjects\" />
   </ItemGroup>
 
 </Project>

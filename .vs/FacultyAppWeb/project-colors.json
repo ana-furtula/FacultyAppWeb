@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "c743d330-8bbe-4911-8ffd-680274e00b0c": {
+      "ProjectGuid": "c743d330-8bbe-4911-8ffd-680274e00b0c",
+      "DisplayName": "FacultyAppWeb",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "12058532-3937-43e5-8390-4981bcaf802f": {
+      "ProjectGuid": "12058532-3937-43e5-8390-4981bcaf802f",
+      "DisplayName": "FacultyAppWeb.RepositoryServices.Interfaces",
+      "ColorIndex": 1
+    },
+    "7d942f72-5b35-4337-9ca5-17b7b164d5e3": {
+      "ProjectGuid": "7d942f72-5b35-4337-9ca5-17b7b164d5e3",
+      "DisplayName": "FacultyAppWeb.RepositoryServices.InMemory",
+      "ColorIndex": 2
+    },
+    "9094f064-00bf-4228-814e-2ec6a60af4c4": {
+      "ProjectGuid": "9094f064-00bf-4228-814e-2ec6a60af4c4",
+      "DisplayName": "FacultyAppWeb.Domains",
+      "ColorIndex": 3
+    },
+    "61738c5d-fd87-4174-bc5a-517c050d828a": {
+      "ProjectGuid": "61738c5d-fd87-4174-bc5a-517c050d828a",
+      "DisplayName": "FacultyAppWeb.RepositoryServices.MySQL",
+      "ColorIndex": 4
+    }
+  },
+  "NextColorIndex": 5
+}

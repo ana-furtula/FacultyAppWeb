@@ -17,9 +17,4 @@
     <ProjectReference Include="..\FacultyAppWeb.RepositoryServices.MySQL\FacultyAppWeb.RepositoryServices.MySQL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\ExamRegistrations\" />
-    <Folder Include="Views\ExamRegistrations\" />
-  </ItemGroup>
-
 </Project>

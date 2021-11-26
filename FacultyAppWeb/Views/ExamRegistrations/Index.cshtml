@@ -1,0 +1,127 @@
+﻿@using FacultyAppWeb.Models.ExamRegistrations
+
+@{
+}
+
+@model ExamRegistrationsViewModel
+
+
+<h2>Exam registrations</h2>
+
+@if (Model != null)
+{
+    if (Model.MessageSuccess != null)
+    {
+        <div class="alert alert-success">@Model.MessageSuccess</div>
+    }
+    else
+    {
+        if (Model.MessageError != null)
+        {
+            <div class="alert alert-danger">@Model.MessageError</div>
+        }
+    }
+}
+
+<form method="get" asp-controller="ExamRegistrations">
+    <div class="form-group" style="display:inline-block">
+        <div class="input-group">
+            <input type="search" class="form-control" name="searchTermSubject" value="@Model.SearchTermSubject" placeholder="Subject name" />
+        </div>
+        <div>
+            <input type="search" class="form-control" name="searchTermStudent" value="@Model.SearchTermStudent" placeholder="Student index" />
+        </div>
+        <span class="input-group-append">
+            <button class="btn btn-primary">Search </button>
+        </span>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Index</th>
+            <th>Student</th>
+            <th>Subject name</th>
+            <th>ESPB</th>
+            <th>Semester</th>
+            <th>Professor</th>
+            <th>Grade</th>
+            <th>Registration date</th>
+            <th>Exam date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var er in Model.ExamRegistrations)
+        {
+            <tr>
+                <td>@er.Student.Index</td>
+                <td>@(er.Student.FirstName + " " + er.Student.LastName)</td>
+                <td>@er.Subject.Name</td>
+                <td>@er.Subject.ESPB</td>
+                <td>@er.Subject.Semester</td>
+                @{
+                    if (er.Professor != null)
+                    {
+                        <td>@(er.Professor.FirstName + " " + er.Professor.LastName)</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+                }
+                @{
+                    if (er.Grade != null)
+                    {
+                        <td>@er.Grade</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+                }
+                <td>@er.RegistrationDate.ToShortDateString()</td>
+                @{
+                    if (er.ExamDate != null)
+                    {
+                        <td>@er.ExamDate.Value.ToShortDateString()</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+                }
+                @{
+                    if (!er.IsLocked)
+                    {
+                        <td>
+                            <a class="btn btn-secondary" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Edit">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Delete">
+                                Delete
+                            </a>
+                        </td>
+                        if (er.Professor != null)
+                        {
+                            <td>
+                                <a class="btn btn-secondary" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Lock">
+                                    Lock
+                                </a>
+                            </td>
+                        }
+                    }
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>
+<div style="padding:1rem 1rem 1rem 1rem">
+    <a class="btn btn-primary" asp-controller="ExamRegistrations" asp-action="Create">
+        New
+    </a>
+</div>

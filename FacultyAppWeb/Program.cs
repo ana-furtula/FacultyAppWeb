@@ -10,6 +10,7 @@ builder.Services.AddSingleton<IStudentRepository, MySqlStudentRepository>();
 builder.Services.AddSingleton<IProfessorRepository, MySqlProfessorRepository>();
 builder.Services.AddSingleton<ISubjectRepository, MySqlSubjectRepository>();
 builder.Services.AddSingleton<ILectureRepository, MySqlLectureRepository>();
+builder.Services.AddSingleton<IExamRegistrationRepository, MySqlExamRegistrationRepository>();
 builder.Services.AddSingleton<DbBroker, DbBroker>();
 
 var app = builder.Build();

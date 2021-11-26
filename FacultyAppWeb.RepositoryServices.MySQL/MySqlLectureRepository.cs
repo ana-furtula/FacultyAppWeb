@@ -301,5 +301,54 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
                 Connection?.Close();
             }
         }
+
+        public IEnumerable<Professor> GetProfessorsForSubject(long subjectId)
+        {
+            try
+            {
+                Connection = DbBroker.GetConnection();
+                Connection.Open();
+
+                Transaction = Connection.BeginTransaction();
+
+                MySqlDataReader dataReader;
+                MySqlCommand cmd = Connection.CreateCommand();
+
+                cmd.CommandText = $"SELECT p.Id, p.FirstName, p.LastName, p.JMBG FROM {TableName} l INNER JOIN professors p ON (l.ProfessorId = p.Id) WHERE SubjectId = {subjectId}";
+
+                dataReader = cmd.ExecuteReader();
+
+                List<Professor> professors = new();
+
+                while (dataReader.Read())
+                {
+                    Professor professor = new()
+                    {
+                        Id = (long)dataReader.GetUInt64("Id"),
+                        FirstName = dataReader.GetString("FirstName"),
+                        LastName = dataReader.GetString("LastName"),
+                        JMBG = dataReader.GetString("JMBG")
+                    };
+
+                   
+                    professors.Add(professor);
+                }
+
+                dataReader.Close();
+                Transaction.Commit();
+
+                return professors;
+            }
+            catch (Exception ex)
+            {
+                if (Connection != null)
+                    Transaction?.Rollback();
+                throw ex;
+            }
+            finally
+            {
+                Connection?.Close();
+            }
+        }
     }
 }

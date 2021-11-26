@@ -145,7 +145,7 @@ namespace FacultyAppWeb.Controllers
                 Console.Error.WriteLine(ex);
                 TempData["MessageError"] = "Subject cannot be deleted!";
             }
-            return RedirectToAction(nameof(ProfessorsController.Index));
+            return RedirectToAction(nameof(SubjectsController.Index));
 
         }
 

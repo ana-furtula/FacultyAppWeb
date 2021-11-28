@@ -1,9 +1,9 @@
-﻿@using FacultyAppWeb.Domains
+﻿@using FacultyAppWeb.Models.Students
 @{
     ViewData["Title"] = "Edit";
 }
 
-@model Student
+@model EditStudentViewModel
 
 
 <h1>Editing @Model.FirstName @Model.LastName @Model.Index</h1>
@@ -11,7 +11,7 @@
 <form method="post">
     <input type="hidden" asp-for = "@Model.Id" />
     <input type="hidden" asp-for = "@Model.Index" />
-    <input type="hidden" asp-for = "@Model.JMBG" />
+
     <div class="form-group">
         <label asp-for="@Model.FirstName">First name</label>
         <input asp-for = "@Model.FirstName" class="form-control">

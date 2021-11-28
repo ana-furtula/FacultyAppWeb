@@ -12,6 +12,6 @@ namespace FacultyAppWeb.Models.ExamRegistrations
         [Required]
         public ExamRegistration ExamRegistration { get; set; }
         [TempData]
-        public String MessageError { get; set; }
+        public string MessageError { get; set; }
     }
 }

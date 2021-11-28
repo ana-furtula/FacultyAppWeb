@@ -8,7 +8,9 @@ namespace FacultyAppWeb.Models.Students
         public string SearchTerm { get; set; }
         public List<Student> Students { get; set; }
         [TempData]
-        public string Message { get; set; }
+        public string MessageSuccess { get; set; }
+        [TempData]
+        public string MessageError { get; set; }
 
     }
 }

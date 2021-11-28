@@ -185,6 +185,7 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
                 Connection = DbBroker.GetConnection();
                 Connection.Open();
 
+
                 Transaction = Connection.BeginTransaction();
 
                 MySqlDataReader dataReader;

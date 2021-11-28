@@ -55,3 +55,13 @@ C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\runtimes\win\lib\
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.MySQL.dll
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.MySQL.pdb
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\System.Web.Mvc.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\System.Web.Razor.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\System.Web.Helpers.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\System.Web.WebPages.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb\bin\Debug\net6.0\Newtonsoft.Json.dll

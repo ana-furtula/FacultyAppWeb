@@ -24,6 +24,12 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
 
                 Connection = new MySqlConnection(connectionString);
             }
+            else{
+                try
+                {
+                    Connection.Close();
+                } catch(Exception) { }
+            }
 
             return Connection;
         }

@@ -10,26 +10,26 @@
     <div class="alert alert-danger">@Model.MessageCreate</div>
 }
 
-<form method="post">
-     <div class="form-group">
-        <label asp-for="@Model.Student.Index"></label>
-        <input asp-for = "@Model.Student.Index" class="form-control" />
-        <span class="text-danger" asp-validation-for="@Model.Student.Index"></span>
+<form method="post" asp-controller = "Students">
+    <div class="form-group">
+        <label asp-for="@Model.Index">Index</label>
+        <input asp-for = "@Model.Index" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.Index"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Student.FirstName"></label>
-        <input asp-for = "@Model.Student.FirstName" class="form-control" />
-        <span class="text-danger" asp-validation-for="@Model.Student.FirstName"></span>
+        <label asp-for="@Model.FirstName">First name</label>
+        <input asp-for = "@Model.FirstName" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.FirstName"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Student.LastName"></label>
-        <input asp-for = "@Model.Student.LastName" class="form-control" />
-        <span class="text-danger" asp-validation-for="@Model.Student.LastName"></span>
+        <label asp-for="@Model.LastName">Last name</label>
+        <input asp-for = "@Model.LastName" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.LastName"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Student.JMBG"></label>
-        <input asp-for = "@Model.Student.JMBG" class="form-control" />
-        <span class="text-danger" asp-validation-for="@Model.Student.JMBG"></span>
+        <label asp-for="@Model.JMBG">JMBG</label>
+        <input asp-for = "@Model.JMBG" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.JMBG"></span>
     </div>
         <br />
     <div class="form-group">

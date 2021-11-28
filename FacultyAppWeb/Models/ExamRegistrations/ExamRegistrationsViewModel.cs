@@ -6,13 +6,13 @@ namespace FacultyAppWeb.Models.ExamRegistrations
     public class ExamRegistrationsViewModel
     {
         public List<ExamRegistration> ExamRegistrations { get; set; }
-        public String SearchTermSubject { get; set; }
-        public String SearchTermStudent { get; set; }
+        public string SearchTermSubject { get; set; }
+        public string SearchTermStudent { get; set; }
 
         [TempData]
-        public String MessageSuccess { get; set; }
+        public string MessageSuccess { get; set; }
         [TempData]
-        public String MessageError { get; set; }
+        public string MessageError { get; set; }
 
     }
 }

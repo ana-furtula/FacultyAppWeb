@@ -11,7 +11,7 @@ namespace FacultyAppWeb.Models.ExamRegistrations
         public string SelectedSubject { get; set; }
 
         [TempData]
-        public String MessageCreate { get; set; }
+        public string MessageCreate { get; set; }
         
     }
 }

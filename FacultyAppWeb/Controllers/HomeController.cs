@@ -1,6 +1,8 @@
 ﻿using FacultyAppWeb.Models;
+using FacultyAppWeb.RepositoryServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace FacultyAppWeb.Controllers
 {
@@ -11,6 +13,28 @@ namespace FacultyAppWeb.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+        }
+
+        [AcceptVerbs("GET")]
+        public IActionResult VerifyFirstName(string firstName)
+        {
+            var rx = new Regex("[A-Z][a-z]+");
+            
+            if (string.IsNullOrEmpty(firstName) || !rx.IsMatch(firstName))
+                return Json($"First name {firstName} is not valid.");
+
+            return Json(true);
+        }
+
+        [AcceptVerbs("GET")]
+        public IActionResult VerifyLastName(string lastName)
+        {
+            var rx = new Regex("[A-Z][a-z]+");
+
+            if (string.IsNullOrEmpty(lastName) || !rx.IsMatch(lastName))
+                return Json($"Last name {lastName} is not valid.");
+
+            return Json(true);
         }
 
         public IActionResult Index()

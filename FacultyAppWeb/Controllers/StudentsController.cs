@@ -3,6 +3,7 @@ using FacultyAppWeb.Models;
 using FacultyAppWeb.Models.Students;
 using FacultyAppWeb.RepositoryServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace FacultyAppWeb.Controllers
 {
@@ -10,7 +11,9 @@ namespace FacultyAppWeb.Controllers
     {
         private readonly IStudentRepository studentRepository;
         [TempData]
-        public string Message { get; set; }
+        public string MessageSuccess { get; set; }
+        [TempData]
+        public string MessageError { get; set; }
         [TempData]
         public string MessageCreate { get; set; }
 
@@ -19,6 +22,39 @@ namespace FacultyAppWeb.Controllers
         {
             this.studentRepository = studentRepository;
         }
+
+        [AcceptVerbs("GET")]
+        public IActionResult VerifyIndex(string index)
+        {
+
+            var rx = new Regex("[0-9]{4}/[0-9]{4}");
+
+            if (!rx.IsMatch(index))
+                return Json($"Index {index} is not valid.");
+            if (studentRepository.GetStudentsByIndex(index).Any())
+            {
+                return Json($"Student with index {index} already exists.");
+            }
+           
+            return Json(true);
+        }
+
+        [AcceptVerbs("GET")]
+        public IActionResult VerifyJMBG(string jmbg)
+        {
+
+            var rx = new Regex("[0-9]{13}");
+
+            if (!rx.IsMatch(jmbg))
+                return Json($"JMBG {jmbg} is not valid.");
+            if (studentRepository.GetStudentByJMBG(jmbg)!=null)
+            {
+                return Json($"Student with JMBG {jmbg} already exists.");
+            }
+
+            return Json(true);
+        }
+
 
         [HttpGet("students")]
         public IActionResult Index(string searchTerm = null)
@@ -29,7 +65,8 @@ namespace FacultyAppWeb.Controllers
                 {
                     SearchTerm = searchTerm,
                     Students = studentRepository.GetStudentsByIndex(searchTerm).ToList(),
-                    Message = this.Message
+                    MessageSuccess = MessageSuccess,
+                    MessageError = MessageError
                 };
 
                 return View(studentsViewModel);
@@ -47,7 +84,13 @@ namespace FacultyAppWeb.Controllers
             try
             {
                 Student student = studentRepository.GetById(id);
-                return View(student);
+                return View(new EditStudentViewModel()
+                {
+                    Id = student.Id,
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    Index = student.Index
+                });
             } catch(Exception ex)
             {
                 Console.Error.WriteLine(ex);
@@ -56,7 +99,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("editStudent")]
-        public IActionResult Edit(Student updated)
+        public IActionResult Edit(EditStudentViewModel updated)
         {
             if (!ModelState.IsValid)
             {
@@ -64,26 +107,41 @@ namespace FacultyAppWeb.Controllers
             }
             try
             {
-                studentRepository.Update(updated);
-                TempData["Message"] = "Student successfully updated!";
+                var student = new Student()
+                {
+                    Id = updated.Id,
+                    LastName = updated.LastName,
+                    FirstName = updated.FirstName,
+                    Index = updated.Index
+                };
+                studentRepository.Update(student);
+                TempData["MessageSuccess"] = "Student successfully updated!";
                 return RedirectToAction(nameof(StudentsController.Index));
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex);
-                return RedirectToAction(nameof(HomeController.Error));
+                TempData["MessageError"] = "Student cannot be updated!";
+                return RedirectToAction(nameof(StudentsController.Index));
             }
         }
 
         [HttpGet("newStudent")]
         public IActionResult Create()
         {
-            return View(new CreateStudentViewModel()
+            try
             {
-                MessageCreate = null,
-                Student = new Student()
-            });
-           
+                return View(new CreateStudentViewModel()
+                {
+                    MessageCreate = null,
+                    Index = "",
+                    FirstName = "",
+                    JMBG = "",
+                    LastName = ""
+                });
+            } catch(Exception ex)
+            {
+                return null;
+            }
         }
 
         [HttpPost("newStudent")]
@@ -95,32 +153,21 @@ namespace FacultyAppWeb.Controllers
             }
             try
             {
-                if (studentRepository.GetStudentsByIndex(newStudent.Student.Index).Any())
+                studentRepository.Add(new Student()
                 {
-                    return View(new CreateStudentViewModel()
-                    {
-                        MessageCreate = "Student with this index already exists.",
-                        Student = newStudent.Student
-                    });
-                }
-                if (studentRepository.GetStudentByJMBG(newStudent.Student.JMBG) != null)
-                {
-                    return View(new CreateStudentViewModel()
-                    {
-                        MessageCreate = "Student with this JMBG already exists.",
-                        Student = newStudent.Student
-                    });
-                }
+                    Index = newStudent.Index,
+                    FirstName = newStudent.FirstName,
+                    JMBG = newStudent.JMBG,
+                    LastName = newStudent.LastName
+                });
 
-                studentRepository.Add(newStudent.Student);
-                TempData["Message"] = "Student successfully saved!";
-
+                TempData["MessageSuccess"] = "Student successfully saved!";
                 return RedirectToAction(nameof(StudentsController.Index));
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex);
-                return RedirectToAction(nameof(HomeController.Error));
+                TempData["MessageSuccess"] = "Student cannot be saved!";
+                return RedirectToAction(nameof(StudentsController.Index));
             }
             
         }
@@ -131,13 +178,13 @@ namespace FacultyAppWeb.Controllers
             try
             {
                 studentRepository.Delete(id);
-                TempData["Message"] = "Student successfully deleted!";
+                TempData["MessageSuccess"] = "Student successfully deleted!";
                 return RedirectToAction(nameof(StudentsController.Index));
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex);
-                return RedirectToAction(nameof(HomeController.Error));
+                TempData["MessageError"] = "Student cannot be deleted!";
+                return RedirectToAction(nameof(StudentsController.Index));
             }
            
         }

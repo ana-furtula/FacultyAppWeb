@@ -8,9 +8,19 @@
 
 <h2>Students</h2>
 
-@if (Model!=null && Model.Message != null)
+@if (Model!=null)
 {
-    <div class="alert alert-success">@Model.Message</div>
+     if (Model.MessageSuccess != null)
+    {
+        <div class="alert alert-success">@Model.MessageSuccess</div>
+    }
+    else
+    {
+        if(Model.MessageError != null)
+        {
+             <div class="alert alert-danger">@Model.MessageError</div>
+        }
+    }
 }
 
 <form method="get">

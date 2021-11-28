@@ -2,6 +2,7 @@
 using FacultyAppWeb.Models.Professors;
 using FacultyAppWeb.RepositoryServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace FacultyAppWeb.Controllers
 {
@@ -18,12 +19,28 @@ namespace FacultyAppWeb.Controllers
             this.professorRepository = professorRepository;
         }
 
+        [AcceptVerbs("GET")]
+        public IActionResult VerifyJMBG(string jmbg)
+        {
+
+            var rx = new Regex("[0-9]{13}");
+
+            if (!rx.IsMatch(jmbg))
+                return Json($"JMBG {jmbg} is not valid.");
+            if (professorRepository.GetByJMBG(jmbg) != null)
+            {
+                return Json($"Professor with JMBG {jmbg} already exists.");
+            }
+
+            return Json(true);
+        }
+
         [HttpGet("professors")]
         public IActionResult Index(string searchTerm = null)
         {
             try
             {
-                ProfessorsViewModel professorsViewModel = new ProfessorsViewModel()
+                var professorsViewModel = new ProfessorsViewModel()
                 {
                     SearchTerm = searchTerm,
                     Professors = professorRepository.GetProfessorsByName(searchTerm).ToList(),
@@ -47,13 +64,20 @@ namespace FacultyAppWeb.Controllers
             try
             {
                 Professor professor = professorRepository.GetById(id);
-                return View(professor);
+             /*   return View(new EditProfessorViewModel()
+                {
+                    FirstName = professor.FirstName,
+                    LastName = professor.LastName,
+                    Id = professor.Id
+                });*/
+             return View(professor);
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex);
+                //return RedirectToAction(nameof(HomeController.Error));
+                TempData["MessageError"] = "Could not load professor";
+                return RedirectToAction(nameof(ProfessorsController.Index));
             }
-            return RedirectToAction(nameof(HomeController.Error));
         }
 
         [HttpPost("editProfessor")]
@@ -65,15 +89,20 @@ namespace FacultyAppWeb.Controllers
             }
             try
             {
+                /*var prof = new Professor()
+                {
+                    Id = updated.Id,
+                    FirstName = updated.FirstName,
+                    LastName = updated.LastName
+                };*/
                 professorRepository.Update(updated);
                 TempData["MessageSuccess"] = "Professor successfully updated!";
-                return RedirectToAction(nameof(ProfessorsController.Index));
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex);
-                return RedirectToAction(nameof(HomeController.Error));
+                TempData["MessageError"] = "Professor cannot be updated!";
             }
+            return RedirectToAction(nameof(ProfessorsController.Index));
         }
 
         [HttpGet("newProfessor")]
@@ -82,7 +111,9 @@ namespace FacultyAppWeb.Controllers
             return View(new CreateProfessorViewModel()
             {
                 MessageCreate = null,
-                Professor = new Professor()
+                FirstName = "",
+                LastName = "",
+                JMBG = ""
             });
 
         }
@@ -96,25 +127,21 @@ namespace FacultyAppWeb.Controllers
             }
             try
             {
-                if (professorRepository.GetByJMBG(newProfessor.Professor.JMBG) != null)
+                var prof = new Professor()
                 {
-                    return View(new CreateProfessorViewModel()
-                    {
-                        MessageCreate = "Professor with this JMBG already exists.",
-                        Professor = newProfessor.Professor
-                    });
-                }
+                    FirstName = newProfessor.FirstName,
+                    LastName = newProfessor.LastName,
+                    JMBG = newProfessor.JMBG
+                };
+                professorRepository.Add(prof);
 
-                professorRepository.Add(newProfessor.Professor);
                 TempData["MessageSuccess"] = "Professor successfully saved!";
-
-                return RedirectToAction(nameof(ProfessorsController.Index));
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex);
-                return RedirectToAction(nameof(HomeController.Error));
+                TempData["MessageError"] = "Professor cannot be saved!";
             }
+            return RedirectToAction(nameof(ProfessorsController.Index));
 
         }
 
@@ -128,7 +155,6 @@ namespace FacultyAppWeb.Controllers
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex);
                 TempData["MessageError"] = "Professor cannot be deleted!";
             }
             return RedirectToAction(nameof(ProfessorsController.Index));

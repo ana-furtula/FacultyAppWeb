@@ -4,13 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace FacultyAppWeb.Domains
 {
     public class Student : Person
     {
-        [Required]
-        [StringLength(9, ErrorMessage = "Index length can't be more than 9.")]
         public string Index { get; set; }
         [Required]
         public long Id { get; set; }

@@ -108,7 +108,7 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
 
                 Transaction.Commit();
 
-                return count > 0 ? true : false;
+                return count > 0;
             }
             catch (Exception ex)
             {
@@ -221,13 +221,10 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
             }
         }
 
-        public IEnumerable<ExamRegistration> GetExamRegistrationsByProfessorId(string professorId)
+        public IEnumerable<ExamRegistration> GetExamRegistrationsByProfessorId(long professorId)
         {
             try
             {
-                if (string.IsNullOrEmpty(professorId))
-                    return new List<ExamRegistration>();
-
                 Connection = DbBroker.GetConnection();
                 Connection.Open();
 
@@ -522,7 +519,7 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
             }
         }
 
-        public IEnumerable<ExamRegistration> GetExamRegistrationsByStudentId(string studentId)
+        public IEnumerable<ExamRegistration> GetExamRegistrationsByStudentId(long studentId)
         {
             throw new NotImplementedException();
         }
@@ -630,7 +627,7 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
             }
         }
 
-        public IEnumerable<ExamRegistration> GetExamRegistrationsBySubjectId(string subjectId)
+        public IEnumerable<ExamRegistration> GetExamRegistrationsBySubjectId(long subjectId)
         {
             throw new NotImplementedException();
         }

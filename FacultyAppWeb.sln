@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacultyAppWeb", "FacultyAppWeb\FacultyAppWeb.csproj", "{C743D330-8BBE-4911-8FFD-680274E00B0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacultyAppWeb", "FacultyAppWeb\FacultyAppWeb.csproj", "{C743D330-8BBE-4911-8FFD-680274E00B0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacultyAppWeb.RepositoryServices.Interfaces", "FacultyAppWeb.Data\FacultyAppWeb.RepositoryServices.Interfaces.csproj", "{12058532-3937-43E5-8390-4981BCAF802F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacultyAppWeb.RepositoryServices.Interfaces", "FacultyAppWeb.Data\FacultyAppWeb.RepositoryServices.Interfaces.csproj", "{12058532-3937-43E5-8390-4981BCAF802F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacultyAppWeb.RepositoryServices.InMemory", "FacultyAppWeb.RepositoryServices.InMemory\FacultyAppWeb.RepositoryServices.InMemory.csproj", "{7D942F72-5B35-4337-9CA5-17B7B164D5E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacultyAppWeb.RepositoryServices.InMemory", "FacultyAppWeb.RepositoryServices.InMemory\FacultyAppWeb.RepositoryServices.InMemory.csproj", "{7D942F72-5B35-4337-9CA5-17B7B164D5E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacultyAppWeb.Domains", "FacultyAppWeb.Domains\FacultyAppWeb.Domains.csproj", "{9094F064-00BF-4228-814E-2EC6A60AF4C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacultyAppWeb.Domains", "FacultyAppWeb.Domains\FacultyAppWeb.Domains.csproj", "{9094F064-00BF-4228-814E-2EC6A60AF4C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacultyAppWeb.RepositoryServices.MySQL", "FacultyAppWeb.RepositoryServices.MySQL\FacultyAppWeb.RepositoryServices.MySQL.csproj", "{61738C5D-FD87-4174-BC5A-517C050D828A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacultyAppWeb.RepositoryServices.MySQL", "FacultyAppWeb.RepositoryServices.MySQL\FacultyAppWeb.RepositoryServices.MySQL.csproj", "{61738C5D-FD87-4174-BC5A-517C050D828A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacultyAppWeb.RepositoryServices.EntityFramework", "FacultyAppWeb.RepositoryServices.EntityFramework\FacultyAppWeb.RepositoryServices.EntityFramework.csproj", "{075F2ED9-3137-4354-AA63-4207901E02E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{61738C5D-FD87-4174-BC5A-517C050D828A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61738C5D-FD87-4174-BC5A-517C050D828A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61738C5D-FD87-4174-BC5A-517C050D828A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{075F2ED9-3137-4354-AA63-4207901E02E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{075F2ED9-3137-4354-AA63-4207901E02E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{075F2ED9-3137-4354-AA63-4207901E02E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{075F2ED9-3137-4354-AA63-4207901E02E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

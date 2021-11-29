@@ -13,5 +13,6 @@ namespace FacultyAppWeb.Models.Students
         [Remote(action: "VerifyLastName", controller: "Home")]
         public string LastName { get; set; }
         public string Index { get; set; }
+        public string JMBG { get; set; }
     }
 }

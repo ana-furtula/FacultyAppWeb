@@ -1,5 +1,4 @@
 ﻿using FacultyAppWeb.Domains;
-using FacultyAppWeb.Models;
 using FacultyAppWeb.Models.Students;
 using FacultyAppWeb.RepositoryServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,7 @@ namespace FacultyAppWeb.Controllers
     public class StudentsController : Controller
     {
         private readonly IStudentRepository studentRepository;
+      
         [TempData]
         public string MessageSuccess { get; set; }
         [TempData]
@@ -35,7 +35,7 @@ namespace FacultyAppWeb.Controllers
             {
                 return Json($"Student with index {index} already exists.");
             }
-           
+
             return Json(true);
         }
 
@@ -47,6 +47,7 @@ namespace FacultyAppWeb.Controllers
 
             if (!rx.IsMatch(jmbg))
                 return Json($"JMBG {jmbg} is not valid.");
+
             if (studentRepository.GetStudentByJMBG(jmbg)!=null)
             {
                 return Json($"Student with JMBG {jmbg} already exists.");
@@ -61,7 +62,8 @@ namespace FacultyAppWeb.Controllers
         {
             try
             {
-                StudentsViewModel studentsViewModel = new StudentsViewModel()
+
+                var studentsViewModel = new StudentsViewModel()
                 {
                     SearchTerm = searchTerm,
                     Students = studentRepository.GetStudentsByIndex(searchTerm).ToList(),
@@ -89,7 +91,8 @@ namespace FacultyAppWeb.Controllers
                     Id = student.Id,
                     FirstName = student.FirstName,
                     LastName = student.LastName,
-                    Index = student.Index
+                    Index = student.Index,
+                    JMBG = student.JMBG
                 });
             } catch(Exception ex)
             {
@@ -112,7 +115,8 @@ namespace FacultyAppWeb.Controllers
                     Id = updated.Id,
                     LastName = updated.LastName,
                     FirstName = updated.FirstName,
-                    Index = updated.Index
+                    Index = updated.Index,
+                    JMBG = updated.JMBG
                 };
                 studentRepository.Update(student);
                 TempData["MessageSuccess"] = "Student successfully updated!";

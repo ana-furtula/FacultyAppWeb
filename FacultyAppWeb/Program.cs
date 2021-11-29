@@ -1,4 +1,5 @@
 //using FacultyAppWeb.RepositoryServices.InMemory;
+using FacultyAppWeb.RepositoryServices.EntityFramework;
 using FacultyAppWeb.RepositoryServices.Interfaces;
 using FacultyAppWeb.RepositoryServices.MySQL;
 
@@ -6,12 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<IStudentRepository, MySqlStudentRepository>();
-builder.Services.AddSingleton<IProfessorRepository, MySqlProfessorRepository>();
-builder.Services.AddSingleton<ISubjectRepository, MySqlSubjectRepository>();
-builder.Services.AddSingleton<ILectureRepository, MySqlLectureRepository>();
-builder.Services.AddSingleton<IExamRegistrationRepository, MySqlExamRegistrationRepository>();
-builder.Services.AddSingleton<DbBroker, DbBroker>();
+builder.Services.AddTransient<IStudentRepository, StudentRepository>();
+builder.Services.AddTransient<IProfessorRepository, ProfessorRepository>();
+builder.Services.AddTransient<ISubjectRepository, SubjectRepository>();
+builder.Services.AddTransient<ILectureRepository, LectureRepository>();
+builder.Services.AddTransient<IExamRegistrationRepository, ExamRegistrationRepository>();
+builder.Services.AddTransient<DbBroker>();
+builder.Services.AddDbContext<FacultyContext>();
 
 var app = builder.Build();
 

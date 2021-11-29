@@ -31,9 +31,11 @@ namespace FacultyAppWeb.Domains
 
         public override bool Equals(object obj)
         {
+            if(obj == null)
+                return false;
             if (obj is Professor prof)
             {
-                return FirstName.Equals(prof.FirstName) && LastName.Equals(prof.LastName);
+                return FirstName.Equals(prof.FirstName) && LastName.Equals(prof.LastName) && Id == prof.Id;
             }
             return false;
         }

@@ -35,11 +35,12 @@ namespace FacultyAppWeb.Controllers
         {
             try
             {
+                var ers = examRegistrationRepository.GetAll();
                 ExamRegistrationsViewModel ersViewModel = new()
                 {
                     SearchTermStudent = searchTermStudent,
                     SearchTermSubject = searchTermSubject,
-                    ExamRegistrations = examRegistrationRepository.GetAll().Where(er => (searchTermStudent == null || er.Student.Index.ToLower().StartsWith(searchTermStudent)) && (searchTermSubject == null || er.Subject.Name.ToLower().StartsWith(searchTermSubject))).OrderBy(er=> er.IsLocked).ToList(),
+                    ExamRegistrations = ers.Any()?ers.Where(er => (searchTermStudent == null || er.Student.Index.ToLower().StartsWith(searchTermStudent)) && (searchTermSubject == null || er.Subject.Name.ToLower().StartsWith(searchTermSubject))).OrderBy(er=> er.IsLocked).ToList():null,
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError
                 };
@@ -109,7 +110,10 @@ namespace FacultyAppWeb.Controllers
                         Subject = subject,
                         Student = student,
                         RegistrationDate = DateTime.Now,
-                        IsLocked = false
+                        IsLocked = false,
+                        Professor = null,
+                        Grade = null,
+                        ExamDate = null
                     };
 
                     if (!examRegistrationRepository.Exists(er))

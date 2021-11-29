@@ -12,7 +12,7 @@ namespace FacultyAppWeb.Domains
         public long Id { get; set; }
         public Student Student { get; set; }
         public Subject Subject { get; set; }
-        public Professor Professor { get; set; }
+        public Professor? Professor { get; set; }
         public DateTime RegistrationDate { get; set; }
         public DateTime? ExamDate { get; set; }
         [Required]

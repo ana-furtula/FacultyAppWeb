@@ -6,6 +6,7 @@ namespace FacultyAppWeb.Models.Professors
     public class EditProfessorViewModel
     {
         public long Id { get; set; }
+        public string JMBG { get; set; }
 
         [Required]
         [Remote(action: "VerifyFirstName", controller: "Home")]

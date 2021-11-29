@@ -15,9 +15,9 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         IEnumerable<ExamRegistration> GetExamRegistrationsBySubjectName(string subjectName);
         IEnumerable<ExamRegistration> GetExamRegistrationsByProfessorName(string professorName);
         IEnumerable<ExamRegistration> GetExamRegistrationsByStudentIndex(string studentIndex);
-        IEnumerable<ExamRegistration> GetExamRegistrationsByProfessorId(string professorId);
-        IEnumerable<ExamRegistration> GetExamRegistrationsBySubjectId(string subjectId);
-        IEnumerable<ExamRegistration> GetExamRegistrationsByStudentId(string studentId);
+        IEnumerable<ExamRegistration> GetExamRegistrationsByProfessorId(long professorId);
+        IEnumerable<ExamRegistration> GetExamRegistrationsBySubjectId(long subjectId);
+        IEnumerable<ExamRegistration> GetExamRegistrationsByStudentId(long studentId);
         ExamRegistration Add(ExamRegistration examRegistration);
         ExamRegistration Delete(long id);
         ExamRegistration Update(ExamRegistration er);

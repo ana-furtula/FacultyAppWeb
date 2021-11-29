@@ -30,7 +30,17 @@
       "ProjectGuid": "61738c5d-fd87-4174-bc5a-517c050d828a",
       "DisplayName": "FacultyAppWeb.RepositoryServices.MySQL",
       "ColorIndex": 4
+    },
+    "cb1bf5ac-b56e-49a7-ae47-4e396fb44e5d": {
+      "ProjectGuid": "cb1bf5ac-b56e-49a7-ae47-4e396fb44e5d",
+      "DisplayName": "FacultyAppWeb.RepositoryServices.EntityFramework",
+      "ColorIndex": 5
+    },
+    "075f2ed9-3137-4354-aa63-4207901e02e0": {
+      "ProjectGuid": "075f2ed9-3137-4354-aa63-4207901e02e0",
+      "DisplayName": "FacultyAppWeb.RepositoryServices.EntityFramework",
+      "ColorIndex": 6
     }
   },
-  "NextColorIndex": 5
+  "NextColorIndex": 7
 }

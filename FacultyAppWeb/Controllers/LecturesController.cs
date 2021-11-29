@@ -32,10 +32,11 @@ namespace FacultyAppWeb.Controllers
         {
             try
             {
+                var lectures = lectureRepository.GetLecturesBySubjectName(searchTerm);
                 LecturesViewModel lecturesViewModel = new()
                 {
                     SearchTerm = searchTerm,
-                    Lectures = lectureRepository.GetLecturesBySubjectName(searchTerm).ToList(),
+                    Lectures = (lectures!=null)? lectures.ToList():null,
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError
                 };

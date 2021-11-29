@@ -9,7 +9,7 @@
 
 <h2>Professors</h2>
 
-@if (Model!=null)
+@if (Model != null)
 {
     if (Model.MessageSuccess != null)
     {
@@ -17,29 +17,33 @@
     }
     else
     {
-        if(Model.MessageError != null)
+        if (Model.MessageError != null)
         {
-             <div class="alert alert-danger">@Model.MessageError</div>
+            <div class="alert alert-danger">@Model.MessageError</div>
         }
     }
 
 }
 
-<form method="get" asp-controller="Professors">
-    <div class="form-group">
-        <div class="input-group">
+<form method="get" asp-controller="Professors" style="padding-bottom:0.5rem;">
+    <div class="form-group" style="text-align: center;">
+        <div style="display: inline-block;vertical-align: middle;">
             <input type="search" class="form-control" name="searchTerm" value="@Model.SearchTerm" placeholder="Name" />
-            <span class="input-group-append">
-                <button class="btn btn-primary">
-                    Search
-                </button>
-            </span>
         </div>
+        <button style="border:none; background-color:white; display: inline-block;vertical-align: middle;">
+            <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" title="Search"></i>
+        </button>
     </div>
 </form>
 
-<table class="table">
-    <thead>
+<div class="float-end" style="padding:1rem 1rem 1rem 1rem">
+    <a class="btn btn-primary" asp-controller="Professors" asp-action="Create">
+        Add new
+    </a>
+</div>
+
+<table class="table" style="vertical-align: middle;">
+    <thead style="background-color: lightgray">
         <tr>
             <th>First name</th>
             <th>Last name</th>
@@ -55,21 +59,16 @@
                 <td>@professor.LastName</td>
                 <td>@professor.JMBG</td>
                 <td>
-                    <a class="btn btn-secondary" asp-area="" asp-route-id="@professor.Id" asp-controller="Professors" asp-action="Edit">
-                        Edit
-                    </a>
-                </td>
-                <td>
-                    <a class="btn btn-secondary" asp-area="" asp-route-id="@professor.Id" asp-controller="Professors" asp-action="Delete">
-                        Delete
-                    </a>
+                    <div style="display:inline-flex">
+                        <a class="form-control" style="border:none" asp-area="" asp-route-id="@professor.Id" asp-controller="Professors" asp-action="Edit">
+                            <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.5rem " title="Edit"></i>
+                        </a>
+                        <a class="form-control" style="border:none" asp-area="" asp-route-id="@professor.Id" asp-controller="Professors" asp-action="Delete">
+                            <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-<div style="padding:1rem 1rem 1rem 1rem">
-    <a class="btn btn-primary" asp-controller="Professors" asp-action="Create">
-        New
-    </a>
-</div>

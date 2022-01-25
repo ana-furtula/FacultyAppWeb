@@ -1,4 +1,5 @@
-﻿@using FacultyAppWeb.Models.Students
+﻿@using FacultyAppWeb.Common
+@using FacultyAppWeb.Models.Students
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -34,11 +35,16 @@
     </div>
 </form>
 
-<div class="float-end" style="padding:1rem 1rem 1rem 1rem">
-    <a class="btn btn-primary" asp-controller="Students" asp-action="Create">
-        Add new
-    </a>
-</div>
+@{
+    if (Context.HasRole("Admin"))
+    {
+        <div class="float-end" style="padding:1rem 1rem 1rem 1rem">
+            <a class="btn btn-primary" asp-controller="Students" asp-action="Create">
+                Add new
+            </a>
+        </div>
+    }
+}
 
 <table class="table" style="vertical-align: middle;">
     <thead>
@@ -62,11 +68,11 @@
                 <td>@student.Email</td>
                 <td>
                     <div style="display:inline-flex">
-                        
+
                         <a class="form-control" style="border:none" asp-area="" asp-route-id="@student.Id" asp-controller="Students" asp-action="Details">
                             <i class="bi bi-file-person-fill" style="color: cornflowerblue; font-size: 1.5rem " title="Details"></i>
                         </a>
-                        
+
                     </div>
                 </td>
             </tr>

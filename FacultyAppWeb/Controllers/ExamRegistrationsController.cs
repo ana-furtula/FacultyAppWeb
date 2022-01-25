@@ -42,13 +42,21 @@ namespace FacultyAppWeb.Controllers
             try
             {
                 var userEmail = User.FindFirstValue(ClaimTypes.Name);
+                Professor professor = null;
+                List<Lecture> lectures = null;
+                professor = professorRepository.GetProfessorsByName("").Where(p => p.Email.Equals(userEmail)).FirstOrDefault();
+                if (professor != null)
+                {
+                    lectures = lectureRepository.GetLecturesForProfessor(professor)!=null?lectureRepository.GetLecturesForProfessor(professor).ToList(): new List<Lecture>();
+                }
                 var ers = examRegistrationRepository.GetAll();
                 ExamRegistrationsViewModel ersViewModel = new()
                 {
                     SearchTermStudent = searchTermStudent,
                     SearchTermSubject = searchTermSubject,
-                    ExamRegistrations = ers.Any()?ers.Where(er => (searchTermStudent == null || er.Student.Index.ToLower().StartsWith(searchTermStudent.ToLower())) && (searchTermSubject == null || er.Subject.Name.ToLower().StartsWith(searchTermSubject.ToLower()))).OrderBy(er=> er.IsLocked).ToList():null,
+                    ExamRegistrations = ers.Any() ? ers.Where(er => (searchTermStudent == null || er.Student.Index.ToLower().StartsWith(searchTermStudent.ToLower())) && (searchTermSubject == null || er.Subject.Name.ToLower().StartsWith(searchTermSubject.ToLower()))).OrderBy(er => er.IsLocked).ToList() : null,
                     CurrentUserEmail = userEmail,
+                    Lectures = lectures,
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError
                 };
@@ -64,6 +72,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("newER")]
+        [Authorize(Roles = "Admin, Student")]
         public IActionResult Create(long id)
         {
             try
@@ -100,6 +109,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("newER")]
+        [Authorize(Roles = "Admin, Student")]
         public IActionResult Create(CreateExamRegistrationViewModel newER)
         {
             try
@@ -149,6 +159,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("deleteER")]
+        [Authorize(Roles = "Admin, Student")]
         public IActionResult Delete(long id)
         {
             try
@@ -183,7 +194,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("editER")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Professor")]
         public IActionResult Edit(long id)
         {
             try
@@ -215,7 +226,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("editER")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Professor")]
         public IActionResult Edit(EditExamRegistrationViewModel updated)
         {
             if (updated.ExamRegistration.Grade>10 || updated.ExamRegistration.Grade<5)

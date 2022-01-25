@@ -62,7 +62,7 @@ namespace FacultyAppWeb.Controllers
 
 
         [HttpGet("students")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Professor")]
         public IActionResult Index(string searchTerm = null)
         {
             try

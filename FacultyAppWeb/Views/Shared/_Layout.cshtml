@@ -16,10 +16,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 @{
-                    if (Context.User.Identity.IsAuthenticated)
-                    {
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    }
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 }
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +28,7 @@
                         {
                             <ul class="navbar-nav flex-grow-1">
                                 @{
-                                    if (Context.HasRole("Admin"))
+                                    if (Context.HasRole("Admin") || Context.HasRole("Professor"))
                                     {
 
                                         <li class="nav-item">
@@ -46,7 +43,7 @@
 
                                     }
 
-                                    @if (Context.HasRole("User"))
+                                    @if (Context.HasRole("Student"))
                                     {
                                         <li>
                                             <a class="form-control" style="border:none" asp-area="" asp-route-email="@Context.GetEmail()" asp-controller="Students" asp-action="Details">

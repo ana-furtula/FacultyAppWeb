@@ -1,4 +1,5 @@
-﻿@using FacultyAppWeb.Models.Lectures
+﻿@using FacultyAppWeb.Common
+@using FacultyAppWeb.Models.Lectures
 @{
     ViewData["Title"] = "Lectures";
 }
@@ -13,7 +14,7 @@
     if (Model.MessageSuccess != null)
     {
         <div class="alert alert-success">@Model.MessageSuccess</div>
-        
+
     }
     else
     {
@@ -24,26 +25,32 @@
     }
 }
 
-<form method="get" asp-controller="Lectures" style = "padding-bottom:0.5rem;">
+<form method="get" asp-controller="Lectures" style="padding-bottom:0.5rem;">
     <div class="form-group" style="text-align: center;">
         <div style="display: inline-block;vertical-align: middle;">
             <input type="search" class="form-control" name="searchTerm" value="@Model.SearchTerm" placeholder="Subject name" />
-         </div>  
-                <button style="border:none; background-color:white; display: inline-block;vertical-align: middle;">
-                    <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" title="Search"></i>
-                </button>
-          
-        
+        </div>
+        <button style="border:none; background-color:white; display: inline-block;vertical-align: middle;">
+            <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" title="Search"></i>
+        </button>
+
+
     </div>
 </form>
 
-<div class="float-end" style="padding:1rem 1rem 1rem 1rem">
-    <a class="btn btn-primary" asp-controller="Lectures" asp-action="Create">
-        Add new
-    </a>
-</div>
+@{
+    if (Context.HasRole("Admin"))
+    {
+        <div class="float-end" style="padding:1rem 1rem 1rem 1rem">
+            <a class="btn btn-primary" asp-controller="Lectures" asp-action="Create">
+                Add new
+            </a>
+        </div>
+    }
+}
 
-<table class="table" style = "vertical-align: middle;">
+
+<table class="table" style="vertical-align: middle;">
     <thead style="background-color: lightgray">
         <tr>
             <th>First name</th>
@@ -68,9 +75,15 @@
                     <td>@lecture.Subject.ESPB</td>
                     <td>@lecture.Subject.Semester</td>
                     <td>
-                        <a class="form-control" style="border:none" asp-area="" asp-route-id="@lecture.Id" asp-controller="Lectures" asp-action="Delete">
-                           <i class="bi bi-x-circle-fill" style = "color: red; font-size: 2rem;" title="Delete"></i>
-                        </a>
+                        @{
+                            if (Context.HasRole("Admin"))
+                            {
+                                <a class="form-control" style="border:none" asp-area="" asp-route-id="@lecture.Id" asp-controller="Lectures" asp-action="Delete">
+                                    <i class="bi bi-x-circle-fill" style="color: red; font-size: 2rem;" title="Delete"></i>
+                                </a>
+                            }
+                        }
+
                     </td>
                 </tr>
             }

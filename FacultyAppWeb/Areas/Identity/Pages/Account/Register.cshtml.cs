@@ -115,7 +115,9 @@ namespace FacultyAppWeb.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                if (!studentRepository.GetStudentsByIndex("").Where(s => (s.Email.Equals(Input.Email))).Any() && !professorRepository.GetProfessorsByName("").Where(p => (p.Email.Equals(Input.Email))).Any())
+                var student = studentRepository.GetStudentsByIndex("").Where(s => (s.Email.Equals(Input.Email))).FirstOrDefault();
+                var professor = professorRepository.GetProfessorsByName("").Where(p => (p.Email.Equals(Input.Email))).FirstOrDefault();
+                if ((student == null && professor == null) || (student != null && professor != null))
                 {
                     ModelState.AddModelError(string.Empty, $"Cannot register user with {Input.Email} email.");
                 }
@@ -129,7 +131,15 @@ namespace FacultyAppWeb.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User created a new account with password.");
-                        await _userManager.AddToRoleAsync(user, "User");
+                        
+                        if(student != null)
+                        {
+                            await _userManager.AddToRoleAsync(user, "Student");
+                        }
+                        else
+                        {
+                            await _userManager.AddToRoleAsync(user, "Professor");
+                        }
 
 
                         await _signInManager.SignInAsync(user, isPersistent: false);

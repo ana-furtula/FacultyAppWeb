@@ -54,12 +54,14 @@
                 </a>
             </div>
         }
+
+        if (!Context.HasRole("Professor"))
+        {
+            <div style="display:inline-block">
+                <a class="btn btn-primary" style="border:none" asp-area="" asp-route-id="@Model.Id" asp-controller="ExamRegistrations" asp-action="Create">
+                    Add exam registration
+                </a>
+            </div>
+        }
     }
-
-    <div style="display:inline-block">
-        <a class="btn btn-primary" style="border:none" asp-area="" asp-route-id="@Model.Id" asp-controller="ExamRegistrations" asp-action="Create">
-            Add exam registration
-        </a>
-    </div>
-
 </div>

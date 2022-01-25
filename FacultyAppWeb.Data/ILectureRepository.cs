@@ -16,5 +16,10 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         Lecture Add(Lecture lecture);
         Lecture Delete(long id);
         IEnumerable<Professor> GetProfessorsForSubject(long subjectId);
+
+        IEnumerable<Lecture> GetLecturesForProfessor(Professor professor)
+        {
+            return null;
+        }
     }
 }

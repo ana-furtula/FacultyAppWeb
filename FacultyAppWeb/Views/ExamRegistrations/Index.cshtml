@@ -30,7 +30,7 @@
             <input type="search" class="form-control" name="searchTermSubject" value="@Model.SearchTermSubject" placeholder="Subject name" />
         </div>
         @{
-            if (Context.HasRole("Admin"))
+            if (Context.HasRole("Admin") || Context.HasRole("Professor"))
             {
                 <div style="display: inline-block;vertical-align: middle;">
                     <input type="search" class="form-control" name="searchTermStudent" value="@Model.SearchTermStudent" placeholder="Student index" />
@@ -51,7 +51,7 @@
     </div>*@
 
 @{
-    if (Context.HasRole("Admin"))
+    if (Context.HasRole("Admin") || Context.HasRole("Professor"))
     {
         <table class="table" style="vertical-align: middle;">
             <thead>
@@ -71,8 +71,24 @@
             <tbody>
                 @if (Model.ExamRegistrations != null)
                 {
+
                     foreach (var er in Model.ExamRegistrations)
                     {
+                        if (Context.HasRole("Professor"))
+                        {
+                            bool signal = false;
+                            foreach (var lecture in Model.Lectures)
+                            {
+                                if (lecture.Subject.Id == er.Subject.Id)
+                                {
+                                    signal = true;
+                                    break;
+                                }
+                            }
+                            if (!signal)
+                                continue;
+
+                        }
                         <tr>
                             <td>@er.Student.Index</td>
                             <td>@(er.Student.FirstName + " " + er.Student.LastName)</td>
@@ -86,7 +102,7 @@
                                 }
                                 else
                                 {
-                                    <td>N/A</td>
+                                    <td></td>
                                 }
                             }
                             @{
@@ -96,7 +112,7 @@
                                 }
                                 else
                                 {
-                                    <td>N/A</td>
+                                    <td></td>
                                 }
                             }
                             <td>@er.RegistrationDate.ToShortDateString()</td>
@@ -107,7 +123,7 @@
                                 }
                                 else
                                 {
-                                    <td>N/A</td>
+                                    <td></td>
                                 }
                             }
                             <td>
@@ -119,9 +135,14 @@
                                                 <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.5rem " title="Edit"></i>
                                             </a>
 
-                                            <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Delete">
-                                                <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
-                                            </a>
+                                            if (Context.HasRole("Admin"))
+                                            {
+                                                <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Delete">
+                                                    <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
+                                                </a>
+
+                                            }
+
 
                                             if (er.Professor != null)
                                             {

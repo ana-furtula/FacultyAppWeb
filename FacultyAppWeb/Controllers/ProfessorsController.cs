@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace FacultyAppWeb.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Professor")]
     public class ProfessorsController : Controller
     {
         private readonly IProfessorRepository professorRepository;
@@ -61,6 +61,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("editProfessor")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(long id)
         {
             try
@@ -83,6 +84,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("editProfessor")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(Professor updated)
         {
             if (!ModelState.IsValid)
@@ -108,6 +110,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("newProfessor")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View(new CreateProfessorViewModel()
@@ -122,6 +125,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("newProfessor")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(CreateProfessorViewModel newProfessor)
         {
             if (!ModelState.IsValid)
@@ -150,6 +154,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("deleteProfessor")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(long id)
         {
             try

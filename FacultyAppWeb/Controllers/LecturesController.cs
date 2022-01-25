@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FacultyAppWeb.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Professor")]
     public class LecturesController : Controller
     {
         private readonly ILectureRepository lectureRepository;
@@ -55,6 +55,7 @@ namespace FacultyAppWeb.Controllers
 
 
         [HttpGet("deleteLecture")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(long id)
         {
             try
@@ -72,6 +73,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("newLecture")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             try
@@ -111,6 +113,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("newLecture")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(CreateLectureViewModel newLecture)
         {
             try

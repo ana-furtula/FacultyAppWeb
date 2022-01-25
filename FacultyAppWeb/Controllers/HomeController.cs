@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 
 namespace FacultyAppWeb.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

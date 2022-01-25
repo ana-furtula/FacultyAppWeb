@@ -2,11 +2,13 @@
 using FacultyAppWeb.Models.Lectures;
 using FacultyAppWeb.Models.Subjects;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FacultyAppWeb.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class LecturesController : Controller
     {
         private readonly ILectureRepository lectureRepository;

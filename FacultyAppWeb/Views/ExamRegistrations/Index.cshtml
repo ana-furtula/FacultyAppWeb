@@ -1,4 +1,5 @@
-﻿@using FacultyAppWeb.Models.ExamRegistrations
+﻿@using FacultyAppWeb.Common
+@using FacultyAppWeb.Models.ExamRegistrations
 
 @{
 }
@@ -28,106 +29,196 @@
         <div style="display: inline-block;vertical-align: middle;">
             <input type="search" class="form-control" name="searchTermSubject" value="@Model.SearchTermSubject" placeholder="Subject name" />
         </div>
-        <div style="display: inline-block;vertical-align: middle;">
-            <input type="search" class="form-control" name="searchTermStudent" value="@Model.SearchTermStudent" placeholder="Student index" />
-        </div>
+        @{
+            if (Context.HasRole("Admin"))
+            {
+                <div style="display: inline-block;vertical-align: middle;">
+                    <input type="search" class="form-control" name="searchTermStudent" value="@Model.SearchTermStudent" placeholder="Student index" />
+                </div>
+            }
+        }
         <button style="border:none; background-color:white; display: inline-block;vertical-align: middle;">
             <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" title="Search"></i>
         </button>
     </div>
 </form>
 
-
-<div class="float-end" style="padding:1rem 1rem 1rem 1rem">
+@*
+    <div class="float-end" style="padding:1rem 1rem 1rem 1rem">
     <a class="btn btn-primary" asp-controller="ExamRegistrations" asp-action="Create">
-        Create new
+    Create new
     </a>
-</div>
+    </div>*@
 
-<table class="table" style="vertical-align: middle;">
-    <thead>
-        <tr>
-            <th>Index</th>
-            <th>Student</th>
-            <th>Subject name</th>
-            <th>ESPB</th>
-            <th>Semester</th>
-            <th>Professor</th>
-            <th>Grade</th>
-            <th>Registration date</th>
-            <th>Exam date</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.ExamRegistrations != null)
-        {
-            foreach (var er in Model.ExamRegistrations)
-            {
+@{
+    if (Context.HasRole("Admin"))
+    {
+        <table class="table" style="vertical-align: middle;">
+            <thead>
                 <tr>
-                    <td>@er.Student.Index</td>
-                    <td>@(er.Student.FirstName + " " + er.Student.LastName)</td>
-                    <td>@er.Subject.Name</td>
-                    <td>@er.Subject.ESPB</td>
-                    <td>@er.Subject.Semester</td>
-                    @{
-                        if (er.Professor != null)
-                        {
-                            <td>@(er.Professor.FirstName + " " + er.Professor.LastName)</td>
-                        }
-                        else
-                        {
-                            <td>N/A</td>
-                        }
-                    }
-                    @{
-                        if (er.Grade != null)
-                        {
-                            <td>@er.Grade</td>
-                        }
-                        else
-                        {
-                            <td>N/A</td>
-                        }
-                    }
-                    <td>@er.RegistrationDate.ToShortDateString()</td>
-                    @{
-                        if (er.ExamDate != null)
-                        {
-                            <td>@er.ExamDate.Value.ToShortDateString()</td>
-                        }
-                        else
-                        {
-                            <td>N/A</td>
-                        }
-                    }
-                    <td>
-                        <div style="display:inline-flex">
+                    <th>Index</th>
+                    <th>Student</th>
+                    <th>Subject name</th>
+                    <th>ESPB</th>
+                    <th>Semester</th>
+                    <th>Professor</th>
+                    <th>Grade</th>
+                    <th>Registration date</th>
+                    <th>Exam date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ExamRegistrations != null)
+                {
+                    foreach (var er in Model.ExamRegistrations)
+                    {
+                        <tr>
+                            <td>@er.Student.Index</td>
+                            <td>@(er.Student.FirstName + " " + er.Student.LastName)</td>
+                            <td>@er.Subject.Name</td>
+                            <td>@er.Subject.ESPB</td>
+                            <td>@er.Subject.Semester</td>
                             @{
-                                if (!er.IsLocked)
+                                if (er.Professor != null)
                                 {
-                                    <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Edit">
-                                        <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.5rem " title="Edit"></i>
-                                    </a>
+                                    <td>@(er.Professor.FirstName + " " + er.Professor.LastName)</td>
+                                }
+                                else
+                                {
+                                    <td>N/A</td>
+                                }
+                            }
+                            @{
+                                if (er.Grade != null)
+                                {
+                                    <td>@er.Grade</td>
+                                }
+                                else
+                                {
+                                    <td>N/A</td>
+                                }
+                            }
+                            <td>@er.RegistrationDate.ToShortDateString()</td>
+                            @{
+                                if (er.ExamDate != null)
+                                {
+                                    <td>@er.ExamDate.Value.ToShortDateString()</td>
+                                }
+                                else
+                                {
+                                    <td>N/A</td>
+                                }
+                            }
+                            <td>
+                                <div style="display:inline-flex">
+                                    @{
+                                        if (!er.IsLocked)
+                                        {
+                                            <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Edit">
+                                                <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.5rem " title="Edit"></i>
+                                            </a>
 
-                                    <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Delete">
-                                        <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
-                                    </a>
+                                            <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Delete">
+                                                <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
+                                            </a>
 
+                                            if (er.Professor != null)
+                                            {
+                                                <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Lock">
+                                                    <i class="bi bi-lock-fill" style="color:brown; font-size: 1.5rem;" title="Lock"></i>
+                                                </a>
+                                            }
+                                        }
+
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <table class="table" style="vertical-align: middle;">
+            <thead>
+                <tr>
+                    <th>Subject name</th>
+                    <th>ESPB</th>
+                    <th>Semester</th>
+                    <th>Professor</th>
+                    <th>Grade</th>
+                    <th>Registration date</th>
+                    <th>Exam date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ExamRegistrations != null)
+                {
+                    foreach (var er in Model.ExamRegistrations)
+                    {
+                        if (er.Student.Email.Equals(Model.CurrentUserEmail))
+                        {
+                            <tr>
+                                <td>@er.Subject.Name</td>
+                                <td>@er.Subject.ESPB</td>
+                                <td>@er.Subject.Semester</td>
+                                @{
                                     if (er.Professor != null)
                                     {
-                                        <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Lock">
-                                            <i class="bi bi-lock-fill" style="color:brown; font-size: 1.5rem;" title="Lock"></i>
-                                        </a>
+                                        <td>@(er.Professor.FirstName + " " + er.Professor.LastName)</td>
+                                    }
+                                    else
+                                    {
+                                        <td>N/A</td>
                                     }
                                 }
+                                @{
+                                    if (er.Grade != null)
+                                    {
+                                        <td>@er.Grade</td>
+                                    }
+                                    else
+                                    {
+                                        <td>N/A</td>
+                                    }
+                                }
+                                <td>@er.RegistrationDate.ToShortDateString()</td>
+                                @{
+                                    if (er.ExamDate != null)
+                                    {
+                                        <td>@er.ExamDate.Value.ToShortDateString()</td>
+                                    }
+                                    else
+                                    {
+                                        <td>N/A</td>
+                                    }
+                                }
+                                <td>
+                                    <div style="display:inline-flex">
+                                        @{
+                                            if (!er.IsLocked)
+                                            {
+                                                <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Delete">
+                                                    <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
+                                                </a>
 
-                            }
-                        </div>
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+                                            }
+
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                    }
+                }
+            </tbody>
+        </table>
+    }
+}
+
 

@@ -8,6 +8,7 @@ namespace FacultyAppWeb.Models.ExamRegistrations
         public List<ExamRegistration> ExamRegistrations { get; set; }
         public string SearchTermSubject { get; set; }
         public string SearchTermStudent { get; set; }
+        public string CurrentUserEmail { get; set; }
 
         [TempData]
         public string MessageSuccess { get; set; }

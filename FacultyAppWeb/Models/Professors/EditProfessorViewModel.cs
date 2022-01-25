@@ -7,6 +7,7 @@ namespace FacultyAppWeb.Models.Professors
     {
         public long Id { get; set; }
         public string JMBG { get; set; }
+        public string Email { get; set; }
 
         [Required]
         [Remote(action: "VerifyFirstName", controller: "Home")]

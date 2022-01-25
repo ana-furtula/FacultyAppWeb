@@ -1,15 +1,12 @@
 ﻿using FacultyAppWeb.Domains;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace FacultyAppWeb.RepositoryServices.EntityFramework
 {
-    public class FacultyContext : DbContext
+    public class FacultyContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         private readonly IConfiguration config;
 
@@ -19,10 +16,14 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<ExamRegistration> ExamRegistrations { get; set; }
 
-       /* public FacultyContext(IConfiguration config)
+        public FacultyContext(DbContextOptions<FacultyContext> options): base(options)
         {
-            this.config = config;
-        }*/
+        }
+
+        /* public FacultyContext(IConfiguration config)
+         {
+             this.config = config;
+         }*/
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

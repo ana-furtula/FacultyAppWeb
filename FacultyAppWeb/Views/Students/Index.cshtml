@@ -47,6 +47,7 @@
             <th>First name</th>
             <th>Last name</th>
             <th>JMBG</th>
+            <th>Email</th>
             <th></th>
         </tr>
     </thead>
@@ -58,15 +59,14 @@
                 <td>@student.FirstName</td>
                 <td>@student.LastName</td>
                 <td>@student.JMBG</td>
+                <td>@student.Email</td>
                 <td>
                     <div style="display:inline-flex">
-                        <a class="form-control" style="border:none" asp-area="" asp-route-id="@student.Id" asp-controller="Students" asp-action="Edit">
-                            <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.5rem " title="Edit"></i>
+                        
+                        <a class="form-control" style="border:none" asp-area="" asp-route-id="@student.Id" asp-controller="Students" asp-action="Details">
+                            <i class="bi bi-file-person-fill" style="color: cornflowerblue; font-size: 1.5rem " title="Details"></i>
                         </a>
-
-                        <a class="form-control" style="border:none" asp-area="" asp-route-id="@student.Id" asp-controller="Students" asp-action="Delete">
-                            <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
-                        </a>
+                        
                     </div>
                 </td>
             </tr>

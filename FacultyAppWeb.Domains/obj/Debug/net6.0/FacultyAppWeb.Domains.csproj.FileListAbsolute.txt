@@ -9,4 +9,3 @@ C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Domains\obj\Debug\net6.0\FacultyAp
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Domains\obj\Debug\net6.0\FacultyAppWeb.Domains.dll
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Domains\obj\Debug\net6.0\ref\FacultyAppWeb.Domains.dll
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Domains\obj\Debug\net6.0\FacultyAppWeb.Domains.pdb
-C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Domains\obj\Debug\net6.0\FacultyAppWeb.Domains.csproj.AssemblyReference.cache

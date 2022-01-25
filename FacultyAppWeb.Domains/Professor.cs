@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace FacultyAppWeb.Domains
 {
+    [Index(nameof(Email), IsUnique = true)]
     public class Professor : Person
     {
         [Required]
@@ -15,11 +17,11 @@ namespace FacultyAppWeb.Domains
         public Professor()
         {
         }
-        public Professor(string firstName, string lastName, string jmbg) : base(firstName, lastName, jmbg)
+        public Professor(string firstName, string lastName, string jmbg, string email) : base(firstName, lastName, jmbg, email)
         {
         }
 
-        public Professor(long id, string firstName, string lastName, string jmbg) : base(firstName, lastName, jmbg)
+        public Professor(long id, string firstName, string lastName, string jmbg, string email) : base(firstName, lastName, jmbg, email)
         {
             Id = id;
         }

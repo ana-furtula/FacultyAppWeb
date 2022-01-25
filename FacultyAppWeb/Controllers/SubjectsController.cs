@@ -1,10 +1,12 @@
 ﻿using FacultyAppWeb.Domains;
 using FacultyAppWeb.Models.Subjects;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FacultyAppWeb.Controllers
 {
+    [Authorize]
     public class SubjectsController : Controller
     {
         private readonly ISubjectRepository subjectRepository;
@@ -45,6 +47,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("editSubject")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(long id)
         {
             try
@@ -60,6 +63,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("editSubject")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(Subject updated)
         {
             if (!ModelState.IsValid)
@@ -87,6 +91,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("newSubject")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View(new CreateSubjectViewModel()
@@ -98,6 +103,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("newSubject")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(CreateSubjectViewModel newSubject)
         {
             if (!ModelState.IsValid)
@@ -133,6 +139,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("deleteSubject")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(long id)
         {
             try

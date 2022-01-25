@@ -16,9 +16,9 @@ namespace FacultyAppWeb.RepositoryServices.InMemory
         {
             students = new List<Student>()
             {
-                new Student(1L,"Aleksandra","Furtula","2018/0175","0207999285019"),
-                new Student(2L,"Filip","Furtula","2014/0155","2512995280020"),
-                new Student(3L,"Matija","Furtula","2012/0100","2102994280021")
+                new Student(1L,"Aleksandra","Furtula","2018/0175","0207999285019","email"),
+                new Student(2L,"Filip","Furtula","2014/0155","2512995280020","email"),
+                new Student(3L,"Matija","Furtula","2012/0100","2102994280021","email")
             };
         }
 

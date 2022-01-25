@@ -1,4 +1,5 @@
-﻿@using FacultyAppWeb.Models.Subjects
+﻿@using FacultyAppWeb.Common
+@using FacultyAppWeb.Models.Subjects
 @{
     ViewData["Title"] = "Subjects";
 }
@@ -8,17 +9,17 @@
 
 <h2>Subjects</h2>
 
-@if (Model!=null)
+@if (Model != null)
 {
-     if (Model.MessageSuccess != null)
+    if (Model.MessageSuccess != null)
     {
         <div class="alert alert-success">@Model.MessageSuccess</div>
     }
     else
     {
-        if(Model.MessageError != null)
+        if (Model.MessageError != null)
         {
-             <div class="alert alert-danger">@Model.MessageError</div>
+            <div class="alert alert-danger">@Model.MessageError</div>
         }
     }
 }
@@ -33,12 +34,16 @@
         </button>
     </div>
 </form>
-
-<div class="float-end" style="padding:1rem 1rem 1rem 1rem">
-    <a class="btn btn-primary" asp-controller="Subjects" asp-action="Create">
-        Create new
-    </a>
-</div>
+@{
+    if (Context.HasRole("Admin"))
+    {
+        <div class="float-end" style="padding:1rem 1rem 1rem 1rem">
+            <a class="btn btn-primary" asp-controller="Subjects" asp-action="Create">
+                Create new
+            </a>
+        </div>
+    }
+}
 
 <table class="table" style="vertical-align: middle;">
     <thead>
@@ -46,7 +51,7 @@
             <th>Name</th>
             <th>ESPB</th>
             <th>Semester</th>
-            <th></th>
+            <th></th> 
         </tr>
     </thead>
     <tbody>
@@ -56,16 +61,22 @@
                 <td>@subject.Name</td>
                 <td>@subject.ESPB</td>
                 <td>@subject.Semester</td>
-                 <td>
-                    <div style="display:inline-flex">
-                        <a class="form-control" style="border:none" asp-area="" asp-route-id="@subject.Id" asp-controller="Subjects" asp-action="Edit">
-                            <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.5rem " title="Edit"></i>
-                        </a>
+                <td>
+                    @{
+                        if (Context.HasRole("Admin"))
+                        {
+                            <div style="display:inline-flex">
+                                <a class="form-control" style="border:none" asp-area="" asp-route-id="@subject.Id" asp-controller="Subjects" asp-action="Edit">
+                                    <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.5rem " title="Edit"></i>
+                                </a>
 
-                        <a class="form-control" style="border:none" asp-area="" asp-route-id="@subject.Id" asp-controller="Subjects" asp-action="Delete">
-                            <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
-                        </a>
-                    </div>
+                                <a class="form-control" style="border:none" asp-area="" asp-route-id="@subject.Id" asp-controller="Subjects" asp-action="Delete">
+                                    <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
+                                </a>
+                            </div>
+                        }
+                    }
+
                 </td>
             </tr>
         }

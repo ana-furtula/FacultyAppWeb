@@ -156,8 +156,8 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
                     string lastName = dataReader.GetString("LastName");
                     string jmbg = dataReader.GetString("JMBG");
 
-                    Student student = new Student(id, firstName, lastName, indeks, jmbg);
-                    students.Add(student);
+                    //Student student = new Student(id, firstName, lastName, indeks, jmbg, "");
+                   // students.Add(student);
 
                 }
 

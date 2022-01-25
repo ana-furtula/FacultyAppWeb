@@ -1,8 +1,3 @@
-C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.csproj.AssemblyReference.cache
-C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.AssemblyInfoInputs.cache
-C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.AssemblyInfo.cs
-C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.csproj.CoreCompileInputs.cache
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.deps.json
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.runtimeconfig.json
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.dll
@@ -12,6 +7,11 @@ C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.dll
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.pdb
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.Domains.pdb
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.csproj.AssemblyReference.cache
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.AssemblyInfoInputs.cache
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.AssemblyInfo.cs
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.csproj.CoreCompileInputs.cache
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.csproj.CopyComplete
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.dll
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\ref\FacultyAppWeb.RepositoryServices.EntityFramework.dll

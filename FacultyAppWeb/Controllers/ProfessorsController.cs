@@ -1,11 +1,13 @@
 ﻿using FacultyAppWeb.Domains;
 using FacultyAppWeb.Models.Professors;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 
 namespace FacultyAppWeb.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProfessorsController : Controller
     {
         private readonly IProfessorRepository professorRepository;
@@ -113,7 +115,8 @@ namespace FacultyAppWeb.Controllers
                 MessageCreate = null,
                 FirstName = "",
                 LastName = "",
-                JMBG = ""
+                JMBG = "",
+                Email = ""
             });
 
         }
@@ -131,7 +134,8 @@ namespace FacultyAppWeb.Controllers
                 {
                     FirstName = newProfessor.FirstName,
                     LastName = newProfessor.LastName,
-                    JMBG = newProfessor.JMBG
+                    JMBG = newProfessor.JMBG,
+                    Email = newProfessor.Email
                 };
                 professorRepository.Add(prof);
 

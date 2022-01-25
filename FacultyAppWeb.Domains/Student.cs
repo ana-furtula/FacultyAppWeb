@@ -18,12 +18,12 @@ namespace FacultyAppWeb.Domains
         {
         }
 
-        public Student(string firstName, string lastName, string indeks, string jmbg) : base(firstName, lastName, jmbg)
+        public Student(string firstName, string lastName, string indeks, string jmbg, string email) : base(firstName, lastName, jmbg, email)
         {
             Index = indeks;
         }
 
-        public Student(long id, string firstName, string lastName, string indeks, string jmbg) : base(firstName, lastName, jmbg)
+        public Student(long id, string firstName, string lastName, string indeks, string jmbg, string email) : base(firstName, lastName, jmbg, email)
         {
             Index = indeks;
             Id = id;

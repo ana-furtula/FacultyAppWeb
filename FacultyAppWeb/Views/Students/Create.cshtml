@@ -31,6 +31,11 @@
         <input asp-for = "@Model.JMBG" class="form-control" />
         <span class="text-danger" asp-validation-for="@Model.JMBG"></span>
     </div>
+     <div class="form-group">
+        <label asp-for="@Model.Email">Email</label>
+        <input asp-for = "@Model.Email" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.Email"></span>
+    </div>
         <br />
     <div class="form-group">
     <button type="submit" class="btn btn-primary">Save</button>

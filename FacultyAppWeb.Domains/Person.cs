@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace FacultyAppWeb.Domains
 {
+    [Index(nameof(Email), IsUnique = true)]
     public class Person
     {
         [Required]
@@ -19,15 +21,20 @@ namespace FacultyAppWeb.Domains
         [StringLength(13, ErrorMessage = "JMBG length can't be more than 13.")]
         public string JMBG { get; set; }
 
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
         public Person()
         {
         }
 
-        public Person(string firstName, string lastName, string jmbg)
+        public Person(string firstName, string lastName, string jmbg, string email)
         {
             FirstName = firstName;
             LastName = lastName;
             JMBG = jmbg;
+            Email = email;
         }
     }
 }

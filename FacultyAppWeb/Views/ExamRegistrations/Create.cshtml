@@ -1,4 +1,5 @@
-﻿@using FacultyAppWeb.Models.ExamRegistrations
+﻿@using FacultyAppWeb.Common
+@using FacultyAppWeb.Models.ExamRegistrations
 
 @model CreateExamRegistrationViewModel
 
@@ -8,15 +9,9 @@
 }
 
 <form method="post">
-    <div class="form-group">
-        <label>Select student</label>
-        <div class="col-md-5">
-            @Html.DropDownListFor(x => Model.SelectedStudent, new SelectList(Model.Students, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Professor"})
-            @Html.ValidationMessageFor(x => x.SelectedStudent, "", new { @class = "text-danger" })
-        </div>
-    </div>
     <br />
     <div class="form-group">
+        <input type="hidden" asp-for = "@Model.Student.Id" />
         <label>Select subject</label>
         <div class="col-md-5">
             @Html.DropDownListFor(x => Model.SelectedSubject, new SelectList(Model.Subjects, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Subject"})

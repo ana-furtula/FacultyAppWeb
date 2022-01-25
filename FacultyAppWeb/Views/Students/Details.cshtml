@@ -1,0 +1,65 @@
+﻿@using FacultyAppWeb.Common
+@using FacultyAppWeb.Models.Students
+@{
+    ViewData["Title"] = "Details";
+}
+
+@model DetailsStudentViewModel
+@{
+    if (Model != null && Model.MessageSuccess != null && !Model.MessageSuccess.Equals(""))
+    {
+        <div class="alert alert-success">@Model.MessageSuccess</div>
+    }
+    if (Model != null && Model.MessageError != null && !Model.MessageError.Equals(""))
+    {
+        <div class="alert alert-danger">@Model.MessageError</div>
+    }
+}
+
+<div>
+    <div class="form-group">
+        <label asp-for="@Model.FirstName">First name</label>
+        <input asp-for="@Model.FirstName" class="form-control" readonly>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.LastName">Last name</label>
+        <input asp-for="@Model.LastName" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Index">Index</label>
+        <input asp-for="@Model.Index" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.JMBG">JMBG</label>
+        <input asp-for="@Model.JMBG" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Email">Email</label>
+        <input asp-for="@Model.Email" class="form-control" readonly>
+    </div>
+</div>
+<br />
+<div style="float:right">
+    @{
+        if (Context.HasRole("Admin"))
+        {
+            <div style="display:inline-block">
+                <a class="form-control" style="border:none" asp-area="" asp-route-id="@Model.Id" asp-controller="Students" asp-action="Edit">
+                    <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.5rem " title="Edit"></i>
+                </a>
+            </div>
+            <div style="display:inline-block">
+                <a class="form-control" style="border:none" asp-area="" asp-route-id="@Model.Id" asp-controller="Students" asp-action="Delete">
+                    <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
+                </a>
+            </div>
+        }
+    }
+
+    <div style="display:inline-block">
+        <a class="btn btn-primary" style="border:none" asp-area="" asp-route-id="@Model.Id" asp-controller="ExamRegistrations" asp-action="Create">
+            Add exam registration
+        </a>
+    </div>
+
+</div>

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\FacultyAppWeb\Views\Shared\_Layout.cshtml" Link="_Layout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FacultyAppWeb.Domains\FacultyAppWeb.Domains.csproj" />
   </ItemGroup>
 

@@ -1,11 +1,13 @@
 ﻿using FacultyAppWeb.Models;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace FacultyAppWeb.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -36,7 +38,7 @@ namespace FacultyAppWeb.Controllers
 
             return Json(true);
         }
-
+        
         public IActionResult Index()
         {
             return View();

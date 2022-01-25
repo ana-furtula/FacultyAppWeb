@@ -1,15 +1,17 @@
 ﻿using FacultyAppWeb.Domains;
 using FacultyAppWeb.Models.Students;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 
 namespace FacultyAppWeb.Controllers
 {
+    [Authorize]
     public class StudentsController : Controller
     {
         private readonly IStudentRepository studentRepository;
-      
+
         [TempData]
         public string MessageSuccess { get; set; }
         [TempData]
@@ -24,6 +26,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [AcceptVerbs("GET")]
+        [Authorize(Roles = "Admin")]
         public IActionResult VerifyIndex(string index)
         {
 
@@ -40,6 +43,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [AcceptVerbs("GET")]
+        [Authorize(Roles = "Admin")]
         public IActionResult VerifyJMBG(string jmbg)
         {
 
@@ -48,7 +52,7 @@ namespace FacultyAppWeb.Controllers
             if (!rx.IsMatch(jmbg))
                 return Json($"JMBG {jmbg} is not valid.");
 
-            if (studentRepository.GetStudentByJMBG(jmbg)!=null)
+            if (studentRepository.GetStudentByJMBG(jmbg) != null)
             {
                 return Json($"Student with JMBG {jmbg} already exists.");
             }
@@ -58,6 +62,7 @@ namespace FacultyAppWeb.Controllers
 
 
         [HttpGet("students")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Index(string searchTerm = null)
         {
             try
@@ -73,14 +78,52 @@ namespace FacultyAppWeb.Controllers
 
                 return View(studentsViewModel);
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
             }
             return RedirectToAction(nameof(HomeController.Error));
         }
 
+        [HttpGet("studentDetails")]
+        public IActionResult Details(long id, string messageSuccess = null, string messageError = null, string email = null)
+        {
+            try
+            {
+                Student student = null;
+
+                if (email != null)
+                    student = studentRepository.GetStudentsByIndex("").Where(s => (s.Email.Equals(email))).FirstOrDefault();
+               
+                else if (id != 0)
+                    student = studentRepository.GetById(id);
+
+                if (student == null)
+                    return RedirectToAction(nameof(HomeController.Error));
+
+                return View(new DetailsStudentViewModel()
+                {
+                    Id = student.Id,
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    Index = student.Index,
+                    JMBG = student.JMBG,
+                    Email = student.Email,
+                    MessageSuccess = MessageSuccess,
+                    MessageError = MessageError
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
+            return RedirectToAction(nameof(HomeController.Error));
+        }
+
+
         [HttpGet("editStudent")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(long id)
         {
             try
@@ -92,9 +135,11 @@ namespace FacultyAppWeb.Controllers
                     FirstName = student.FirstName,
                     LastName = student.LastName,
                     Index = student.Index,
-                    JMBG = student.JMBG
+                    JMBG = student.JMBG,
+                    Email = student.Email
                 });
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
             }
@@ -102,6 +147,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("editStudent")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(EditStudentViewModel updated)
         {
             if (!ModelState.IsValid)
@@ -116,7 +162,8 @@ namespace FacultyAppWeb.Controllers
                     LastName = updated.LastName,
                     FirstName = updated.FirstName,
                     Index = updated.Index,
-                    JMBG = updated.JMBG
+                    JMBG = updated.JMBG,
+                    Email = updated.Email
                 };
                 studentRepository.Update(student);
                 TempData["MessageSuccess"] = "Student successfully updated!";
@@ -130,6 +177,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("newStudent")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             try
@@ -140,15 +188,18 @@ namespace FacultyAppWeb.Controllers
                     Index = "",
                     FirstName = "",
                     JMBG = "",
-                    LastName = ""
+                    LastName = "",
+                    Email = ""
                 });
-            } catch(Exception ex)
+            }
+            catch (Exception)
             {
                 return null;
             }
         }
 
         [HttpPost("newStudent")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(CreateStudentViewModel newStudent)
         {
             if (!ModelState.IsValid)
@@ -162,7 +213,8 @@ namespace FacultyAppWeb.Controllers
                     Index = newStudent.Index,
                     FirstName = newStudent.FirstName,
                     JMBG = newStudent.JMBG,
-                    LastName = newStudent.LastName
+                    LastName = newStudent.LastName,
+                    Email = newStudent.Email
                 });
 
                 TempData["MessageSuccess"] = "Student successfully saved!";
@@ -173,10 +225,11 @@ namespace FacultyAppWeb.Controllers
                 TempData["MessageSuccess"] = "Student cannot be saved!";
                 return RedirectToAction(nameof(StudentsController.Index));
             }
-            
+
         }
 
         [HttpGet("delete")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(long id)
         {
             try
@@ -190,7 +243,7 @@ namespace FacultyAppWeb.Controllers
                 TempData["MessageError"] = "Student cannot be deleted!";
                 return RedirectToAction(nameof(StudentsController.Index));
             }
-           
+
         }
 
     }

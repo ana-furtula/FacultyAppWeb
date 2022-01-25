@@ -20,6 +20,9 @@ namespace FacultyAppWeb.Models.Students
         [Remote(action: "VerifyJMBG", controller: "Students")]
         [StringLength(13)]
         public string JMBG { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
         [TempData]
         public string? MessageCreate { get; set; } 

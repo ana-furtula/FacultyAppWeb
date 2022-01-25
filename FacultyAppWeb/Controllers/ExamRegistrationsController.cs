@@ -1,11 +1,15 @@
 ﻿using FacultyAppWeb.Domains;
 using FacultyAppWeb.Models.ExamRegistrations;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace FacultyAppWeb.Controllers
 {
+    [Authorize]
     public class ExamRegistrationsController : Controller
     {
         private readonly IExamRegistrationRepository examRegistrationRepository;
@@ -13,6 +17,7 @@ namespace FacultyAppWeb.Controllers
         private readonly IProfessorRepository professorRepository;
         private readonly ISubjectRepository subjectRepository;
         private readonly IStudentRepository studentRepository;
+        private readonly UserManager<IdentityUser> userManager;
 
         [TempData]
         public string MessageSuccess { get; set; }
@@ -21,13 +26,14 @@ namespace FacultyAppWeb.Controllers
         [TempData]
         public string MessageCreate { get; set; }
 
-        public ExamRegistrationsController(IExamRegistrationRepository examRegistrationRepository, ILectureRepository lectureRepository, IProfessorRepository professorRepository, ISubjectRepository subjectRepository, IStudentRepository studentRepository)
+        public ExamRegistrationsController(IExamRegistrationRepository examRegistrationRepository, ILectureRepository lectureRepository, IProfessorRepository professorRepository, ISubjectRepository subjectRepository, IStudentRepository studentRepository, UserManager<IdentityUser> userManager)
         {
             this.examRegistrationRepository = examRegistrationRepository;
             this.lectureRepository = lectureRepository;
             this.professorRepository = professorRepository;
             this.subjectRepository = subjectRepository;
             this.studentRepository = studentRepository;
+            this.userManager = userManager;
         }
 
         [HttpGet("examRegistrations")]
@@ -35,12 +41,14 @@ namespace FacultyAppWeb.Controllers
         {
             try
             {
+                var userEmail = User.FindFirstValue(ClaimTypes.Name);
                 var ers = examRegistrationRepository.GetAll();
                 ExamRegistrationsViewModel ersViewModel = new()
                 {
                     SearchTermStudent = searchTermStudent,
                     SearchTermSubject = searchTermSubject,
-                    ExamRegistrations = ers.Any()?ers.Where(er => (searchTermStudent == null || er.Student.Index.ToLower().StartsWith(searchTermStudent)) && (searchTermSubject == null || er.Subject.Name.ToLower().StartsWith(searchTermSubject))).OrderBy(er=> er.IsLocked).ToList():null,
+                    ExamRegistrations = ers.Any()?ers.Where(er => (searchTermStudent == null || er.Student.Index.ToLower().StartsWith(searchTermStudent.ToLower())) && (searchTermSubject == null || er.Subject.Name.ToLower().StartsWith(searchTermSubject.ToLower()))).OrderBy(er=> er.IsLocked).ToList():null,
+                    CurrentUserEmail = userEmail,
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError
                 };
@@ -56,35 +64,30 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("newER")]
-        public IActionResult Create()
+        public IActionResult Create(long id)
         {
             try
             {
-                var students = studentRepository.GetStudentsByIndex("");
-                var selectListStudents = new List<SelectListItem>();
-                foreach (var element in students)
-                {
-                    selectListStudents.Add(new SelectListItem
-                    {
-                        Value = element.Id.ToString(),
-                        Text = "Indeks: " + element.Index + ", " + element.FirstName + " " + element.LastName
-                    });
-                }
+                var ers = examRegistrationRepository.GetAll().Where(er => (er.Student.Id == id));
 
                 var subjects = subjectRepository.GetSubjectsByName("");
+               
                 var selectListSubjects = new List<SelectListItem>();
                 foreach (var element in subjects)
                 {
-                    selectListSubjects.Add(new SelectListItem
+                    if(!ers.Where(er=>(er.Subject.Id == element.Id && er.Grade!=null && er.Grade>5)).Any())
                     {
-                        Value = element.Id.ToString(),
-                        Text = element.Name + ", ESPB: " + element.ESPB + ", Semester: " + element.Semester
-                    });
+                        selectListSubjects.Add(new SelectListItem
+                        {
+                            Value = element.Id.ToString(),
+                            Text = element.Name + ", ESPB: " + element.ESPB + ", Semester: " + element.Semester
+                        });
+                    }
                 }
 
                 return View(new CreateExamRegistrationViewModel()
                 {
-                    Students = selectListStudents,
+                    Student = studentRepository.GetById(id),
                     Subjects = selectListSubjects
                 });
             }
@@ -101,14 +104,13 @@ namespace FacultyAppWeb.Controllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(newER.SelectedSubject) && !string.IsNullOrEmpty(newER.SelectedStudent))
+                if (!string.IsNullOrEmpty(newER.SelectedSubject))
                 {
-                    var student = studentRepository.GetById(long.Parse(newER.SelectedStudent));
                     var subject = subjectRepository.GetById(long.Parse(newER.SelectedSubject));
                     var er = new ExamRegistration()
                     {
                         Subject = subject,
-                        Student = student,
+                        Student = studentRepository.GetById(newER.Student.Id),
                         RegistrationDate = DateTime.Now,
                         IsLocked = false,
                         Professor = null,
@@ -120,18 +122,23 @@ namespace FacultyAppWeb.Controllers
                     {
                         examRegistrationRepository.Add(er);
                         TempData["MessageSuccess"] = "Exam registration successfully saved!";
+
+                        return RedirectToAction("Details", new RouteValueDictionary(new { controller = "Students", action = "Details", id = newER.Student.Id, messageSuccess = MessageSuccess }));
                     }
                     else
                     {
                         TempData["MessageError"] = "Exam registration already exists!";
+
                     }
                 }
                 else
                 {
                     TempData["MessageError"] = "Exam registration cannot be saved!";
+
                 }
 
-                return RedirectToAction(nameof(ExamRegistrationsController.Index));
+                return RedirectToAction("Details", new RouteValueDictionary(new { controller = "Students", action = "Details", id = newER.Student.Id, messageSuccess = "",  messageError = MessageError }));
+
             }
             catch (Exception ex)
             {
@@ -159,6 +166,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("lockER")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Lock(long id)
         {
             try
@@ -175,6 +183,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("editER")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(long id)
         {
             try
@@ -206,6 +215,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("editER")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(EditExamRegistrationViewModel updated)
         {
             if (updated.ExamRegistration.Grade>10 || updated.ExamRegistration.Grade<5)

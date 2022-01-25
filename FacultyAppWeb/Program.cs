@@ -2,6 +2,9 @@
 using FacultyAppWeb.RepositoryServices.EntityFramework;
 using FacultyAppWeb.RepositoryServices.Interfaces;
 using FacultyAppWeb.RepositoryServices.MySQL;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Identity.Web.UI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +16,26 @@ builder.Services.AddTransient<ISubjectRepository, SubjectRepository>();
 builder.Services.AddTransient<ILectureRepository, LectureRepository>();
 builder.Services.AddTransient<IExamRegistrationRepository, ExamRegistrationRepository>();
 builder.Services.AddTransient<DbBroker>();
-builder.Services.AddDbContext<FacultyContext>();
+builder.Services.AddDbContext<FacultyContext>(options =>
+        options.UseSqlServer(
+            builder.Configuration.GetConnectionString("FacultyContextDB")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<FacultyContext>();builder.Services.AddDbContext<FacultyContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("FacultyContextDB")));
+/*
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(
+        options => {
+            options.SignIn.RequireConfirmedAccount = false;
+
+            //Other options go here
+        }
+        )
+    .AddEntityFrameworkStores<FacultyContext>();*/
+
+builder.Services.AddRazorPages()
+    .AddMicrosoftIdentityUI();
 
 var app = builder.Build();
 
@@ -29,11 +51,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();

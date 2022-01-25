@@ -14,5 +14,6 @@ namespace FacultyAppWeb.Models.Students
         public string LastName { get; set; }
         public string Index { get; set; }
         public string JMBG { get; set; }
+        public string Email { get; set; }
     }
 }

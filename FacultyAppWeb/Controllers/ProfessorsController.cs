@@ -38,14 +38,16 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("professors")]
-        public IActionResult Index(string searchTerm = null)
+        public IActionResult Index([FromQuery] ProfessorParameters professorParameters, int pageNumber = 1, string searchTerm = null)
         {
             try
             {
+                professorParameters.PageNumber=pageNumber;
                 var professorsViewModel = new ProfessorsViewModel()
                 {
                     SearchTerm = searchTerm,
-                    Professors = professorRepository.GetProfessorsByName(searchTerm).ToList(),
+                    totalProfessorsNumber = professorRepository.GetProfessorsNumber(searchTerm),
+                    Professors = professorRepository.GetProfessorsByName(professorParameters, searchTerm).ToList(),
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError
                 };

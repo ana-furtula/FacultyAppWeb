@@ -6,6 +6,7 @@ namespace FacultyAppWeb.Models.Professors
     public class ProfessorsViewModel
     {
         public string SearchTerm { get; set; }
+        public int totalProfessorsNumber { get; set; }
         public List<Professor> Professors { get; set; }
 
         [TempData]

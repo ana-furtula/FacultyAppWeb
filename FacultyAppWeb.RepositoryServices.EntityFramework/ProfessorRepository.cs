@@ -46,6 +46,28 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             }
         }
 
+        public PagedList<Professor> GetProfessorsByName(ProfessorParameters professorParameters, string index)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(index))
+                    return PagedList<Professor>.ToPagedList(dbContext.Professors,
+        professorParameters.PageNumber,
+        professorParameters.PageSize);
+
+
+                return PagedList<Professor>.ToPagedList(dbContext.Professors.Where(x => x.FirstName.StartsWith(index)),
+        professorParameters.PageNumber,
+        professorParameters.PageSize);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public Professor GetById(long id)
         {
             try
@@ -100,6 +122,25 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             {
                 throw ex;
             }
+        }
+
+        public int GetProfessorsNumber(string index)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(index))
+                    return dbContext.Professors.Count();
+
+
+                return dbContext.Professors.Where(x => x.FirstName.StartsWith(index)).Count();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
         }
     }
 }

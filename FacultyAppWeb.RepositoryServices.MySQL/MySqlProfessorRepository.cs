@@ -228,6 +228,16 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
             }
         }
 
+        public PagedList<Professor> GetProfessorsByName(ProfessorParameters param, string index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetProfessorsNumber(string index)
+        {
+            throw new NotImplementedException();
+        }
+
         public Professor Update(Professor updated)
         {
             try

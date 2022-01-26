@@ -37,7 +37,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("examRegistrations")]
-        public IActionResult Index(string searchTermStudent = null, string searchTermSubject = null)
+        public IActionResult Index([FromQuery] ExamRegistrationParameters examParameters, int pageNumber = 1, string searchTermStudent = null, string searchTermSubject = null)
         {
             try
             {
@@ -47,14 +47,18 @@ namespace FacultyAppWeb.Controllers
                 professor = professorRepository.GetProfessorsByName("").Where(p => p.Email.Equals(userEmail)).FirstOrDefault();
                 if (professor != null)
                 {
-                    subjects = lectureRepository.GetSubjectsForProfessor(professor)!=null?lectureRepository.GetSubjectsForProfessor(professor).ToList(): new List<Subject>();
+                    subjects = lectureRepository.GetSubjectsForProfessor(professor)!=null ? lectureRepository.GetSubjectsForProfessor(professor).ToList(): new List<Subject>();
                 }
-                var ers = examRegistrationRepository.GetAll();
+                examParameters.PageNumber = pageNumber;
+                var ers = examRegistrationRepository.GetAll(examParameters);
                 ExamRegistrationsViewModel ersViewModel = new()
                 {
                     SearchTermStudent = searchTermStudent,
+                    TotalRegistrationNumber = examRegistrationRepository.GetTotalRegistrationNumber(searchTermSubject, searchTermStudent),
+                    
                     SearchTermSubject = searchTermSubject,
-                    ExamRegistrations = ers.Any() ? ers.Where(er => (searchTermStudent == null || er.Student.Index.ToLower().StartsWith(searchTermStudent.ToLower())) && (searchTermSubject == null || er.Subject.Name.ToLower().StartsWith(searchTermSubject.ToLower()))).OrderBy(er => er.IsLocked).ToList() : null,
+                    
+                    ExamRegistrations = ers.Any() ? ers.Where(er => (searchTermStudent == null || er.Student.Index.ToLower().StartsWith(searchTermStudent.ToLower())) &&  (searchTermSubject == null || er.Subject.Name.ToLower().StartsWith(searchTermSubject.ToLower()))).OrderBy(er => er.IsLocked).ToList() : null,
                     CurrentUserEmail = userEmail,
                     Subjects = subjects,
                     MessageSuccess = MessageSuccess,

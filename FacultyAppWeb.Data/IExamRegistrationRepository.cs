@@ -12,9 +12,12 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         bool Exists(ExamRegistration examRegistration);
         ExamRegistration GetById(long id);
         public IEnumerable<ExamRegistration> GetAll();
+        PagedList<ExamRegistration> GetAll(ExamRegistrationParameters param);
         IEnumerable<ExamRegistration> GetExamRegistrationsBySubjectName(string subjectName);
+        PagedList<ExamRegistration> GetExamRegistrationsBySubjectName(ExamRegistrationParameters param, string subjectName);
         IEnumerable<ExamRegistration> GetExamRegistrationsByProfessorName(string professorName);
         IEnumerable<ExamRegistration> GetExamRegistrationsByStudentIndex(string studentIndex);
+        PagedList<ExamRegistration> GetExamRegistrationsByStudentIndex(ExamRegistrationParameters param, string index);
         IEnumerable<ExamRegistration> GetExamRegistrationsByProfessorId(long professorId);
         IEnumerable<ExamRegistration> GetExamRegistrationsBySubjectId(long subjectId);
         IEnumerable<ExamRegistration> GetExamRegistrationsByStudentId(long studentId);
@@ -22,5 +25,6 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         ExamRegistration Delete(long id);
         ExamRegistration Update(ExamRegistration er);
         public void Lock(long id);
+        int GetTotalRegistrationNumber(string subjectName, string index);
     }
 }

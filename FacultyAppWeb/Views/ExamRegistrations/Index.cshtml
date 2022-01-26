@@ -53,6 +53,15 @@
 @{
     if (Context.HasRole("Admin") || Context.HasRole("Professor"))
     {
+        <div class="pagination">
+
+        @for (var i = 1; i <=  (int)Math.Ceiling( @Model.TotalRegistrationNumber/(double)3); i++)
+        {
+          <a class="pgn-el"  asp-route-pageNumber=@i asp-route-searchTermSubject=@Model.SearchTermSubject  asp-route-searchTermStudent=@Model.SearchTermStudent asp-area="" asp-controller="ExamRegistrations" asp-action="Index">@i</a>
+         
+        }
+
+    </div>
         <table class="table" style="vertical-align: middle;">
             <thead>
                 <tr>

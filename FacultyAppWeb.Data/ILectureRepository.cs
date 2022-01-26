@@ -12,6 +12,7 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         bool Exists(Lecture lecture);
         Lecture GetById(long id);
         IEnumerable<Lecture> GetLecturesBySubjectName(string subjectName);
+        PagedList<Lecture> GetLecturesBySubjectName(LectureParameters param, string index);
         IEnumerable<Lecture> GetLecturesByProfessorName(string professorName);
         Lecture Add(Lecture lecture);
         Lecture Delete(long id);
@@ -21,5 +22,6 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         {
             return null;
         }
+        int GetTotalLecturesNumber(string searchTerm);
     }
 }

@@ -48,6 +48,15 @@
         </div>
     }
 }
+<div class="pagination">
+
+        @for (var i = 1; i <=  (int)Math.Ceiling( @Model.TotalLecturesNumber/(double)3); i++)
+        {
+          <a class="pgn-el"  asp-route-pageNumber=@i  asp-route-searchTerm=@Model.SearchTerm asp-area="" asp-controller="Lectures" asp-action="Index">@i</a>
+         
+        }
+
+    </div>
 
 
 <table class="table" style="vertical-align: middle;">

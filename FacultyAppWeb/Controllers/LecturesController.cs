@@ -30,14 +30,15 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("lectures")]
-        public IActionResult Index(string searchTerm = null)
+        public IActionResult Index([FromQuery] LectureParameters lectureParameters, int pageNumber = 1, string searchTerm = null)
         {
             try
-            {
-                var lectures = lectureRepository.GetLecturesBySubjectName(searchTerm);
+            {lectureParameters.PageNumber= pageNumber;
+                var lectures = lectureRepository.GetLecturesBySubjectName(lectureParameters, searchTerm);
                 LecturesViewModel lecturesViewModel = new()
                 {
                     SearchTerm = searchTerm,
+                    TotalLecturesNumber=lectureRepository.GetTotalLecturesNumber(searchTerm),
                     Lectures = (lectures!=null)? lectures.ToList():null,
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError

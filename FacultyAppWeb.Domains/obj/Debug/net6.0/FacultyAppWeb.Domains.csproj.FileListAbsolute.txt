@@ -21,3 +21,4 @@ C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.Domains\obj\Debu
 C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.Domains\obj\Debug\net6.0\FacultyAppWeb.Domains.dll
 C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.Domains\obj\Debug\net6.0\ref\FacultyAppWeb.Domains.dll
 C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.Domains\obj\Debug\net6.0\FacultyAppWeb.Domains.pdb
+C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.Domains\obj\Debug\net6.0\FacultyAppWeb.Domains.csproj.AssemblyReference.cache

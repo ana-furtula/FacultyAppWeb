@@ -119,6 +119,13 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             }
         }
 
+        public PagedList<ExamRegistration> GetAll(ExamRegistrationParameters param)
+        {
+           return PagedList<ExamRegistration>.ToPagedList((IQueryable<ExamRegistration>)GetAll(),
+        param.PageNumber,
+        param.PageSize);
+        }
+
         public ExamRegistration GetById(long id)
         {
             try
@@ -284,6 +291,41 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             }
         }
 
+        public PagedList<ExamRegistration> GetExamRegistrationsByStudentIndex(ExamRegistrationParameters param, string studentIndex)
+        {
+            try
+            {
+                var query = from er in dbContext.ExamRegistrations
+                            join student in dbContext.Students
+                                on er.Student.Id equals student.Id
+                            join subject in dbContext.Subjects
+                                on er.Subject.Id equals subject.Id
+                            join professor in dbContext.Professors
+                                on er.Professor equals professor into ep
+                            from subprof in ep.DefaultIfEmpty()
+                            where string.IsNullOrEmpty(studentIndex) || student.Index.StartsWith(studentIndex)
+                            select new ExamRegistration()
+                            {
+                                Id = er.Id,
+                                Student = student,
+                                Subject = subject,
+                                Professor = subprof ?? null,
+                                ExamDate = er.ExamDate ?? null,
+                                Grade = er.Grade ?? null,
+                                IsLocked = er.IsLocked,
+                                RegistrationDate = er.RegistrationDate
+                            };
+
+                return PagedList<ExamRegistration>.ToPagedList(query,
+        param.PageNumber,
+        param.PageSize);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public IEnumerable<ExamRegistration> GetExamRegistrationsBySubjectId(long subjectId)
         {
             try
@@ -348,6 +390,66 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             {
                 throw ex;
             }
+        }
+
+        public PagedList<ExamRegistration> GetExamRegistrationsBySubjectName(ExamRegistrationParameters param, string subjectName)
+        {
+            try
+            {
+                var query = from er in dbContext.ExamRegistrations
+                            join student in dbContext.Students
+                                on er.Student.Id equals student.Id
+                            join subject in dbContext.Subjects
+                                on er.Subject.Id equals subject.Id
+                            join professor in dbContext.Professors
+                                on er.Professor equals professor into ep
+                            from subprof in ep.DefaultIfEmpty()
+                            where string.IsNullOrEmpty(subjectName) || subject.Name.StartsWith(subjectName)
+                            select new ExamRegistration()
+                            {
+                                Id = er.Id,
+                                Student = student,
+                                Subject = subject,
+                                Professor = subprof ?? null,
+                                ExamDate = er.ExamDate ?? null,
+                                Grade = er.Grade ?? null,
+                                IsLocked = er.IsLocked,
+                                RegistrationDate = er.RegistrationDate
+                            };
+
+                return PagedList<ExamRegistration>.ToPagedList(query,
+         param.PageNumber,
+         param.PageSize);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public int GetTotalRegistrationNumber(string subjectName, string index)
+        {
+            var query = from er in dbContext.ExamRegistrations
+                        join student in dbContext.Students
+                            on er.Student.Id equals student.Id
+                        join subject in dbContext.Subjects
+                            on er.Subject.Id equals subject.Id
+                        join professor in dbContext.Professors
+                            on er.Professor equals professor into ep
+                        from subprof in ep.DefaultIfEmpty()
+                        where (string.IsNullOrEmpty(subjectName) || subject.Name.StartsWith(subjectName)) && (string.IsNullOrEmpty(index) || student.Index.StartsWith(index))
+                        select new ExamRegistration()
+                        {
+                            Id = er.Id,
+                            Student = student,
+                            Subject = subject,
+                            Professor = subprof ?? null,
+                            ExamDate = er.ExamDate ?? null,
+                            Grade = er.Grade ?? null,
+                            IsLocked = er.IsLocked,
+                            RegistrationDate = er.RegistrationDate
+                        };
+            return query.Count();
         }
 
         public void Lock(long id)

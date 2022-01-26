@@ -15,6 +15,7 @@ namespace FacultyAppWeb.Models.ExamRegistrations
         public string MessageSuccess { get; set; }
         [TempData]
         public string MessageError { get; set; }
+        public int TotalRegistrationNumber { get; set; }
 
     }
 }

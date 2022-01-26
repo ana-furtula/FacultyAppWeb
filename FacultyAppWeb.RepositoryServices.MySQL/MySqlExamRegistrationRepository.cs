@@ -792,5 +792,25 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
                 Connection?.Close();
             }
         }
+
+        public PagedList<ExamRegistration> GetAll(ExamRegistrationParameters param)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PagedList<ExamRegistration> GetExamRegistrationsBySubjectName(ExamRegistrationParameters param, string subjectName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PagedList<ExamRegistration> GetExamRegistrationsByStudentIndex(ExamRegistrationParameters param, string index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetTotalRegistrationNumber(string subjectName, string index)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

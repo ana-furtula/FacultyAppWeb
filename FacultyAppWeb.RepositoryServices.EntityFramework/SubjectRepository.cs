@@ -63,6 +63,28 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             }
         }
 
+        public PagedList<Subject> GetSubjectsByName(SubjectParameters subjectParameters, string index)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(index))
+                    return PagedList<Subject>.ToPagedList(dbContext.Subjects,
+        subjectParameters.PageNumber,
+        subjectParameters.PageSize);
+
+
+                return PagedList<Subject>.ToPagedList(dbContext.Subjects.Where(x => x.Name.StartsWith(index)),
+        subjectParameters.PageNumber,
+        subjectParameters.PageSize);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public IEnumerable<Subject> GetSubjectsByESPB(int espb)
         {
             return dbContext.Subjects.Where(s => s.ESPB == espb);
@@ -78,6 +100,23 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         public IEnumerable<Subject> GetSubjectsBySemester(int semester)
         {
             return dbContext.Subjects.Where(s => s.Semester == semester);
+        }
+
+        public int GetTotalSubjectNumber(string index)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(index))
+                    return dbContext.Subjects.Count();
+
+
+                return dbContext.Subjects.Where(x => x.Name.StartsWith(index)).Count();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         public Subject Update(Subject updated)

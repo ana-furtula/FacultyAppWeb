@@ -17,3 +17,22 @@ C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\ref\FacultyAppWeb.RepositoryServices.EntityFramework.dll
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.pdb
 C:\Users\ANA\Code\FacultyAppWeb\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.genruntimeconfig.cache
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.deps.json
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.runtimeconfig.json
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.dll
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\ref\FacultyAppWeb.RepositoryServices.EntityFramework.dll
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.pdb
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.Domains.dll
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.dll
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.RepositoryServices.Interfaces.pdb
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\bin\Debug\net6.0\FacultyAppWeb.Domains.pdb
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.csproj.AssemblyReference.cache
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.AssemblyInfoInputs.cache
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.AssemblyInfo.cs
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.csproj.CoreCompileInputs.cache
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.csproj.CopyComplete
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.dll
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\ref\FacultyAppWeb.RepositoryServices.EntityFramework.dll
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.pdb
+C:\Users\Dragana Stefanovic\Desktop\FacultyWebApp\FacultyAppWeb.RepositoryServices.EntityFramework\obj\Debug\net6.0\FacultyAppWeb.RepositoryServices.EntityFramework.genruntimeconfig.cache

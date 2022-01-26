@@ -259,5 +259,20 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
             }
 
         }
+
+        public IEnumerable<Student> GetStudentsByIndex(StudentParameters param, string index)
+        {
+            throw new NotImplementedException();
+        }
+
+        PagedList<Student> IStudentRepository.GetStudentsByIndex(StudentParameters param, string index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetStudentsNumber(string index)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

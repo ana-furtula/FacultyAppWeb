@@ -1,5 +1,6 @@
 ﻿using FacultyAppWeb.Domains;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using System.Linq;
 
 namespace FacultyAppWeb.RepositoryServices.EntityFramework
 {
@@ -67,12 +68,36 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             }
         }
 
-        public IEnumerable<Student> GetStudentsByIndex(string index)
+        public PagedList<Student> GetStudentsByIndex(StudentParameters studentParameters, string index)
         {
             try
             {
+               
                 if (string.IsNullOrEmpty(index))
-                    return dbContext.Students.ToList();
+                    return PagedList<Student>.ToPagedList(dbContext.Students,
+        studentParameters.PageNumber,
+        studentParameters.PageSize);
+      
+
+                return PagedList<Student>.ToPagedList(dbContext.Students.Where(x => x.Index.StartsWith(index)),
+        studentParameters.PageNumber,
+        studentParameters.PageSize);
+               
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public IEnumerable<Student> GetStudentsByIndex(string index)
+        {
+
+            try
+            {
+                if (string.IsNullOrEmpty(index))
+                    return dbContext.Students.
+                    ToList();
 
                 return dbContext.Students.Where(x => x.Index.StartsWith(index));
             }
@@ -81,6 +106,8 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
                 throw ex;
             }
         }
+
+      
 
         public Student Update(Student updated)
         {
@@ -94,6 +121,25 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             {
                 throw ex;
             }
+        }
+
+        public int GetStudentsNumber(string index)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(index))
+                    return dbContext.Students.Count();
+
+
+                return dbContext.Students.Where(x => x.Index.StartsWith(index)).Count();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+          
+           
         }
     }
 }

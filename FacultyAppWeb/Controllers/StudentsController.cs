@@ -4,6 +4,7 @@ using FacultyAppWeb.RepositoryServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace FacultyAppWeb.Controllers
 {
@@ -11,6 +12,7 @@ namespace FacultyAppWeb.Controllers
     public class StudentsController : Controller
     {
         private readonly IStudentRepository studentRepository;
+
 
         [TempData]
         public string MessageSuccess { get; set; }
@@ -23,6 +25,7 @@ namespace FacultyAppWeb.Controllers
         public StudentsController(IStudentRepository studentRepository)
         {
             this.studentRepository = studentRepository;
+
         }
 
         [AcceptVerbs("GET")]
@@ -63,18 +66,33 @@ namespace FacultyAppWeb.Controllers
 
         [HttpGet("students")]
         [Authorize(Roles = "Admin, Professor")]
-        public IActionResult Index(string searchTerm = null)
+        public IActionResult Index([FromQuery] StudentParameters studentParameters, int pageNumber=1, string searchTerm = null )
         {
             try
             {
+                studentParameters.PageNumber = pageNumber;
+
 
                 var studentsViewModel = new StudentsViewModel()
                 {
                     SearchTerm = searchTerm,
-                    Students = studentRepository.GetStudentsByIndex(searchTerm).ToList(),
+                    TotalStudentsNumber = studentRepository.GetStudentsNumber(searchTerm),
+                    
+                    Students = studentRepository.GetStudentsByIndex(studentParameters, searchTerm).ToList(),
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError
                 };
+                var students = studentRepository.GetStudentsByIndex(studentParameters, searchTerm);
+                var metadata = new
+                {
+                    students.TotalCount,
+                    students.PageSize,
+                    students.CurrentPage,
+                    students.TotalPages,
+                    students.HasNext,
+                    students.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 
                 return View(studentsViewModel);
 

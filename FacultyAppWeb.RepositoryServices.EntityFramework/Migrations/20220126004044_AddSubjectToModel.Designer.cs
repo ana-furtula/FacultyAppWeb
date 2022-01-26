@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FacultyAppWeb.RepositoryServices.SqlServer.Migrations
+namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
 {
     [DbContext(typeof(FacultyContext))]
-    [Migration("20220125122119_Add_UNIQUE_Constraint_Professor_EMAIL")]
-    partial class Add_UNIQUE_Constraint_Professor_EMAIL
+    [Migration("20220126004044_AddSubjectToModel")]
+    partial class AddSubjectToModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,124 +42,17 @@ namespace FacultyAppWeb.RepositoryServices.SqlServer.Migrations
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit");
 
-                    b.Property<long?>("ProfessorId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<long>("StudentId")
-                        .HasColumnType("bigint");
 
                     b.Property<long>("SubjectId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfessorId");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectId");
 
                     b.ToTable("ExamRegistrations");
-                });
-
-            modelBuilder.Entity("FacultyAppWeb.Domains.Lecture", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("ProfessorId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("SubjectId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfessorId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("Lectures");
-                });
-
-            modelBuilder.Entity("FacultyAppWeb.Domains.Professor", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("JMBG")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.ToTable("Professors");
-                });
-
-            modelBuilder.Entity("FacultyAppWeb.Domains.Student", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Index")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JMBG")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("FacultyAppWeb.Domains.Subject", b =>
@@ -210,6 +103,29 @@ namespace FacultyAppWeb.RepositoryServices.SqlServer.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            ConcurrencyStamp = "6b4520da-cdd8-47be-8191-a6639dea11a6",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            ConcurrencyStamp = "320b85d3-18bb-428a-8ad6-ce6f5ec50760",
+                            Name = "Professor",
+                            NormalizedName = "PROFESSOR"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            ConcurrencyStamp = "134f6f28-9eb9-4700-a777-9af1894730a6",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -300,6 +216,24 @@ namespace FacultyAppWeb.RepositoryServices.SqlServer.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "4469e9e1-6dd6-40ab-99b3-d40136528979",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFOaCu5yyRPbxeuirMzP1WEc14y8ciFN3v0Xcv39tHDIwT94nZ5hmBKuSJoHsue4Xw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "4fa341b0-c563-4d55-ad14-5d7d4f88404c",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -364,6 +298,13 @@ namespace FacultyAppWeb.RepositoryServices.SqlServer.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -389,44 +330,11 @@ namespace FacultyAppWeb.RepositoryServices.SqlServer.Migrations
 
             modelBuilder.Entity("FacultyAppWeb.Domains.ExamRegistration", b =>
                 {
-                    b.HasOne("FacultyAppWeb.Domains.Professor", "Professor")
-                        .WithMany()
-                        .HasForeignKey("ProfessorId");
-
-                    b.HasOne("FacultyAppWeb.Domains.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FacultyAppWeb.Domains.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Professor");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("FacultyAppWeb.Domains.Lecture", b =>
-                {
-                    b.HasOne("FacultyAppWeb.Domains.Professor", "Professor")
-                        .WithMany()
-                        .HasForeignKey("ProfessorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FacultyAppWeb.Domains.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Professor");
 
                     b.Navigation("Subject");
                 });

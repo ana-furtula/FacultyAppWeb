@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FacultyAppWeb.RepositoryServices.SqlServer.Migrations
+namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
 {
     [DbContext(typeof(FacultyContext))]
-    [Migration("20220125121733_Add_UNIQUE_Constraint_Person_EMAIL")]
-    partial class Add_UNIQUE_Constraint_Person_EMAIL
+    [Migration("20220126004211_AddStudentToModel")]
+    partial class AddStudentToModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -210,6 +210,29 @@ namespace FacultyAppWeb.RepositoryServices.SqlServer.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            ConcurrencyStamp = "793c6a95-7a7f-4b29-a960-dec262194b68",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            ConcurrencyStamp = "8a55da9a-297f-4cfd-910f-31b9cdf8969a",
+                            Name = "Professor",
+                            NormalizedName = "PROFESSOR"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            ConcurrencyStamp = "e2497664-f230-426d-b4d8-7890cc6c3857",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -300,6 +323,24 @@ namespace FacultyAppWeb.RepositoryServices.SqlServer.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5439da8e-b3d7-4cc9-b6d7-c5a1a704af0a",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFOaCu5yyRPbxeuirMzP1WEc14y8ciFN3v0Xcv39tHDIwT94nZ5hmBKuSJoHsue4Xw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c6c7bdde-942a-4186-932f-0ccac6d9b1bf",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -364,6 +405,13 @@ namespace FacultyAppWeb.RepositoryServices.SqlServer.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -64,6 +64,7 @@ namespace FacultyAppWeb.Controllers
                     }
                 }
             } catch(Exception)
+
             {
                 return View();
             }

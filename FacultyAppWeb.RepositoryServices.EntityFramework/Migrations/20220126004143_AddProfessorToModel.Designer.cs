@@ -4,6 +4,7 @@ using FacultyAppWeb.RepositoryServices.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
 {
     [DbContext(typeof(FacultyContext))]
-    partial class FacultyContextModelSnapshot : ModelSnapshot
+    [Migration("20220126004143_AddProfessorToModel")]
+    partial class AddProfessorToModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,17 +48,12 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("StudentId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("SubjectId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProfessorId");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectId");
 
@@ -118,154 +115,7 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("JMBG")
-                        .IsUnique();
-
                     b.ToTable("Professors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2L,
-                            Email = "marko@gmail.com",
-                            FirstName = "Marko",
-                            JMBG = "1234561234561",
-                            LastName = "Markovic"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Email = "lazar@gmail.com",
-                            FirstName = "Lazar",
-                            JMBG = "1234567123456",
-                            LastName = "Lazarevic"
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            Email = "ana1@gmail.com",
-                            FirstName = "Ana",
-                            JMBG = "1234567812345",
-                            LastName = "Anic"
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            Email = "lena@gmail.com",
-                            FirstName = "Lena",
-                            JMBG = "1234567891234",
-                            LastName = "Lenic"
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            Email = "mika@gmail.com",
-                            FirstName = "Mika",
-                            JMBG = "1234567823456",
-                            LastName = "Mikic"
-                        },
-                        new
-                        {
-                            Id = 7L,
-                            Email = "gaga@gmail.com",
-                            FirstName = "Dragana",
-                            JMBG = "2345678912345",
-                            LastName = "Stefanovic"
-                        },
-                        new
-                        {
-                            Id = 8L,
-                            Email = "nikola@gmail.com",
-                            FirstName = "Nikola",
-                            JMBG = "0123456789012",
-                            LastName = "Nikolic"
-                        });
-                });
-
-            modelBuilder.Entity("FacultyAppWeb.Domains.Student", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Index")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JMBG")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2L,
-                            Email = "filip1@gmail.com",
-                            FirstName = "Filip",
-                            Index = "2014/0155",
-                            JMBG = "2512995280025",
-                            LastName = "Furtula"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Email = "ana1@gmail.com",
-                            FirstName = "Aleksandra",
-                            Index = "2018/0175",
-                            JMBG = "0207999285019",
-                            LastName = "Furtula"
-                        },
-                        new
-                        {
-                            Id = 10002L,
-                            Email = "matija@gmail.com",
-                            FirstName = "Matija",
-                            Index = "2012/0001",
-                            JMBG = "1111111111111",
-                            LastName = "Matijevic"
-                        },
-                        new
-                        {
-                            Id = 10003L,
-                            Email = "milos@gmail.com",
-                            FirstName = "Milos",
-                            Index = "2000/2000",
-                            JMBG = "2222222222222",
-                            LastName = "Milosevic"
-                        },
-                        new
-                        {
-                            Id = 20002L,
-                            Email = "vojin@gmail.com",
-                            FirstName = "Vojin",
-                            Index = "1234/2000",
-                            JMBG = "1234567891234",
-                            LastName = "Vojislavljevic"
-                        });
                 });
 
             modelBuilder.Entity("FacultyAppWeb.Domains.Subject", b =>
@@ -289,43 +139,6 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subjects");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 10002L,
-                            ESPB = 4,
-                            Name = "EPOS",
-                            Semester = 4
-                        },
-                        new
-                        {
-                            Id = 10004L,
-                            ESPB = 5,
-                            Name = "Projektovanje softvera",
-                            Semester = 5
-                        },
-                        new
-                        {
-                            Id = 10005L,
-                            ESPB = 6,
-                            Name = "Softverski paterni",
-                            Semester = 6
-                        },
-                        new
-                        {
-                            Id = 20002L,
-                            ESPB = 6,
-                            Name = "Programski jezici",
-                            Semester = 6
-                        },
-                        new
-                        {
-                            Id = 20003L,
-                            ESPB = 3,
-                            Name = "ITEH",
-                            Semester = 3
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -358,21 +171,21 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "9a62b53f-7900-41a4-a29e-4fa2d33151ab",
+                            ConcurrencyStamp = "ebf2d22f-ce31-4234-b3a2-5e1d6eaacf52",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "f0fefca2-155f-4bd7-828c-ec4eefea40a7",
+                            ConcurrencyStamp = "50b11f12-eda4-48b6-8bcd-289accc03308",
                             Name = "Professor",
                             NormalizedName = "PROFESSOR"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "182e1dc3-e01e-4e67-b7fc-7dc8580c8445",
+                            ConcurrencyStamp = "2f8aa642-94cb-4245-88b7-b693481183dc",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -472,7 +285,7 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9d45c5c9-3e47-4357-b8ed-df232d020399",
+                            ConcurrencyStamp = "3e80b58a-f3fd-400b-a16a-f4c3e34b5fc8",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -480,7 +293,7 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
                             NormalizedUserName = "ADMIN@GMAIL.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEFOaCu5yyRPbxeuirMzP1WEc14y8ciFN3v0Xcv39tHDIwT94nZ5hmBKuSJoHsue4Xw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "be8dfb95-90fd-4a3c-b10f-52f8536556a5",
+                            SecurityStamp = "033be1b8-036a-437f-a026-b663c3e22a0b",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -584,12 +397,6 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
                         .WithMany()
                         .HasForeignKey("ProfessorId");
 
-                    b.HasOne("FacultyAppWeb.Domains.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FacultyAppWeb.Domains.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
@@ -597,8 +404,6 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
                         .IsRequired();
 
                     b.Navigation("Professor");
-
-                    b.Navigation("Student");
 
                     b.Navigation("Subject");
                 });

@@ -12,11 +12,15 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         bool Exists(Subject subject);
         Subject GetById(long id);
         IEnumerable<Subject> GetSubjectsByName(string name);
+
+        PagedList<Subject> GetSubjectsByName(SubjectParameters param, string index);
         IEnumerable<Subject> GetSubjectsBySemester(int semester);
+
         IEnumerable<Subject> GetSubjectsByESPB(int espb);
         Subject Update(Subject updated);
 
         Subject Add(Subject subject);
         Subject Delete(long id);
+        int GetTotalSubjectNumber(string index);
     }
 }

@@ -302,6 +302,11 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
             }
         }
 
+        public PagedList<Lecture> GetLecturesBySubjectName(LectureParameters param, string index)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Professor> GetProfessorsForSubject(long subjectId)
         {
             try
@@ -349,6 +354,11 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
             {
                 Connection?.Close();
             }
+        }
+
+        public int GetTotalLecturesNumber(string searchTerm)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -159,6 +159,11 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
             }
         }
 
+        public PagedList<Subject> GetSubjectsByName(SubjectParameters param, string index)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Subject> GetSubjectsByESPB(int espb)
         {
             try
@@ -298,6 +303,11 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
             {
                 Connection?.Close();
             }
+        }
+
+        public int GetTotalSubjectNumber(string index)
+        {
+            throw new NotImplementedException();
         }
 
         public Subject Update(Subject updated)

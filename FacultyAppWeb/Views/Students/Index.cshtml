@@ -1,5 +1,6 @@
 ﻿@using FacultyAppWeb.Common
 @using FacultyAppWeb.Models.Students
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -27,7 +28,7 @@
 <form method="get" asp-controller="Students" style="padding-bottom:0.5rem;">
     <div class="form-group" style="text-align: center;">
         <div style="display: inline-block;vertical-align: middle;">
-            <input type="search" class="form-control" name="searchTerm" value="@Model.SearchTerm" placeholder="Index" />
+            <input type="search" class="form-control" id="searchTerm" name="searchTerm" value="@Model.SearchTerm" placeholder="Index" />
         </div>
         <button style="border:none; background-color:white; display: inline-block;vertical-align: middle;">
             <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" title="Search"></i>
@@ -45,6 +46,7 @@
         </div>
     }
 }
+
 
 <table class="table" style="vertical-align: middle;">
     <thead>
@@ -78,4 +80,15 @@
             </tr>
         }
     </tbody>
+    <br />
+    <div class="pagination">
+
+        @for (var i = 1; i <=  (int)Math.Ceiling( @Model.TotalStudentsNumber/(double)3); i++)
+        {
+          <a class="pgn-el"  asp-route-pageNumber=@i  asp-route-searchTerm=@Model.SearchTerm asp-area="" asp-controller="Students" asp-action="Index">@i</a>
+         
+        }
+
+    </div>
+  
 </table>

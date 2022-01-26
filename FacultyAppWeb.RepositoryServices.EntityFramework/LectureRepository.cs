@@ -129,5 +129,54 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             return query;
 
         }
+
+        public PagedList<Lecture> GetLecturesBySubjectName(LectureParameters param, string index)
+        {
+            try
+            {
+                var query = from lecture in dbContext.Lectures
+                            join professor in dbContext.Professors
+                                on lecture.Professor.Id equals professor.Id
+                            join subject in dbContext.Subjects
+                                on lecture.Subject.Id equals subject.Id
+                            select new Lecture() { Professor = professor, Subject = subject, Id = lecture.Id };
+
+                if (string.IsNullOrEmpty(index))
+                {
+                    return PagedList<Lecture>.ToPagedList(query,
+        param.PageNumber,
+        param.PageSize);
+
+                }
+                return PagedList<Lecture>.ToPagedList(query.Where(l => l.Subject.Name.StartsWith(index)),
+        param.PageNumber,
+        param.PageSize);
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
+        }
+
+        public int GetTotalLecturesNumber(string index)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(index))
+                    return dbContext.Lectures.Count();
+
+
+                return dbContext.Lectures.Where(x => x.Subject.Name.StartsWith(index)).Count();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
     }
 }

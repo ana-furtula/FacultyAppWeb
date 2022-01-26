@@ -24,14 +24,16 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("subjects")]
-        public IActionResult Index(string searchTerm = null)
+        public IActionResult Index([FromQuery] SubjectParameters subjectParameters, int pageNumber = 1, string searchTerm = null)
         {
             try
-            {
+            {   subjectParameters.PageNumber = pageNumber;
                 SubjectsViewModel subjectsViewModel = new SubjectsViewModel()
+                
                 {
                     SearchTerm = searchTerm,
-                    Subjects = subjectRepository.GetSubjectsByName(searchTerm).ToList(),
+                    TotalSubjectNumber = subjectRepository.GetTotalSubjectNumber(searchTerm),
+                    Subjects = subjectRepository.GetSubjectsByName(subjectParameters, searchTerm).ToList(),
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError
                 };

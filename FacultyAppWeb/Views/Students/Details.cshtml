@@ -16,7 +16,8 @@
     }
 }
 
-<div>
+
+<div style="padding-top:1rem">
     <div class="form-group">
         <label asp-for="@Model.FirstName">First name</label>
         <input asp-for="@Model.FirstName" class="form-control" readonly>
@@ -38,19 +39,19 @@
         <input asp-for="@Model.Email" class="form-control" readonly>
     </div>
 </div>
-<br />
-<div style="float:right">
+
+<div style="float:right; padding-top:2rem">
     @{
         if (Context.HasRole("Admin"))
         {
-            <div style="display:inline-block">
+            <div style="display:inline-block;">
                 <a class="form-control" style="border:none" asp-area="" asp-route-id="@Model.Id" asp-controller="Students" asp-action="Edit">
-                    <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.5rem " title="Edit"></i>
+                    <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.7rem " title="Edit"></i>
                 </a>
             </div>
-            <div style="display:inline-block">
+            <div style="display:inline-block;">
                 <a class="form-control" style="border:none" asp-area="" asp-route-id="@Model.Id" asp-controller="Students" asp-action="Delete">
-                    <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
+                    <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.7rem " title="Delete"></i>
                 </a>
             </div>
         }
@@ -58,7 +59,7 @@
         if (!Context.HasRole("Professor"))
         {
             <div style="display:inline-block">
-                <a class="btn btn-primary" style="border:none" asp-area="" asp-route-id="@Model.Id" asp-controller="ExamRegistrations" asp-action="Create">
+                <a class="form-control btn btn-primary" style="border:none" asp-area="" asp-route-id="@Model.Id" asp-controller="ExamRegistrations" asp-action="Create">
                     Add exam registration
                 </a>
             </div>

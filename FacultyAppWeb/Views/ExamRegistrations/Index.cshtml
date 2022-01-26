@@ -77,9 +77,9 @@
                         if (Context.HasRole("Professor"))
                         {
                             bool signal = false;
-                            foreach (var lecture in Model.Lectures)
+                            foreach (var subject in Model.Subjects)
                             {
-                                if (lecture.Subject.Id == er.Subject.Id)
+                                if (subject.Id == er.Subject.Id)
                                 {
                                     signal = true;
                                     break;
@@ -194,7 +194,7 @@
                                     }
                                     else
                                     {
-                                        <td>N/A</td>
+                                        <td></td>
                                     }
                                 }
                                 @{
@@ -204,7 +204,7 @@
                                     }
                                     else
                                     {
-                                        <td>N/A</td>
+                                        <td></td>
                                     }
                                 }
                                 <td>@er.RegistrationDate.ToShortDateString()</td>
@@ -215,13 +215,13 @@
                                     }
                                     else
                                     {
-                                        <td>N/A</td>
+                                        <td></td>
                                     }
                                 }
                                 <td>
                                     <div style="display:inline-flex">
                                         @{
-                                            if (!er.IsLocked)
+                                            if (!er.IsLocked && er.Grade==null)
                                             {
                                                 <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Delete">
                                                     <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>

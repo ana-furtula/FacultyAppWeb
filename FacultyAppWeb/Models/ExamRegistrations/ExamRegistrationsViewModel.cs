@@ -9,7 +9,7 @@ namespace FacultyAppWeb.Models.ExamRegistrations
         public string SearchTermSubject { get; set; }
         public string SearchTermStudent { get; set; }
         public string CurrentUserEmail { get; set; }
-        public List<Lecture> Lectures { get; set; }
+        public List<Subject> Subjects { get; set; }
 
         [TempData]
         public string MessageSuccess { get; set; }

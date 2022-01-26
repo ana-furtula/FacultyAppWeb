@@ -43,11 +43,11 @@ namespace FacultyAppWeb.Controllers
             {
                 var userEmail = User.FindFirstValue(ClaimTypes.Name);
                 Professor professor = null;
-                List<Lecture> lectures = null;
+                List<Subject> subjects = null;
                 professor = professorRepository.GetProfessorsByName("").Where(p => p.Email.Equals(userEmail)).FirstOrDefault();
                 if (professor != null)
                 {
-                    lectures = lectureRepository.GetLecturesForProfessor(professor)!=null?lectureRepository.GetLecturesForProfessor(professor).ToList(): new List<Lecture>();
+                    subjects = lectureRepository.GetSubjectsForProfessor(professor)!=null?lectureRepository.GetSubjectsForProfessor(professor).ToList(): new List<Subject>();
                 }
                 var ers = examRegistrationRepository.GetAll();
                 ExamRegistrationsViewModel ersViewModel = new()
@@ -56,7 +56,7 @@ namespace FacultyAppWeb.Controllers
                     SearchTermSubject = searchTermSubject,
                     ExamRegistrations = ers.Any() ? ers.Where(er => (searchTermStudent == null || er.Student.Index.ToLower().StartsWith(searchTermStudent.ToLower())) && (searchTermSubject == null || er.Subject.Name.ToLower().StartsWith(searchTermSubject.ToLower()))).OrderBy(er => er.IsLocked).ToList() : null,
                     CurrentUserEmail = userEmail,
-                    Lectures = lectures,
+                    Subjects = subjects,
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError
                 };
@@ -177,7 +177,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("lockER")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Professor")]
         public IActionResult Lock(long id)
         {
             try

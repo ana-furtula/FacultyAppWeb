@@ -80,20 +80,17 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             }
         }
 
-        public IEnumerable<Lecture> GetLecturesForProfessor(Professor professor)
+        public IEnumerable<Subject> GetSubjectsForProfessor(Professor professor)
         {
-            try
-            {
-                if (professor==null)
-                {
-                    return null;
-                }
-                return dbContext.Lectures.Where(x => x.Professor.Id == professor.Id);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var query = from lecture in dbContext.Lectures
+                        join prof in dbContext.Professors
+                            on lecture.Professor.Id equals professor.Id
+                        join subject in dbContext.Subjects
+                            on lecture.Subject.Id equals subject.Id
+                        where prof.Id == professor.Id
+                        select subject;
+
+            return query;
         }
 
         public IEnumerable<Lecture> GetLecturesBySubjectName(string subjectName)

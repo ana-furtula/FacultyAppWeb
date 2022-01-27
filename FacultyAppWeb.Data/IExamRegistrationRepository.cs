@@ -12,7 +12,7 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         bool Exists(ExamRegistration examRegistration);
         ExamRegistration GetById(long id);
         public IEnumerable<ExamRegistration> GetAll();
-        PagedList<ExamRegistration> GetAll(ExamRegistrationParameters param, string searchTermSubject, string searchTermStudent, out int total);
+        IEnumerable<ExamRegistration> GetAll(ExamRegistrationParameters param, string searchTermSubject, string searchTermStudent, out bool hasNext);
         IEnumerable<ExamRegistration> GetExamRegistrationsBySubjectName(string subjectName);
         PagedList<ExamRegistration> GetExamRegistrationsBySubjectName(ExamRegistrationParameters param, string subjectName);
         IEnumerable<ExamRegistration> GetExamRegistrationsByProfessorName(string professorName);
@@ -26,7 +26,7 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         ExamRegistration Update(ExamRegistration er);
         public void Lock(long id);
         int GetTotalRegistrationNumber(string subjectName, string index);
-        PagedList<ExamRegistration> GetAllForProfessor(ExamRegistrationParameters examParameters, string searchTermSubject, string searchTermStudent, List<Subject> subjects, out int total);
-        PagedList<ExamRegistration> GetAllForStudent(ExamRegistrationParameters examParameters, string searchTermSubject, Student student, out int total);
+        IEnumerable<ExamRegistration> GetAllForProfessor(ExamRegistrationParameters examParameters, string searchTermSubject, string searchTermStudent, List<Subject> subjects, out bool hasNext);
+        IEnumerable<ExamRegistration> GetAllForStudent(ExamRegistrationParameters examParameters, string searchTermSubject, Student student, out bool hasNext);
     }
 }

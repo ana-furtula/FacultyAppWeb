@@ -43,25 +43,37 @@
     </div>
 </form>
 
-@*
-    <div class="float-end" style="padding:1rem 1rem 1rem 1rem">
-    <a class="btn btn-primary" asp-controller="ExamRegistrations" asp-action="Create">
-    Create new
-    </a>
-    </div>*@
+<div class="pagination" style="margin-top:10px; margin-bottom: 10px;">
 
-@{
-    if (Context.HasRole("Admin") || Context.HasRole("Professor"))
-    {
-        <div class="pagination" style="margin-top:10px; margin-bottom: 10px;">
+            @{
+                if (Model.PageNumber == 1)
+                {
+                    <a class="pgn-el" style="width:6rem !important" disabled>Previous</a>
+                }
+                else
+                {
+                    int prev = Model.PageNumber - 1;
+                    <a class="pgn-el" style="width:6rem !important" asp-route-pageNumber=@prev asp-route-searchTermSubject=@Model.SearchTermSubject asp-route-searchTermStudent=@Model.SearchTermStudent asp-area="" asp-controller="ExamRegistrations" asp-action="Index">Previous</a>
+                }
 
-            @for (var i = 1; i <= (int)Math.Ceiling(@Model.TotalRegistrationNumber / (double)3); i++)
-            {
-                <a class="pgn-el" asp-route-pageNumber=@i asp-route-searchTermSubject=@Model.SearchTermSubject asp-route-searchTermStudent=@Model.SearchTermStudent asp-area="" asp-controller="ExamRegistrations" asp-action="Index">@i</a>
+                if (Model.HasNext)
+                {
+                    int next = Model.PageNumber + 1;
+                    <a class="pgn-el" style="width:6rem !important" asp-route-pageNumber=@next asp-route-searchTermSubject=@Model.SearchTermSubject asp-route-searchTermStudent=@Model.SearchTermStudent asp-area="" asp-controller="ExamRegistrations" asp-action="Index">Next</a>
+                }
+                else
+                {
+                    <a class="pgn-el" style="width:6rem !important" disabled>Next</a>
+
+                }
 
             }
 
         </div>
+
+@{
+    if (Context.HasRole("Admin") || Context.HasRole("Professor"))
+    {
         <table class="table" style="vertical-align: middle;">
             <thead>
                 <tr>

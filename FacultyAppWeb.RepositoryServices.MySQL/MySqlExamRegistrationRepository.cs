@@ -827,5 +827,20 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<ExamRegistration> GetAll(ExamRegistrationParameters param, string searchTermSubject, string searchTermStudent, out bool hasNext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ExamRegistration> GetAllForProfessor(ExamRegistrationParameters examParameters, string searchTermSubject, string searchTermStudent, List<Subject> subjects, out bool hasNext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ExamRegistration> GetAllForStudent(ExamRegistrationParameters examParameters, string searchTermSubject, Student student, out bool hasNext)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -47,30 +47,37 @@ namespace FacultyAppWeb.Controllers
                 List<Subject> subjects = null;
                 examParameters.PageNumber = pageNumber;
                 professor = professorRepository.GetProfessorsByName("").Where(p => p.Email.Equals(userEmail)).FirstOrDefault();
-                PagedList<ExamRegistration> ers;
-                int total;
+                IEnumerable<ExamRegistration> ers;
+                bool hasNext;
                 if (professor != null)
                 {
                     var profSubjects = lectureRepository.GetSubjectsForProfessor(professor);
-                    subjects = profSubjects != null ? profSubjects.ToList(): new List<Subject>();
-                    ers = examRegistrationRepository.GetAllForProfessor(examParameters, searchTermSubject, searchTermStudent, subjects, out total);
-                }
-                else if(student!=null){
-                    ers = examRegistrationRepository.GetAllForStudent(examParameters, searchTermSubject, student, out total);
+                    subjects = profSubjects != null ? profSubjects.ToList() : new List<Subject>();
+                    ers = examRegistrationRepository.GetAllForProfessor(examParameters, searchTermSubject, searchTermStudent, subjects, out hasNext);
                 }
                 else
                 {
-                    ers = examRegistrationRepository.GetAll(examParameters, searchTermSubject, searchTermStudent, out total);
+                    student = studentRepository.GetStudentsByIndex("").Where(s => s.Email.Equals(userEmail)).FirstOrDefault();
+                    if (student != null)
+                    {
+                        ers = examRegistrationRepository.GetAllForStudent(examParameters, searchTermSubject, student, out hasNext);
+                    }
+                    else
+                    {
+                        ers = examRegistrationRepository.GetAll(examParameters, searchTermSubject, searchTermStudent, out hasNext);
+                    }
                 }
+                
 
                 ExamRegistrationsViewModel ersViewModel = new()
                 {
                     SearchTermStudent = searchTermStudent,
-                    TotalRegistrationNumber = total,
+                    PageNumber = pageNumber,
                     SearchTermSubject = searchTermSubject,
                     ExamRegistrations = ers.Any() ? ers.ToList() : null,
                     CurrentUserEmail = userEmail,
                     Subjects = subjects,
+                    HasNext = hasNext,
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError
                 };
@@ -94,11 +101,11 @@ namespace FacultyAppWeb.Controllers
                 var ers = examRegistrationRepository.GetAll().Where(er => (er.Student.Id == id));
 
                 var subjects = subjectRepository.GetSubjectsByName("");
-               
+
                 var selectListSubjects = new List<SelectListItem>();
                 foreach (var element in subjects)
                 {
-                    if(!ers.Where(er=>(er.Subject.Id == element.Id && er.Grade!=null && er.Grade>5)).Any())
+                    if (!ers.Where(er => (er.Subject.Id == element.Id && er.Grade != null && er.Grade > 5)).Any())
                     {
                         selectListSubjects.Add(new SelectListItem
                         {
@@ -161,7 +168,7 @@ namespace FacultyAppWeb.Controllers
 
                 }
 
-                return RedirectToAction("Details", new RouteValueDictionary(new { controller = "Students", action = "Details", id = newER.Student.Id, messageSuccess = "",  messageError = MessageError }));
+                return RedirectToAction("Details", new RouteValueDictionary(new { controller = "Students", action = "Details", id = newER.Student.Id, messageSuccess = "", messageError = MessageError }));
 
             }
             catch (Exception ex)
@@ -243,10 +250,10 @@ namespace FacultyAppWeb.Controllers
         [Authorize(Roles = "Admin, Professor")]
         public IActionResult Edit(EditExamRegistrationViewModel updated)
         {
-            if (updated.ExamRegistration.Grade>10 || updated.ExamRegistration.Grade<5)
+            if (updated.ExamRegistration.Grade > 10 || updated.ExamRegistration.Grade < 5)
             {
                 MessageError = "Invalid input";
-                return RedirectToAction(nameof(ExamRegistrationsController.Edit), new { id = updated.ExamRegistration.Id});
+                return RedirectToAction(nameof(ExamRegistrationsController.Edit), new { id = updated.ExamRegistration.Id });
             }
             try
             {

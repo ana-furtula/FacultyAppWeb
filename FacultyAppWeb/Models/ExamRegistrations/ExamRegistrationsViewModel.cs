@@ -10,7 +10,8 @@ namespace FacultyAppWeb.Models.ExamRegistrations
         public string SearchTermStudent { get; set; }
         public string CurrentUserEmail { get; set; }
         public List<Subject> Subjects { get; set; }
-
+        public int PageNumber { get; set; }
+        public bool HasNext { get; set; }
         [TempData]
         public string MessageSuccess { get; set; }
         [TempData]

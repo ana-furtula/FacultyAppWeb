@@ -1,5 +1,6 @@
 ﻿using FacultyAppWeb.Domains;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,10 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                Lecture lecture = dbContext.Lectures.SingleOrDefault(x => x.Id == id);
+                Lecture lecture = dbContext.Lectures
+                                  .Include(x => x.Professor)
+                                  .Include(x => x.Subject)
+                                  .SingleOrDefault(x => x.Id == id);
                 return lecture;
             }
             catch (Exception ex)
@@ -70,9 +74,17 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             {
                 if (string.IsNullOrEmpty(professorName))
                 {
-                    return dbContext.Lectures;
+                    var all = dbContext.Lectures
+                        .Include(x => x.Professor)
+                        .Include(x => x.Subject).ToList();
+                    return all;
+
                 }
-                return dbContext.Lectures.Where(x => x.Professor.FirstName.StartsWith(professorName));
+                var lectures = dbContext.Lectures
+                        .Include(x => x.Professor)
+                        .Include(x => x.Subject)
+                        .Where(x => x.Professor.FirstName.StartsWith(professorName)).ToList();
+                return lectures;
             }
             catch (Exception ex)
             {
@@ -82,33 +94,37 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
 
         public IEnumerable<Subject> GetSubjectsForProfessor(Professor professor)
         {
-            var query = from lecture in dbContext.Lectures
-                        join prof in dbContext.Professors
-                            on lecture.Professor.Id equals professor.Id
-                        join subject in dbContext.Subjects
-                            on lecture.Subject.Id equals subject.Id
-                        where prof.Id == professor.Id
-                        select subject;
+            if (professor == null)
+            {
+                return null;
+            }
 
-            return query;
+            var subjects = dbContext.Lectures
+                           .Include(x => x.Professor)
+                           .Include(x => x.Subject)
+                           .Where(x => x.Professor.Id == professor.Id)
+                           .Select(x => x.Subject).ToList();
+            return subjects;
+
         }
 
         public IEnumerable<Lecture> GetLecturesBySubjectName(string subjectName)
         {
             try
             {
-                var query = from lecture in dbContext.Lectures
-                            join professor in dbContext.Professors
-                                on lecture.Professor.Id equals professor.Id
-                            join subject in dbContext.Subjects
-                                on lecture.Subject.Id equals subject.Id
-                            select new Lecture() { Professor = professor, Subject = subject, Id = lecture.Id };
-                
                 if (string.IsNullOrEmpty(subjectName))
                 {
-                    return query;
+                    var all = dbContext.Lectures
+                        .Include(x => x.Professor)
+                        .Include(x => x.Subject).ToList();
+                    return all;
+
                 }
-                return query.Where(l=>l.Subject.Name.StartsWith(subjectName));
+                var lectures = dbContext.Lectures
+                        .Include(x => x.Professor)
+                        .Include(x => x.Subject)
+                        .Where(x => x.Subject.Name.StartsWith(subjectName)).ToList();
+                return lectures;
             }
             catch (Exception ex)
             {
@@ -118,15 +134,13 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
 
         public IEnumerable<Professor> GetProfessorsForSubject(long subjectId)
         {
-            var query = from lecture in dbContext.Lectures
-                        join professor in dbContext.Professors
-                            on lecture.Professor.Id equals professor.Id
-                        join subject in dbContext.Subjects
-                            on lecture.Subject.Id equals subject.Id
-                        where subject.Id == subjectId
-                        select professor;
 
-            return query;
+            var profs = dbContext.Lectures
+                           .Include(x => x.Professor)
+                           .Include(x => x.Subject)
+                           .Where(x => x.Subject.Id == subjectId)
+                           .Select(x => x.Professor).ToList();
+            return profs;
 
         }
 
@@ -134,12 +148,9 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from lecture in dbContext.Lectures
-                            join professor in dbContext.Professors
-                                on lecture.Professor.Id equals professor.Id
-                            join subject in dbContext.Subjects
-                                on lecture.Subject.Id equals subject.Id
-                            select new Lecture() { Professor = professor, Subject = subject, Id = lecture.Id };
+                var query = dbContext.Lectures
+                        .Include(x => x.Professor)
+                        .Include(x => x.Subject);
 
                 if (string.IsNullOrEmpty(index))
                 {
@@ -151,7 +162,7 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
                 return PagedList<Lecture>.ToPagedList(query.Where(l => l.Subject.Name.StartsWith(index)),
         param.PageNumber,
         param.PageSize);
-                
+
 
 
             }
@@ -159,7 +170,7 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             {
                 throw ex;
             }
-           
+
         }
 
         public int GetTotalLecturesNumber(string index)

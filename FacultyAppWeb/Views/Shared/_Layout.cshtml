@@ -14,7 +14,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 myNav">
             <div class="container-fluid">
                 @{
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -86,16 +86,17 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style = "padding-top:5rem; padding-bottom:8rem">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+  
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - FacultyAppWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <footer class="footer text-muted" style = "padding-top:5rem">
+          <div class="logo" style="padding-right:2.5rem; padding-bottom: 3rem">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE5yLBLb00UJ-t1qjT7zxUcsy0rP4L05uP2CVeJcrkTYtL_0ZFJBdph3TzgHOWAjpZmRM&usqp=CAU" style="float:right; right:2.5rem; bottom:3rem">
+          </div>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

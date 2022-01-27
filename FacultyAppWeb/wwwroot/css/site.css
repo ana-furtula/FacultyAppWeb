@@ -2,9 +2,7 @@
 
 html {
     font-size: 14px;
-    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE5yLBLb00UJ-t1qjT7zxUcsy0rP4L05uP2CVeJcrkTYtL_0ZFJBdph3TzgHOWAjpZmRM&usqp=CAU");
-
-   
+    /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE5yLBLb00UJ-t1qjT7zxUcsy0rP4L05uP2CVeJcrkTYtL_0ZFJBdph3TzgHOWAjpZmRM&usqp=CAU");*/
 }
 
 @media (min-width: 768px) {
@@ -14,19 +12,50 @@ html {
 }
 
 
-   
-   
+
+
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     margin-bottom: 60px;
-    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE5yLBLb00UJ-t1qjT7zxUcsy0rP4L05uP2CVeJcrkTYtL_0ZFJBdph3TzgHOWAjpZmRM&usqp=CAU");
-
+    /*background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE5yLBLb00UJ-t1qjT7zxUcsy0rP4L05uP2CVeJcrkTYtL_0ZFJBdph3TzgHOWAjpZmRM&usqp=CAU");*/
 }
+
+.logo img {
+    -moz-transition: transform 1s;
+    -webkit-transition: transform 1s;
+    transition: transform 1s;
+}
+
+    .logo img:hover {
+        transform: rotate(50deg);
+        -moz-transform: rotate(50deg);
+        -webkit-transform: rotate(50deg);
+    }
+
+.ITbooks img:hover {
+    position: relative;
+    top: -10px;
+    left: 20px;
+    width: 400px;
+    height: auto;
+    display: block;
+    z-index: 999;
+}
+
+.myNav {
+    position: fixed;  /*Sticky/fixed navbar */
+    width: 100%;
+    top: 0;
+}
+
+
+
+
 .btn-prevnext {
     display: inline;
     background-color: white;
@@ -38,6 +67,7 @@ body {
     margin-bottom: 10px;
     padding: 3px;
 }
+
 .pgn-el {
     text-decoration: none;
     color: white;
@@ -51,71 +81,85 @@ body {
     padding-top: 4px;
     margin-bottom: 0px !important;
 }
+
 .nav-link:hover {
     background-color: #79c2d0;
     color: white !important;
 }
-.nav-link 
-{ 
-   border-radius:5px;
-   font-weight: 500;
-   font-size: 18px;
-   margin-right: 8px;
 
-   
+.nav-link {
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 18px;
+    margin-right: 8px;
 }
+
 .navbar {
     background-color: #5585b5 !important;
 }
+
 .table {
     background: rgb(255,255,255);
     background: linear-gradient(360deg, rgba(255,255,255,1) 0%, rgba(85,133,181,1) 100%, rgba(9,9,17,0.9476832969515931) 100%);
     border-radius: 10px;
 }
+
 tbody {
     margin: 30px;
 }
+
 .bookLink {
     text-decoration: none;
     color: black;
     font-weight: 400;
     font-size: 30px;
 }
-.bookLink:hover {
-    text-decoration: none;
-    color:darkgray;
 
-}
+    .bookLink:hover {
+        text-decoration: none;
+        color: darkgray;
+    }
+
 .subttl {
     font-style: italic !important;
     color: black !important;
-    font-size:20px;
+    font-size: 20px;
 }
-.form-group{
+
+.form-group {
     display: inline;
     margin-bottom: 2%;
- 
 }
+
 .btn-add {
     color: white;
     background-color: #5585b5 !important;
     border: 1px solid #5585b5;
     border-radius: 5px;
     text-decoration: none;
-
     padding: 8px;
+}
 
+.form-control {
+    margin-left: 10px;
+    /*width: 400px;*/
+    background-color: transparent;
 }
-.form-control{
-    margin-left:10px;
-    width: 400px;
+
+.btn-addER {
+    background-color: #5585b5 !important;
 }
+
+
+
 #editLecture {
-    margin-right:20px;
+    margin-right: 20px;
 }
+
 .pagination {
     margin-left: 8px;
 }
+
 .row {
     display: block;
     margin: 0 auto;
@@ -123,22 +167,22 @@ tbody {
     align-content: center;
     width: 600px;
     margin-top: 50px !important;
-
-    
 }
+
 #account {
     display: block;
     width: 400px;
     margin-left: 8em;
 }
 
-#login-submit{
+#login-submit {
     color: white !important;
     background-color: gray;
 }
+
 #registerSubmit {
     color: white !important;
     background-color: gray;
-    width:400px !important;
-    margin-left:10px;
+    width: 400px !important;
+    margin-left: 10px;
 }

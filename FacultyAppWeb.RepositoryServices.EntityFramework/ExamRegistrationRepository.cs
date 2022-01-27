@@ -1,5 +1,6 @@
 ﻿using FacultyAppWeb.Domains;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,26 +36,11 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            where er.Id == id
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof ?? null,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
+                var query = dbContext.ExamRegistrations
+                            .Include(x => x.Student)
+                            .Include(x => x.Subject)
+                            .Include(x => x.Professor != null ? x.Professor : null)
+                            .Where(x => x.Id == id);
 
                 var exam = query.FirstOrDefault();
                 dbContext.Remove(exam);
@@ -72,14 +58,12 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            where (student.Id == examRegistration.Student.Id && subject.Id == examRegistration.Subject.Id) && (er.Grade == null || er.Grade > 5 || er.IsLocked == false)
-                            select er;
-                return query.Any();
+                var ers = dbContext.ExamRegistrations
+                          .Include(x => x.Student)
+                          .Include(x => x.Subject)
+                          .Where(x => x.Student.Id == examRegistration.Student.Id && x.Subject.Id == examRegistration.Subject.Id && (x.Grade == null || x.IsLocked == false || (x.IsLocked == true && x.Grade > 5)));
+
+                return ers.Any();
             }
             catch (Exception ex)
             {
@@ -91,25 +75,10 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof ?? null,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
+                var query = dbContext.ExamRegistrations
+                            .Include(x => x.Student)
+                            .Include(x => x.Subject)
+                            .Include(x => x.Professor != null ? x.Professor : null);
 
                 return query;
             }
@@ -121,41 +90,26 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
 
         public PagedList<ExamRegistration> GetAll(ExamRegistrationParameters param)
         {
-           return PagedList<ExamRegistration>.ToPagedList((IQueryable<ExamRegistration>)GetAll(),
-        param.PageNumber,
-        param.PageSize);
+            return PagedList<ExamRegistration>.ToPagedList((IQueryable<ExamRegistration>)GetAll(),
+         param.PageNumber,
+         param.PageSize);
         }
 
         public ExamRegistration GetById(long id)
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            where er.Id == id
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof ?? null,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
+                var query = dbContext.ExamRegistrations
+                            .Include(x => x.Student)
+                            .Include(x => x.Subject)
+                            .Include(x => x.Professor != null ? x.Professor : null)
+                            .Where(x => x.Id == id);
 
                 return query.FirstOrDefault();
             }
             catch (Exception ex)
             {
-                throw ex;
+                return null;
             }
         }
 
@@ -163,27 +117,11 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            where subprof!=null && subprof.Id == professorId
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
-
+                var query = dbContext.ExamRegistrations
+                            .Include(x => x.Student)
+                            .Include(x => x.Subject)
+                            .Include(x => x.Professor)
+                            .Where(x => x.Professor.Id == professorId);
                 return query;
             }
             catch (Exception ex)
@@ -196,26 +134,16 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            where string.IsNullOrEmpty(professorName) || (subprof!=null && subprof.FirstName.StartsWith(professorName))
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof ?? null,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
+                if (string.IsNullOrEmpty(professorName))
+                {
+                    return GetAll();
+                }
+
+                var query = dbContext.ExamRegistrations
+                        .Include(x => x.Student)
+                        .Include(x => x.Subject)
+                        .Include(x => x.Professor!=null? x.Professor:null)
+                        .Where(x => x.Professor != null && x.Professor.FirstName.StartsWith(professorName));
 
                 return query;
             }
@@ -229,26 +157,11 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            where student.Id == studentId
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof ?? null,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
+                var query = dbContext.ExamRegistrations
+                        .Include(x => x.Student)
+                        .Include(x => x.Subject)
+                        .Include(x => x.Professor != null ? x.Professor : null)
+                        .Where(x => x.Student.Id == studentId);
 
                 return query;
             }
@@ -262,26 +175,16 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            where string.IsNullOrEmpty(studentIndex) || student.Index.StartsWith(studentIndex)
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof ?? null,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
+                if (string.IsNullOrEmpty(studentIndex))
+                {
+                    return GetAll();
+                }
+
+                var query = dbContext.ExamRegistrations
+                        .Include(x => x.Student)
+                        .Include(x => x.Subject)
+                        .Include(x => x.Professor != null ? x.Professor : null)
+                        .Where(x => x.Student.Index.StartsWith(studentIndex));
 
                 return query;
             }
@@ -295,26 +198,11 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            where string.IsNullOrEmpty(studentIndex) || student.Index.StartsWith(studentIndex)
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof ?? null,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
+                var query = dbContext.ExamRegistrations
+                       .Include(x => x.Student)
+                       .Include(x => x.Subject)
+                       .Include(x => x.Professor != null ? x.Professor : null)
+                       .Where(x => string.IsNullOrEmpty(studentIndex) || x.Student.Index.StartsWith(studentIndex));
 
                 return PagedList<ExamRegistration>.ToPagedList(query,
         param.PageNumber,
@@ -330,26 +218,11 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            where subject.Id == subjectId
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof ?? null,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
+                var query = dbContext.ExamRegistrations
+                        .Include(x => x.Student)
+                        .Include(x => x.Subject)
+                        .Include(x => x.Professor != null ? x.Professor : null)
+                        .Where(x => x.Subject.Id == subjectId);
 
                 return query;
             }
@@ -363,26 +236,16 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            where string.IsNullOrEmpty(subjectName) || subject.Name.StartsWith(subjectName)
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof ?? null,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
+                if (string.IsNullOrEmpty(subjectName))
+                {
+                    return GetAll();
+                }
+
+                var query = dbContext.ExamRegistrations
+                        .Include(x => x.Student)
+                        .Include(x => x.Subject)
+                        .Include(x => x.Professor != null ? x.Professor : null)
+                        .Where(x => x.Subject.Name.StartsWith(subjectName));
 
                 return query;
             }
@@ -396,26 +259,11 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                var query = from er in dbContext.ExamRegistrations
-                            join student in dbContext.Students
-                                on er.Student.Id equals student.Id
-                            join subject in dbContext.Subjects
-                                on er.Subject.Id equals subject.Id
-                            join professor in dbContext.Professors
-                                on er.Professor equals professor into ep
-                            from subprof in ep.DefaultIfEmpty()
-                            where string.IsNullOrEmpty(subjectName) || subject.Name.StartsWith(subjectName)
-                            select new ExamRegistration()
-                            {
-                                Id = er.Id,
-                                Student = student,
-                                Subject = subject,
-                                Professor = subprof ?? null,
-                                ExamDate = er.ExamDate ?? null,
-                                Grade = er.Grade ?? null,
-                                IsLocked = er.IsLocked,
-                                RegistrationDate = er.RegistrationDate
-                            };
+                var query = dbContext.ExamRegistrations
+                         .Include(x => x.Student)
+                         .Include(x => x.Subject)
+                         .Include(x => x.Professor != null ? x.Professor : null)
+                         .Where(x => (string.IsNullOrEmpty(subjectName)) || x.Subject.Name.StartsWith(subjectName));
 
                 return PagedList<ExamRegistration>.ToPagedList(query,
          param.PageNumber,
@@ -429,26 +277,13 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
 
         public int GetTotalRegistrationNumber(string subjectName, string index)
         {
-            var query = from er in dbContext.ExamRegistrations
-                        join student in dbContext.Students
-                            on er.Student.Id equals student.Id
-                        join subject in dbContext.Subjects
-                            on er.Subject.Id equals subject.Id
-                        join professor in dbContext.Professors
-                            on er.Professor equals professor into ep
-                        from subprof in ep.DefaultIfEmpty()
-                        where (string.IsNullOrEmpty(subjectName) || subject.Name.StartsWith(subjectName)) && (string.IsNullOrEmpty(index) || student.Index.StartsWith(index))
-                        select new ExamRegistration()
-                        {
-                            Id = er.Id,
-                            Student = student,
-                            Subject = subject,
-                            Professor = subprof ?? null,
-                            ExamDate = er.ExamDate ?? null,
-                            Grade = er.Grade ?? null,
-                            IsLocked = er.IsLocked,
-                            RegistrationDate = er.RegistrationDate
-                        };
+
+            var query = dbContext.ExamRegistrations
+                        .Include(x => x.Student)
+                        .Include(x => x.Subject)
+                        .Include(x => x.Professor != null ? x.Professor : null)
+                        .Where(x => (string.IsNullOrEmpty(subjectName) || x.Subject.Name.StartsWith(subjectName)) && (string.IsNullOrEmpty(index) || x.Student.Index.StartsWith(index)));
+
             return query.Count();
         }
 

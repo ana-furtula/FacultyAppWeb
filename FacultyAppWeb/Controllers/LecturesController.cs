@@ -33,7 +33,8 @@ namespace FacultyAppWeb.Controllers
         public IActionResult Index([FromQuery] LectureParameters lectureParameters, int pageNumber = 1, string searchTerm = null)
         {
             try
-            {lectureParameters.PageNumber= pageNumber;
+            {
+                lectureParameters.PageNumber= pageNumber;
                 var lectures = lectureRepository.GetLecturesBySubjectName(lectureParameters, searchTerm);
                 LecturesViewModel lecturesViewModel = new()
                 {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FacultyAppWeb.Domains;
 
+
 namespace FacultyAppWeb.Models.Subjects
 {
     public class SubjectsViewModel
@@ -12,6 +13,7 @@ namespace FacultyAppWeb.Models.Subjects
         public string MessageSuccess { get; set; }
         [TempData]
         public string MessageError { get; set; }
+        
 
     }
 }

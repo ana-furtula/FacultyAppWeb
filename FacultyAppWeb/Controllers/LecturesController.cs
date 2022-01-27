@@ -148,7 +148,6 @@ namespace FacultyAppWeb.Controllers
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex);
                 return RedirectToAction(nameof(HomeController.Error));
             }
 

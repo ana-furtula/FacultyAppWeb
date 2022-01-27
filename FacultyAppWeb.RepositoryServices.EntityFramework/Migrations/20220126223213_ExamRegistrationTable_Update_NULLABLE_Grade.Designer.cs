@@ -4,6 +4,7 @@ using FacultyAppWeb.RepositoryServices.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
 {
     [DbContext(typeof(FacultyContext))]
-    partial class FacultyContextModelSnapshot : ModelSnapshot
+    [Migration("20220126223213_ExamRegistrationTable_Update_NULLABLE_Grade")]
+    partial class ExamRegistrationTable_Update_NULLABLE_Grade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

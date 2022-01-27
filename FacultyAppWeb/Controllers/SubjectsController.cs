@@ -23,6 +23,34 @@ namespace FacultyAppWeb.Controllers
             this.subjectRepository = subjectRepository;
         }
 
+        [HttpGet]
+        public JsonResult GetMethod()
+        {
+            var subjects = subjectRepository.GetSubjectsByName("").ToList();
+            List<ChartData> data = new();
+            foreach(var subject in subjects)
+            {
+                //int failed = subjectRepository.getNumberOfFailedExams(subject.Id);
+                int passed = subjectRepository.getNumberOfPassedExams(subject.Id);
+                int total = subjectRepository.getTotalNumberOfGradedExams(subject.Id);
+                double percent;
+                if (total != 0)
+                {
+                    percent = ((double)passed / total) * 100;
+                }
+                else
+                {
+                    percent = 0;
+                }
+
+                data.Add(new ChartData() {
+                    Name = subject.Name,
+                    PassedPercent = percent
+                });
+            }
+            return Json(data.ToArray());
+        }
+
         [HttpGet("subjects")]
         public IActionResult Index([FromQuery] SubjectParameters subjectParameters, int pageNumber = 1, string searchTerm = null)
         {

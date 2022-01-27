@@ -341,5 +341,20 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
                 Connection?.Close();
             }
         }
+
+        public int getNumberOfPassedExams(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getNumberOfFailedExams(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getTotalNumberOfGradedExams(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -22,5 +22,8 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         Subject Add(Subject subject);
         Subject Delete(long id);
         int GetTotalSubjectNumber(string index);
+        int getNumberOfPassedExams(long id);
+        int getNumberOfFailedExams(long id);
+        int getTotalNumberOfGradedExams(long id);
     }
 }

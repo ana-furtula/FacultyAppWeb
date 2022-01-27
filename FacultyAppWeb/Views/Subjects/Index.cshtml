@@ -45,13 +45,13 @@
     }
 }
 <div class="pagination" style="padding:1rem 1rem 1rem 1rem">
-        @for (var i = 1; i <=  (int) Math.Ceiling(@Model.TotalSubjectNumber/(double) 3); i++)
-        {
-          <a class="pgn-el"  asp-route-pageNumber=@i  asp-route-searchTerm=@Model.SearchTerm asp-area="" asp-controller="Subjects" asp-action="Index">@i</a>
-         
+    @for (var i = 1; i <= (int)Math.Ceiling(@Model.TotalSubjectNumber / (double)3); i++)
+    {
+        <a class="pgn-el" asp-route-pageNumber=@i asp-route-searchTerm=@Model.SearchTerm asp-area="" asp-controller="Subjects" asp-action="Index">@i</a>
 
-        }
-                </div>
+
+    }
+</div>
 
 <table class="table" style="vertical-align: middle;">
     <thead>
@@ -59,7 +59,7 @@
             <th>Name</th>
             <th>ESPB</th>
             <th>Semester</th>
-            <th></th> 
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -96,55 +96,61 @@
 
 @section Scripts
 {
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
 
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawChart);
+    // Set a callback to run when the Google Visualization API is loaded.
+    //google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
+    let chartData;
 
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Subject');
-        
-        data.addColumn('number', 'Passed');
-        data.addRows([
-          ['EPOS', 30],
-          ['Prog. jezici', 15],
-          ['ITEH', 19],
-          ['Proj. softvera', 18],
-          ['Baze podataka', 20]
-         
-        ]);
-   
-    
-       
-         
-         
-       
+    $(document).ready(function() {
+      $.get('Subjects/GetMethod')
+       .done(function (response) {
+           chartData = response;
+           console.log(chartData)
+           if(chartData){
+               drawChart();
+           }
+       })
+    });
 
-        // Set chart options
-        var options = {'title':'Percent of passed exams',
-                       'width':600,
-                       'height':500,
-                   };
 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
-        chart.draw(data, options);
+    function drawChart() {
+
+      // Create the data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Subject');
+
+      data.addColumn('number', 'Passed');
+      for(var i = 0; i < chartData.length; i++) {
+        var obj = chartData[i];
+        data.addRow(
+        [obj.name, obj.passedPercent],
+      );
       }
 
 
+      // Set chart options
+      var options = {'title':'Percent of passed exams',
+                     'width':600,
+                     'height':500,
+                 };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
+      chart.draw(data, options);
+    }
 
 
-    </script>
+
+
+</script>
 
 }
- 
 
- 
+

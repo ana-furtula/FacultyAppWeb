@@ -1,5 +1,6 @@
 ﻿using FacultyAppWeb.Domains;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,6 +131,51 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public int getNumberOfPassedExams(long id)
+        {
+            try
+            {
+                int num = dbContext.ExamRegistrations
+                          .Include(x => x.Subject)
+                          .Where(x => x.Subject.Id == id && x.Grade!=null && x.Grade>5).Count();
+                return num;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public int getNumberOfFailedExams(long id)
+        {
+            try
+            {
+                int num = dbContext.ExamRegistrations
+                          .Include(x => x.Subject)
+                          .Where(x => x.Subject.Id == id && x.Grade != null && x.Grade == 5).Count();
+                return num;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public int getTotalNumberOfGradedExams(long id)
+        {
+            try
+            {
+                int num = dbContext.ExamRegistrations
+                          .Include(x => x.Subject)
+                          .Where(x => x.Subject.Id == id && x.Grade != null).Count();
+                return num;
+            }
+            catch (Exception ex)
+            {
+                return 0;
             }
         }
     }

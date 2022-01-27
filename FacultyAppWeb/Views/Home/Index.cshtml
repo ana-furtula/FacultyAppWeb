@@ -14,24 +14,26 @@
     else
     {
         <h1 style="text-align:center;">The newest IT books</h1>
-        <table class="table" style="vertical-align: middle;">
+       <table class="table" style="vertical-align: middle;">
             <tbody>
                 @foreach (var book in Model)
                 {
                     <tr>
-                        <td> <img src="@book.Image" alt="" style="width:80%; height:auto"></img></td>
+                        <td> <img src="@book.Image" alt="" style="width:250px; height:250px"></img></td>
                         <td >
                             <div style="font:700; font-size:x-large">
-                                <a href="@book.Url">@book.Title</a>
+                                <a class="bookLink" href="@book.Url">@book.Title</a>
                             </div>
-                            <div style="font:700; font-size:larger">
+                            <div  class="subttl">
                             @book.Subtitle
                             </div>
                         </td>
                     </tr>
+                    
+                 
                 }
             </tbody>
-        </table>
+        </table> 
 
     }
 

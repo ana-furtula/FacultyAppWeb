@@ -11,6 +11,8 @@ namespace FacultyAppWeb.Models.Students
         public string Index { get; set; }
         public string JMBG { get; set; }
         public string Email { get; set; }
+        public List<ExamRegistration> PassedExams { get; set; }
+        public List<ExamRegistration> FailedExams { get; set; }
         [TempData]
         public string MessageSuccess { get; set; }
         [TempData]

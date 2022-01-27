@@ -19,5 +19,7 @@ namespace FacultyAppWeb.RepositoryServices.Interfaces
         Student GetStudentByJMBG(string JMBG);
         Student Delete(long id);
         int GetStudentsNumber(string searchTerm);
+        IEnumerable<ExamRegistration> GetFailedExams(long id);
+        IEnumerable<ExamRegistration> GetPassedExams(long id);
     }
 }

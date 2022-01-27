@@ -120,6 +120,9 @@ namespace FacultyAppWeb.Controllers
                 if (student == null)
                     return RedirectToAction(nameof(HomeController.Error));
 
+                var studentsPassedExams = studentRepository.GetPassedExams(student.Id).ToList();
+                var studentsFailedExams = studentRepository.GetFailedExams(student.Id).ToList();
+
                 return View(new DetailsStudentViewModel()
                 {
                     Id = student.Id,
@@ -128,6 +131,8 @@ namespace FacultyAppWeb.Controllers
                     Index = student.Index,
                     JMBG = student.JMBG,
                     Email = student.Email,
+                    PassedExams = studentsPassedExams!=null?studentsPassedExams.ToList():new List<ExamRegistration>(),
+                    FailedExams = studentsFailedExams!=null?studentsFailedExams.ToList():new List<ExamRegistration>(),
                     MessageSuccess = MessageSuccess,
                     MessageError = MessageError
                 });
@@ -138,7 +143,6 @@ namespace FacultyAppWeb.Controllers
             }
             return RedirectToAction(nameof(HomeController.Error));
         }
-
 
         [HttpGet("editStudent")]
         [Authorize(Roles = "Admin")]

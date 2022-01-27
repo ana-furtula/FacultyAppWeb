@@ -1,5 +1,6 @@
 ﻿using FacultyAppWeb.Domains;
 using FacultyAppWeb.RepositoryServices.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace FacultyAppWeb.RepositoryServices.EntityFramework
@@ -140,6 +141,24 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
 
           
            
+        }
+
+        public IEnumerable<ExamRegistration> GetFailedExams(long id)
+        {
+            return dbContext.ExamRegistrations
+                   .Include(x => x.Student)
+                   .Include(x => x.Subject)
+                   .Include(x => x.Professor)
+                   .Where(x => x.Student.Id == id && x.IsLocked == true && x.Grade == 5);
+        }
+
+        public IEnumerable<ExamRegistration> GetPassedExams(long id)
+        {
+            return dbContext.ExamRegistrations
+                   .Include(x => x.Student)
+                   .Include(x => x.Subject)
+                   .Include(x => x.Professor)
+                   .Where(x => x.Student.Id == id && x.IsLocked == true && x.Grade > 5);
         }
     }
 }

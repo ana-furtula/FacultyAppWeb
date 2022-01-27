@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<div style="float:right; padding-top:2rem">
+<div style="float:right; padding-top:2rem; padding-bottom:7rem">
     @{
         if (Context.HasRole("Admin"))
         {
@@ -66,3 +66,71 @@
         }
     }
 </div>
+
+<div style="padding-bottom:7rem;">
+    <h3 style="margin-top:10rem">Passed exams</h3>
+    <table id="tablePassed" class="display" style="padding-top:3rem">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>ESPB</th>
+                <th>Grade</th>
+                <th>Exam date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.PassedExams)
+                {
+                    <tr>
+                        <td>@item.Subject.Name</td>
+                        <td>@item.Subject.ESPB</td>
+                        <td>@item.Grade</td>
+                        <td>@item.ExamDate</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h3>Failed exams</h3>
+    <table id="tableFailed" class="display" style="padding-top:3rem">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>ESPB</th>
+                <th>Grade</th>
+                <th>Exam date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.FailedExams)
+                {
+                    <tr>
+                        <td>@item.Subject.Name</td>
+                        <td>@item.Subject.ESPB</td>
+                        <td>@item.Grade</td>
+                        <td>@item.ExamDate</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('#tablePassed').DataTable();
+        $('#tableFailed').DataTable();
+    });
+</script>
+
+}

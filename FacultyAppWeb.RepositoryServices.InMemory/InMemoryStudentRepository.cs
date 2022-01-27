@@ -90,5 +90,15 @@ namespace FacultyAppWeb.RepositoryServices.InMemory
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<ExamRegistration> GetFailedExams(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ExamRegistration> GetPassedExams(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -274,5 +274,15 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<ExamRegistration> GetFailedExams(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ExamRegistration> GetPassedExams(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace FacultyAppWeb.Domains
     [Index(nameof(Email), IsUnique = true)]
     public class Professor : Person
     {
+
         [Required]
         public long Id { get; set; }
 

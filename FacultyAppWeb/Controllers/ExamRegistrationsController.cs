@@ -43,22 +43,32 @@ namespace FacultyAppWeb.Controllers
             {
                 var userEmail = User.FindFirstValue(ClaimTypes.Name);
                 Professor professor = null;
+                Student student = null;
                 List<Subject> subjects = null;
+                examParameters.PageNumber = pageNumber;
                 professor = professorRepository.GetProfessorsByName("").Where(p => p.Email.Equals(userEmail)).FirstOrDefault();
+                PagedList<ExamRegistration> ers;
+                int total;
                 if (professor != null)
                 {
-                    subjects = lectureRepository.GetSubjectsForProfessor(professor)!=null ? lectureRepository.GetSubjectsForProfessor(professor).ToList(): new List<Subject>();
+                    var profSubjects = lectureRepository.GetSubjectsForProfessor(professor);
+                    subjects = profSubjects != null ? profSubjects.ToList(): new List<Subject>();
+                    ers = examRegistrationRepository.GetAllForProfessor(examParameters, searchTermSubject, searchTermStudent, subjects, out total);
                 }
-                examParameters.PageNumber = pageNumber;
-                var ers = examRegistrationRepository.GetAll(examParameters);
+                else if(student!=null){
+                    ers = examRegistrationRepository.GetAllForStudent(examParameters, searchTermSubject, student, out total);
+                }
+                else
+                {
+                    ers = examRegistrationRepository.GetAll(examParameters, searchTermSubject, searchTermStudent, out total);
+                }
+
                 ExamRegistrationsViewModel ersViewModel = new()
                 {
                     SearchTermStudent = searchTermStudent,
-                    TotalRegistrationNumber = examRegistrationRepository.GetTotalRegistrationNumber(searchTermSubject, searchTermStudent),
-                    
+                    TotalRegistrationNumber = total,
                     SearchTermSubject = searchTermSubject,
-                    
-                    ExamRegistrations = ers.Any() ? ers.Where(er => (searchTermStudent == null || er.Student.Index.ToLower().StartsWith(searchTermStudent.ToLower())) &&  (searchTermSubject == null || er.Subject.Name.ToLower().StartsWith(searchTermSubject.ToLower()))).OrderBy(er => er.IsLocked).ToList() : null,
+                    ExamRegistrations = ers.Any() ? ers.ToList() : null,
                     CurrentUserEmail = userEmail,
                     Subjects = subjects,
                     MessageSuccess = MessageSuccess,

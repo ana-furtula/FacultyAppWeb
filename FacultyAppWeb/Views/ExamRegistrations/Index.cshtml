@@ -55,13 +55,13 @@
     {
         <div class="pagination" style="margin-top:10px; margin-bottom: 10px;">
 
-        @for (var i = 1; i <=  (int)Math.Ceiling( @Model.TotalRegistrationNumber/(double)3); i++)
-        {
-          <a class="pgn-el"  asp-route-pageNumber=@i asp-route-searchTermSubject=@Model.SearchTermSubject  asp-route-searchTermStudent=@Model.SearchTermStudent asp-area="" asp-controller="ExamRegistrations" asp-action="Index">@i</a>
-         
-        }
+            @for (var i = 1; i <= (int)Math.Ceiling(@Model.TotalRegistrationNumber / (double)3); i++)
+            {
+                <a class="pgn-el" asp-route-pageNumber=@i asp-route-searchTermSubject=@Model.SearchTermSubject asp-route-searchTermStudent=@Model.SearchTermStudent asp-area="" asp-controller="ExamRegistrations" asp-action="Index">@i</a>
 
-    </div>
+            }
+
+        </div>
         <table class="table" style="vertical-align: middle;">
             <thead>
                 <tr>
@@ -83,21 +83,6 @@
 
                     foreach (var er in Model.ExamRegistrations)
                     {
-                        if (Context.HasRole("Professor"))
-                        {
-                            bool signal = false;
-                            foreach (var subject in Model.Subjects)
-                            {
-                                if (subject.Id == er.Subject.Id)
-                                {
-                                    signal = true;
-                                    break;
-                                }
-                            }
-                            if (!signal)
-                                continue;
-
-                        }
                         <tr>
                             <td>@er.Student.Index</td>
                             <td>@(er.Student.FirstName + " " + er.Student.LastName)</td>
@@ -190,59 +175,56 @@
                 {
                     foreach (var er in Model.ExamRegistrations)
                     {
-                        if (er.Student.Email.Equals(Model.CurrentUserEmail))
-                        {
-                            <tr>
-                                <td>@er.Subject.Name</td>
-                                <td>@er.Subject.ESPB</td>
-                                <td>@er.Subject.Semester</td>
-                                @{
-                                    if (er.Professor != null)
-                                    {
-                                        <td>@(er.Professor.FirstName + " " + er.Professor.LastName)</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
+                        <tr>
+                            <td>@er.Subject.Name</td>
+                            <td>@er.Subject.ESPB</td>
+                            <td>@er.Subject.Semester</td>
+                            @{
+                                if (er.Professor != null)
+                                {
+                                    <td>@(er.Professor.FirstName + " " + er.Professor.LastName)</td>
                                 }
-                                @{
-                                    if (er.Grade != null)
-                                    {
-                                        <td>@er.Grade</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
+                                else
+                                {
+                                    <td></td>
                                 }
-                                <td>@er.RegistrationDate.ToShortDateString()</td>
-                                @{
-                                    if (er.ExamDate != null)
-                                    {
-                                        <td>@er.ExamDate.Value.ToShortDateString()</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
+                            }
+                            @{
+                                if (er.Grade != null)
+                                {
+                                    <td>@er.Grade</td>
                                 }
-                                <td>
-                                    <div style="display:inline-flex">
-                                        @{
-                                            if (!er.IsLocked && er.Grade==null)
-                                            {
-                                                <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Delete">
-                                                    <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
-                                                </a>
-
-                                            }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            <td>@er.RegistrationDate.ToShortDateString()</td>
+                            @{
+                                if (er.ExamDate != null)
+                                {
+                                    <td>@er.ExamDate.Value.ToShortDateString()</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            <td>
+                                <div style="display:inline-flex">
+                                    @{
+                                        if (!er.IsLocked && er.Grade == null)
+                                        {
+                                            <a class="form-control" style="border:none" asp-area="" asp-route-id="@er.Id" asp-controller="ExamRegistrations" asp-action="Delete">
+                                                <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
+                                            </a>
 
                                         }
-                                    </div>
-                                </td>
-                            </tr>
-                        }
+
+                                    }
+                                </div>
+                            </td>
+                        </tr>
 
                     }
                 }

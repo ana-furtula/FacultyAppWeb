@@ -88,9 +88,29 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
             }
         }
 
-        public PagedList<ExamRegistration> GetAll(ExamRegistrationParameters param)
+        private IEnumerable<ExamRegistration> GetAll(string searchTermSubject, string searchTermStudent)
         {
-            return PagedList<ExamRegistration>.ToPagedList((IQueryable<ExamRegistration>)GetAll(),
+            try
+            {
+                var query = dbContext.ExamRegistrations
+                            .Include(x => x.Student)
+                            .Include(x => x.Subject)
+                            .Include(x => x.Professor != null ? x.Professor : null)
+                            .Where(x => (searchTermStudent == null || x.Student.Index.ToLower().StartsWith(searchTermStudent.ToLower())) && (searchTermSubject == null || x.Subject.Name.ToLower().StartsWith(searchTermSubject.ToLower())));
+
+                return query;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public PagedList<ExamRegistration> GetAll(ExamRegistrationParameters param, string searchTermSubject, string searchTermStudent, out int number)
+        {
+            var all = GetAll(searchTermSubject, searchTermStudent);
+            number = all != null ? all.Count() : 0;
+            return PagedList<ExamRegistration>.ToPagedList((IQueryable<ExamRegistration>)all,
          param.PageNumber,
          param.PageSize);
         }
@@ -142,7 +162,7 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
                 var query = dbContext.ExamRegistrations
                         .Include(x => x.Student)
                         .Include(x => x.Subject)
-                        .Include(x => x.Professor!=null? x.Professor:null)
+                        .Include(x => x.Professor != null ? x.Professor : null)
                         .Where(x => x.Professor != null && x.Professor.FirstName.StartsWith(professorName));
 
                 return query;
@@ -309,6 +329,77 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
                 dbContext.Update(er);
                 dbContext.SaveChanges();
                 return er;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public PagedList<ExamRegistration> GetAllForProfessor(ExamRegistrationParameters param, string searchTermSubject, string searchTermStudent, List<Subject> subjects, out int number)
+        {
+            try
+            {
+                var all = GetAllForProfessor(searchTermSubject, searchTermStudent, subjects);
+                number = all != null ? all.Count() : 0;
+                return PagedList<ExamRegistration>.ToPagedList((IQueryable<ExamRegistration>)all, param.PageNumber, param.PageSize);
+            }
+            catch (Exception ex)
+            {
+                number = 0;
+                throw ex;
+            }
+
+        }
+
+        private IEnumerable<ExamRegistration> GetAllForProfessor(string searchTermSubject, string searchTermStudent, List<Subject> subjects)
+        {
+            try
+            {
+                var query = dbContext.ExamRegistrations
+                            .Include(x => x.Student)
+                            .Include(x => x.Subject)
+                            .Include(x => x.Professor != null ? x.Professor : null)
+                            .Where(x => subjects.Contains(x.Subject) && (searchTermStudent == null || x.Student.Index.ToLower().StartsWith(searchTermStudent.ToLower())) && (searchTermSubject == null || x.Subject.Name.ToLower().StartsWith(searchTermSubject.ToLower())));
+
+
+                return query;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public PagedList<ExamRegistration> GetAllForStudent(ExamRegistrationParameters param, string searchTermSubject, Student student, out int number)
+        {
+            try
+            {
+                var all = GetAllForStudent(searchTermSubject, student);
+                number = all != null ? all.Count() : 0;
+                return PagedList<ExamRegistration>.ToPagedList((IQueryable<ExamRegistration>)all, param.PageNumber, param.PageSize);
+            }
+            catch (Exception ex)
+            {
+                number = 0;
+                throw ex;
+            }
+        }
+
+        private IEnumerable<ExamRegistration> GetAllForStudent(string searchTermSubject, Student student)
+        {
+            try
+            {
+                var query = dbContext.ExamRegistrations
+                            .Include(x => x.Student)
+                            .Include(x => x.Subject)
+                            .Include(x => x.Professor != null ? x.Professor : null)
+                            .Where(x => x.Student.Id == student.Id && (searchTermSubject == null || x.Subject.Name.ToLower().StartsWith(searchTermSubject.ToLower())));
+
+
+                return query;
+
             }
             catch (Exception ex)
             {

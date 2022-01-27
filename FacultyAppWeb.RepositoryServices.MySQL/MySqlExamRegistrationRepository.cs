@@ -793,7 +793,7 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
             }
         }
 
-        public PagedList<ExamRegistration> GetAll(ExamRegistrationParameters param)
+        public PagedList<ExamRegistration> GetAll(ExamRegistrationParameters param, string SearchTermSubject, string SearchTermStudent)
         {
             throw new NotImplementedException();
         }
@@ -809,6 +809,21 @@ namespace FacultyAppWeb.RepositoryServices.MySQL
         }
 
         public int GetTotalRegistrationNumber(string subjectName, string index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PagedList<ExamRegistration> GetAllForProfessor(ExamRegistrationParameters examParameters, string searchTermSubject, string searchTermStudent, List<Subject> subjects, out int total)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PagedList<ExamRegistration> GetAll(ExamRegistrationParameters param, string searchTermSubject, string searchTermStudent, out int total)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PagedList<ExamRegistration> GetAllForStudent(ExamRegistrationParameters examParameters, string searchTermSubject, Student student, out int total)
         {
             throw new NotImplementedException();
         }

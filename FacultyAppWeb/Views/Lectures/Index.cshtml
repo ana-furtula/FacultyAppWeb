@@ -30,7 +30,7 @@
         <div style="display: inline-block;vertical-align: middle;">
             <input type="search" class="form-control" name="searchTerm" value="@Model.SearchTerm" placeholder="Subject name" />
         </div>
-        <button style="border:none; background-color:white; display: inline-block;vertical-align: middle;">
+        <button style="border:none; background-color:white; display: inline-block;vertical-align: middle; ">
             <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" title="Search"></i>
         </button>
 
@@ -42,7 +42,7 @@
     if (Context.HasRole("Admin"))
     {
         <div class="float-end" style="padding:1rem 1rem 1rem 1rem">
-            <a class="btn btn-primary" asp-controller="Lectures" asp-action="Create">
+            <a class="btn-add" asp-controller="Lectures" asp-action="Create">
                 Add new
             </a>
         </div>
@@ -60,7 +60,7 @@
 
 
 <table class="table" style="vertical-align: middle;">
-    <thead style="background-color: lightgray">
+    <thead >
         <tr>
             <th>First name</th>
             <th>Last name</th>
@@ -86,10 +86,11 @@
                     <td>
                         @{
                             if (Context.HasRole("Admin"))
-                            {
-                                <a class="form-control" style="border:none" asp-area="" asp-route-id="@lecture.Id" asp-controller="Lectures" asp-action="Delete">
-                                    <i class="bi bi-x-circle-fill" style="color: red; font-size: 2rem;" title="Delete"></i>
+                            { <div style="display:inline-flex">
+                                <a class="form-control" style="border:none; width:57px;" asp-area="" asp-route-id="@lecture.Id" asp-controller="Lectures" asp-action="Delete">
+                                    <i id="editLecture" class="bi bi-x-circle-fill" style="color: red; font-size: 2rem;" title="Delete"></i>
                                 </a>
+                                </div>
                             }
                         }
 

@@ -53,7 +53,7 @@
 @{
     if (Context.HasRole("Admin") || Context.HasRole("Professor"))
     {
-        <div class="pagination">
+        <div class="pagination" style="margin-top:10px; margin-bottom: 10px;">
 
         @for (var i = 1; i <=  (int)Math.Ceiling( @Model.TotalRegistrationNumber/(double)3); i++)
         {

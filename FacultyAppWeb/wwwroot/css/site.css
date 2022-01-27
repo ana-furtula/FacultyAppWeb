@@ -8,10 +8,14 @@ html {
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
+
+
+   
+   
 
 html {
   position: relative;
@@ -37,8 +41,8 @@ body {
 .pgn-el {
     text-decoration: none;
     color: white;
-    background-color: #0d6efd;
-    border: 1px solid #0d6efd;
+    background-color: #5585b5;
+    border: 1px solid #5585b5;
     width: 35px;
     height: 35px;
     margin-right: 8px;
@@ -86,4 +90,55 @@ tbody {
     font-style: italic !important;
     color: black !important;
     font-size:20px;
+}
+.form-group{
+    display: inline;
+    margin-bottom: 2%;
+ 
+}
+.btn-add {
+    color: white;
+    background-color: #5585b5 !important;
+    border: 1px solid #5585b5;
+    border-radius: 5px;
+    text-decoration: none;
+
+    padding: 8px;
+
+}
+.form-control{
+    margin-left:10px;
+    width: 400px;
+}
+#editLecture {
+    margin-right:20px;
+}
+.pagination {
+    margin-left: 8px;
+}
+.row {
+    display: block;
+    margin: 0 auto;
+    background-color: #5585b5;
+    align-content: center;
+    width: 600px;
+    margin-top: 50px !important;
+
+    
+}
+#account {
+    display: block;
+    width: 400px;
+    margin-left: 8em;
+}
+
+#login-submit{
+    color: white !important;
+    background-color: gray;
+}
+#registerSubmit {
+    color: white !important;
+    background-color: gray;
+    width:400px !important;
+    margin-left:10px;
 }

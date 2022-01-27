@@ -40,8 +40,8 @@
 @{
     if (Context.HasRole("Admin"))
     {
-        <div class="float-end" style="padding:1rem 1rem 1rem 1rem">
-            <a class="btn btn-primary" asp-controller="Professors" asp-action="Create">
+        <div class="float-end" style=" padding:1rem 1rem 1rem 1rem;">
+            <a class="btn-add" asp-controller="Professors" asp-action="Create">
                 Add new
             </a>
         </div>
@@ -59,7 +59,7 @@
 
 
 <table class="table" style="vertical-align: middle;">
-    <thead style="background-color: lightgray">
+    <thead >
         <tr>
             <th>First name</th>
             <th>Last name</th>

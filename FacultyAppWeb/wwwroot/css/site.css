@@ -10,7 +10,25 @@ html {
         font-size: 16px;
     }
 }
+@media (max-width: 900px) {
+    .card {
+        width: 25rem !important;
+        margin: auto !important;
+        align-self:center;
+    }
+    .course-cards {
+        display: block !important;
+        position:center !important;
+        margin: auto !important;
+        align-items: center;
+        align-content: center;
+        text-align:center;
 
+
+
+    }
+   
+}
 
 
 
@@ -22,6 +40,8 @@ html {
 
 body {
     margin-bottom: 60px;
+    margin-left:20px;
+    margin-right: 20px;
     /*background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE5yLBLb00UJ-t1qjT7zxUcsy0rP4L05uP2CVeJcrkTYtL_0ZFJBdph3TzgHOWAjpZmRM&usqp=CAU");*/
 }
 
@@ -186,3 +206,14 @@ tbody {
     width: 400px !important;
     margin-left: 10px;
 }
+.course-cards{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    margin-left:0 px;
+    margin-right: 0px;
+}
+#courses-card:hover {
+    zoom:101%;
+    box-shadow: 0 8px 10px 0 rgba(0,0,0,0.2);
+}
+

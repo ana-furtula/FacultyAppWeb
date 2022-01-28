@@ -1,0 +1,66 @@
+﻿
+    @{
+    ViewData["Title"] = "Courses";
+}
+
+@model List<Course>
+
+
+@{
+    if (Model == null)
+    {
+        <div class="text-center">
+            <h1 class="display-4">Faculty Web Application</h1>
+        </div>
+    }
+    else
+    {
+       
+        <h1 style="text-align:center;">Hind the best one for you!</h1>
+        <div class="choose-category">
+
+      </div>
+      <form method="get" asp-controller="Courses"  style="padding-bottom:0.5rem;">
+    <div class="form-group" style="text-align: center;">
+        <div style="display: inline-block;vertical-align: middle;">
+            <input type="search" class="form-control" name="searchTerm" value="@Course.SearchTerm" placeholder="Course name" />
+        </div>
+        <button style="border:none; background-color:white; display: inline-block;vertical-align: middle;">
+            <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" asp-route-searchTerm=@Course.SearchTerm  title="Search"></i>
+        </button>
+    </div>
+     <button style="border:1px solid #73ebbb; margin-left:10px; width:100px; color:white; border-radius:5px; background-color:#73ebbb; display: inline-block;vertical-align: middle;" asp-route-searchTerm="" >
+            Reset </button>
+     </form>
+     
+
+
+        <div class="course-cards">
+       
+                @foreach (var course in Model)
+                {
+                     <div class="card" id="courses-card" style="width: 17rem; margin : 10px;">
+                        <img class="card-img-top" src="@course.Thumbnail" alt="Card image cap" style="margin: 5px;">
+                           <div class="card-body">
+                                <h5 class="card-title" style="margin-bottom: 10px; height:90px;">@course.Title</h5>
+                                <p class="card-text" style="margin-bottom: 10px;  height:120px;">@course.Description</p>
+                                <h3 style="color: red; margin-bottom :30px;"class="mb-0 font-weight-semibold">Original price @course.Original_price</h3>
+                                <h5 style="color: green; margin-top : 10px; height:50px;"class="mb-0 font-weight-semibold">Coupon code @course.Coupon_code</h5>
+                               
+                                <p class="card-text"><small class="text-muted" >Last updated: @course.Last_updated</small></p>
+                                <a href="@course.Url" class="btn btn-primary">Go to course</a>
+                            </div>
+                    </div>
+                    
+                 
+                }
+        </div>
+ 
+
+    }
+
+}
+
+
+
+

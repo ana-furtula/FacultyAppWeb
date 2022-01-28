@@ -52,12 +52,16 @@
                                             <a class="form-control" style="border:none" asp-area="" asp-route-email="@Context.GetEmail()" asp-controller="Students" asp-action="Details">
                                                 <i class="bi bi-file-person-fill" style="color: cornflowerblue; font-size: 1.5rem " title="Details"></i>
                                             </a>
+                                          
                                         </li>
                                     }
 
                                 }
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Subjects" asp-action="Index">Subjects</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="Index">Popular Courses</a>
                                 </li>
 
                                 <li class="nav-item">

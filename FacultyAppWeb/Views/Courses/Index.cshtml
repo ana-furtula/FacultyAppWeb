@@ -5,6 +5,7 @@
 
 @model List<Course>
 
+
 @{
     if (Model == null)
     {
@@ -19,6 +20,18 @@
         <div class="choose-category">
 
       </div>
+      <form method="get" asp-controller="Courses"  style="padding-bottom:0.5rem;">
+    <div class="form-group" style="text-align: center;">
+        <div style="display: inline-block;vertical-align: middle;">
+            <input type="search" class="form-control" name="searchTerm" value="@Course.SearchTerm" placeholder="Course name" />
+        </div>
+        <button style="border:none; background-color:white; display: inline-block;vertical-align: middle;">
+            <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" asp-route-searchTerm=@Course.SearchTerm  title="Search"></i>
+        </button>
+    </div>
+     <button style="border:1px solid #73ebbb; margin-left:10px; width:100px; color:white; border-radius:5px; background-color:#73ebbb; display: inline-block;vertical-align: middle;" asp-route-searchTerm="" >
+            Reset </button>
+     </form>
      
 
 
@@ -26,17 +39,6 @@
        
                 @foreach (var course in Model)
                 {
-                    /*<tr>
-                        <td> <img src="@course.Thumbnail" alt="" style="width:250px; height:250px"></img></td>
-                        <td >
-                            <div style="font:700; font-size:x-large">
-                                <a class="bookLink" href="@course.Url">@course.Title</a>
-                            </div>
-                            <div  class="subttl">
-                            @course.Description
-                            </div>
-                        </td>
-                    </tr>*/
                      <div class="card" id="courses-card" style="width: 17rem; margin : 10px;">
                         <img class="card-img-top" src="@course.Thumbnail" alt="Card image cap" style="margin: 5px;">
                            <div class="card-body">

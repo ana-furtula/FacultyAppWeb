@@ -43,7 +43,7 @@ namespace FacultyAppWeb.Controllers
              return View();
          }*/
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm = null)
         {
             List<Course> courses = new List<Course>();
 
@@ -70,7 +70,22 @@ namespace FacultyAppWeb.Controllers
                     foreach (var course in coursesJSON)
                     {
                         courses.Add(course);
-                    } 
+                    }
+                    if (string.IsNullOrEmpty(searchTerm))
+                        return View(courses);
+                    else
+                    { List<Course> newList= new List<Course>();
+                        foreach (var course in courses)
+                        {
+                            if (course.Title.ToLower().Contains(searchTerm.ToLower()))
+                            {
+                                newList.Add(course);
+                            }
+                        }
+                        return View(newList);
+                    }
+
+
                 }
 
             }

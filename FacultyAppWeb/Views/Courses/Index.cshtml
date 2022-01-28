@@ -29,9 +29,37 @@
             <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" asp-route-searchTerm=@Course.SearchTerm  title="Search"></i>
         </button>
     </div>
-     <button style="border:1px solid #73ebbb; margin-left:10px; width:100px; color:white; border-radius:5px; background-color:#73ebbb; display: inline-block;vertical-align: middle;" asp-route-searchTerm="" >
+     <button style="border:1px solid #73ebbb; margin-left:10px; margin-bottom: 8px; width:100px; color:white; border-radius:5px; background-color:#73ebbb; display: inline-block;vertical-align: middle;" asp-route-searchTerm="" >
             Reset </button>
-     </form>
+            <select id="searchByCategory" style="display: inline; margin-top:3px;  margin-left:30px;">
+
+            
+                @{
+                    <option name="All">All</option>
+                    List<string> categories = new List<string>();
+                    var i = 1;
+                    @foreach(var course in @Model)
+                {
+                        @foreach (var cat in course.Category)
+                        {
+                            if(!categories.Contains(cat))
+                            {
+                                categories.Add(cat);
+                            }
+                        }
+                  
+                    
+                }
+                    @foreach(var ctgry in categories)
+                    {
+                        <option name=@ctgry value="@Course.SearchCategory">@ctgry</option>
+                    }
+               } 
+            </select>
+            <button style="border:1px solid #73ebbb; margin-left:10px; margin-bottom: 8px; width:100px; color:white; border-radius:5px; background-color:#73ebbb; display: inline-block;vertical-align: middle;" asp-route-searchTerm="@Course.SearchTerm" asp-route-searchCategory="@Course.SearchCategory";>
+            Search</button>
+        </form>
+    
      
 
 
@@ -55,12 +83,7 @@
                  
                 }
         </div>
- 
-
-    }
+        
 
 }
-
-
-
-
+}

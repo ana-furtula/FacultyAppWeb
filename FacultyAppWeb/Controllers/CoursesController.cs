@@ -6,8 +6,8 @@ using System.Text.RegularExpressions;
 
 namespace FacultyAppWeb.Controllers
 {
-    public class CoursesController: Controller
-        
+    public class CoursesController : Controller
+
     {
         private readonly ILogger<CoursesController> _logger;
 
@@ -16,35 +16,13 @@ namespace FacultyAppWeb.Controllers
             _logger = logger;
         }
 
-        [AcceptVerbs("GET")]
-        public IActionResult VerifyFirstName(string firstName)
+
+
+
+        public async Task<IActionResult> Index(string searchTerm = null, string searchCategory = null)
         {
-            var rx = new Regex("[A-Z][a-z]+");
+         
 
-            if (string.IsNullOrEmpty(firstName) || !rx.IsMatch(firstName))
-                return Json($"First name {firstName} is not valid.");
-
-            return Json(true);
-        }
-
-        [AcceptVerbs("GET")]
-        public IActionResult VerifyLastName(string lastName)
-        {
-            var rx = new Regex("[A-Z][a-z]+");
-
-            if (string.IsNullOrEmpty(lastName) || !rx.IsMatch(lastName))
-                return Json($"Last name {lastName} is not valid.");
-
-            return Json(true);
-        }
-
-        /* public IActionResult Index()
-         {
-             return View();
-         }*/
-
-        public async Task<IActionResult> Index(string searchTerm = null)
-        {
             List<Course> courses = new List<Course>();
 
             try
@@ -64,17 +42,22 @@ namespace FacultyAppWeb.Controllers
                 {
                     response.EnsureSuccessStatusCode();
                     var body = await response.Content.ReadAsStringAsync();
-        
+
                     var coursesJSON = System.Text.Json.JsonSerializer.Deserialize<List<Course>>(body, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                     foreach (var course in coursesJSON)
                     {
                         courses.Add(course);
                     }
-                    if (string.IsNullOrEmpty(searchTerm))
-                        return View(courses);
+                    //if category is undefined
+                    if (searchCategory == null || searchCategory.Equals("All"))
+                    {
+                        if (string.IsNullOrEmpty(searchTerm))
+                            return View(courses);
+                    
                     else
-                    { List<Course> newList= new List<Course>();
+                    {
+                        List<Course> newList = new List<Course>();
                         foreach (var course in courses)
                         {
                             if (course.Title.ToLower().Contains(searchTerm.ToLower()))
@@ -84,6 +67,37 @@ namespace FacultyAppWeb.Controllers
                         }
                         return View(newList);
                     }
+                    }
+                    //if category is defined
+                    else
+                    {
+                        List<Course> newList = new List<Course>();
+                        foreach (var course in courses)
+                        {
+                            if (course.Category.Contains(searchCategory))
+                            {
+                                newList.Add(course);
+                            }
+                        }
+                        if (string.IsNullOrEmpty(searchTerm))
+                        {
+                         return View(newList);
+                        }
+                            
+                        else
+                        {
+                            List<Course> newList2 = new List<Course>();
+                            foreach (var course in newList)
+                            {
+                                if (course.Title.ToLower().Contains(searchTerm.ToLower()))
+                                {
+                                    newList2.Add(course);
+                                }
+                            }
+                            return View(newList2);
+                        }
+                    }
+                   
 
 
                 }
@@ -96,7 +110,7 @@ namespace FacultyAppWeb.Controllers
             }
 
 
-            return View(courses);
+           
         }
 
         public IActionResult Privacy()
@@ -109,6 +123,7 @@ namespace FacultyAppWeb.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
     }
 }
+       

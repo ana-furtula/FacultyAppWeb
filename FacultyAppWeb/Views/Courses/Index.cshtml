@@ -1,0 +1,55 @@
+﻿
+    @{
+    ViewData["Title"] = "Courses";
+}
+
+@model List<Course>
+
+@{
+    if (Model == null)
+    {
+        <div class="text-center">
+            <h1 class="display-4">Faculty Web Application</h1>
+        </div>
+    }
+    else
+    {
+       
+        <h1 style="text-align:center;">Hind the best one for you!</h1>
+        <div class="course-cards">
+       
+                @foreach (var course in Model)
+                {
+                    /*<tr>
+                        <td> <img src="@course.Thumbnail" alt="" style="width:250px; height:250px"></img></td>
+                        <td >
+                            <div style="font:700; font-size:x-large">
+                                <a class="bookLink" href="@course.Url">@course.Title</a>
+                            </div>
+                            <div  class="subttl">
+                            @course.Description
+                            </div>
+                        </td>
+                    </tr>*/
+                     <div class="card" id="courses-card" style="width: 17rem; margin : 10px;">
+                        <img class="card-img-top" src="@course.Thumbnail" alt="Card image cap" style="margin: 5px;">
+                           <div class="card-body">
+                                <h5 class="card-title" style="margin-bottom: 10px; height:90px;">@course.Title</h5>
+                                <p class="card-text" style="margin-bottom: 10px;  height:120px;">@course.Description</p>
+                                <h3 style="color: red; margin-bottom :30px;"class="mb-0 font-weight-semibold">Original price @course.Original_price</h3>
+                                <p class="card-text"><small class="text-muted" >Last updated: @course.Last_updated</small></p>
+                                <a href="@course.Url" class="btn btn-primary">Go to course</a>
+                            </div>
+                    </div>
+                    
+                 
+                }
+        </div>
+ 
+
+    }
+
+}
+
+
+

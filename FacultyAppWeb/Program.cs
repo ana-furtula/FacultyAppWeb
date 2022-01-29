@@ -24,6 +24,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FacultyContext>();builder.Services.AddDbContext<FacultyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FacultyContextDB")));
+
+builder.Services.AddControllers().AddXmlDataContractSerializerFormatters();
+
 /*
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(
         options => {

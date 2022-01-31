@@ -5,6 +5,7 @@ using FacultyAppWeb.RepositoryServices.MySQL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Identity.Web.UI;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     options.UseSqlServer(builder.Configuration.GetConnectionString("FacultyContextDB")));
 
 builder.Services.AddControllers().AddXmlDataContractSerializerFormatters();
+builder.Services.AddMvc().AddXmlSerializerFormatters();
+builder.Services.AddMvc().AddXmlDataContractSerializerFormatters();
 
 /*
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(

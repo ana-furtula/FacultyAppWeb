@@ -117,7 +117,7 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
                 var studentFromDb = dbContext.Students.SingleOrDefault(x => x.Id == updated.Id);
 
                 if (studentFromDb == null)
-                    throw new Exception("Ucenik sa prosledjenim podacima ne postoji.");
+                    throw new Exception("Student with passed values does not exist.");
 
                 studentFromDb.FirstName = updated.FirstName;
                 studentFromDb.LastName = updated.LastName;

@@ -4,6 +4,7 @@ using FacultyAppWeb.RepositoryServices.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FacultyAppWeb.RepositoryServices.EntityFramework.Migrations
 {
     [DbContext(typeof(FacultyContext))]
-    partial class FacultyContextModelSnapshot : ModelSnapshot
+    [Migration("20220131114706_Unique_Constraints_Index_JMBG")]
+    partial class Unique_Constraints_Index_JMBG
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

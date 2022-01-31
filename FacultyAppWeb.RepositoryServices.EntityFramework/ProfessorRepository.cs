@@ -114,9 +114,16 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
         {
             try
             {
-                dbContext.Professors.Update(updated);
+                var professorFromDb = dbContext.Professors.SingleOrDefault(x => x.Id == updated.Id);
+
+                if (professorFromDb == null)
+                    throw new Exception("Professor with passed values does not exist.");
+
+                professorFromDb.FirstName = updated.FirstName;
+                professorFromDb.LastName = updated.LastName;
                 dbContext.SaveChanges();
-                return updated;
+
+                return professorFromDb;
             }
             catch (Exception ex)
             {

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace FacultyAppWeb.Domains
 {
     [Index(nameof(Email), IsUnique = true)]
+    [Index(nameof(JMBG), IsUnique = true)]
     public class Person
     {
         [Required]

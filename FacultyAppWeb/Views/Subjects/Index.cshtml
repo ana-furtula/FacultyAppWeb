@@ -71,16 +71,22 @@
                 <td>@subject.Semester</td>
                 <td>
                     @{
-                        if (Context.HasRole("Admin"))
+                        if (Context.HasRole("Admin") || (Context.HasRole("Professor") && Model.SubjectsForProfessor.Where(x => x.Id == subject.Id).Count() > 0))
                         {
                             <div style="display:inline-flex">
                                 <a class="form-control" style="border:none" asp-area="" asp-route-id="@subject.Id" asp-controller="Subjects" asp-action="Edit">
                                     <i class="bi bi-pencil-square" style="color: cornflowerblue; font-size: 1.5rem " title="Edit"></i>
                                 </a>
 
-                                <a class="form-control" style="border:none" asp-area="" asp-route-id="@subject.Id" asp-controller="Subjects" asp-action="Delete">
-                                    <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
-                                </a>
+                                @{
+                                    if (Context.HasRole("Admin"))
+                                    {
+                                        <a class="form-control" style="border:none" asp-area="" asp-route-id="@subject.Id" asp-controller="Subjects" asp-action="Delete">
+                                            <i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5rem " title="Delete"></i>
+                                        </a>
+                                    }
+                                }
+
                             </div>
                         }
                     }
@@ -91,7 +97,13 @@
     </tbody>
 </table>
 <div></div>
-<div id="chart"></div>
+@{
+    if (!Context.HasRole("Student"))
+    {
+        <div id="chart"></div>
+
+    }
+}
 
 
 @section Scripts
@@ -144,7 +156,9 @@
 
       // Instantiate and draw our chart, passing in some options.
       var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
+      if(chart){
       chart.draw(data, options);
+      }
     }
 
 

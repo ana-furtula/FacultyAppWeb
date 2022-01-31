@@ -3,6 +3,7 @@ using FacultyAppWeb.Models.Subjects;
 using FacultyAppWeb.RepositoryServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FacultyAppWeb.Controllers
 {
@@ -10,6 +11,8 @@ namespace FacultyAppWeb.Controllers
     public class SubjectsController : Controller
     {
         private readonly ISubjectRepository subjectRepository;
+        private readonly ILectureRepository lectureRepository;
+        private readonly IProfessorRepository professorRepository;
 
         [TempData]
         public string MessageSuccess { get; set; }
@@ -18,9 +21,11 @@ namespace FacultyAppWeb.Controllers
         [TempData]
         public string MessageCreate { get; set; }
 
-        public SubjectsController(ISubjectRepository subjectRepository)
+        public SubjectsController(ISubjectRepository subjectRepository, ILectureRepository lectureRepository, IProfessorRepository professorRepository)
         {
             this.subjectRepository = subjectRepository;
+            this.lectureRepository = lectureRepository;
+            this.professorRepository = professorRepository;
         }
 
         [HttpGet]
@@ -55,15 +60,28 @@ namespace FacultyAppWeb.Controllers
         public IActionResult Index([FromQuery] SubjectParameters subjectParameters, int pageNumber = 1, string searchTerm = null)
         {
             try
-            {   subjectParameters.PageNumber = pageNumber;
-                SubjectsViewModel subjectsViewModel = new SubjectsViewModel()
-                
+            {
+                IEnumerable<Subject> subjects = null;
+                if (User.IsInRole("Professor"))
+                {
+                    var userEmail = User.FindFirstValue(ClaimTypes.Name);
+                    Professor professor = professorRepository.GetProfessorsByName("").Where(p => p.Email.Equals(userEmail)).FirstOrDefault();
+                    subjects = lectureRepository.GetSubjectsForProfessor(professor);
+                }
+
+                if(subjects == null)
+                     subjects = new List<Subject>();
+
+                subjectParameters.PageNumber = pageNumber;
+
+                SubjectsViewModel subjectsViewModel = new()
                 {
                     SearchTerm = searchTerm,
                     TotalSubjectNumber = subjectRepository.GetTotalSubjectNumber(searchTerm),
                     Subjects = subjectRepository.GetSubjectsByName(subjectParameters, searchTerm).ToList(),
                     MessageSuccess = MessageSuccess,
-                    MessageError = MessageError
+                    MessageError = MessageError,
+                    SubjectsForProfessor = subjects.ToList()
                 };
 
                 return View(subjectsViewModel);
@@ -77,7 +95,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpGet("editSubject")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Professor")]
         public IActionResult Edit(long id)
         {
             try
@@ -93,7 +111,7 @@ namespace FacultyAppWeb.Controllers
         }
 
         [HttpPost("editSubject")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Professor")]
         public IActionResult Edit(Subject updated)
         {
             if (!ModelState.IsValid)

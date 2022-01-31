@@ -42,32 +42,35 @@ namespace FacultyAppWeb.Controllers
             try
             {
                 var userEmail = User.FindFirstValue(ClaimTypes.Name);
-                Professor professor = null;
-                Student student = null;
-                List<Subject> subjects = null;
                 examParameters.PageNumber = pageNumber;
-                professor = professorRepository.GetProfessorsByName("").Where(p => p.Email.Equals(userEmail)).FirstOrDefault();
-                IEnumerable<ExamRegistration> ers;
-                bool hasNext;
-                if (professor != null)
+                IEnumerable<ExamRegistration> ers = null;
+                List<Subject> subjects = null;
+                bool hasNext = false;
+                if (User.IsInRole("Professor"))
                 {
-                    var profSubjects = lectureRepository.GetSubjectsForProfessor(professor);
-                    subjects = profSubjects != null ? profSubjects.ToList() : new List<Subject>();
-                    ers = examRegistrationRepository.GetAllForProfessor(examParameters, searchTermSubject, searchTermStudent, subjects, out hasNext);
+                    Professor professor = professorRepository.GetProfessorsByName("").Where(p => p.Email.Equals(userEmail)).FirstOrDefault();
+                    if (professor != null)
+                    {
+                        var profSubjects = lectureRepository.GetSubjectsForProfessor(professor);
+                        subjects = profSubjects != null ? profSubjects.ToList() : new List<Subject>();
+                        ers = examRegistrationRepository.GetAllForProfessor(examParameters, searchTermSubject, searchTermStudent, subjects, out hasNext);
+                    }
+
                 }
                 else
                 {
-                    student = studentRepository.GetStudentsByIndex("").Where(s => s.Email.Equals(userEmail)).FirstOrDefault();
-                    if (student != null)
+                    if (User.IsInRole("Student"))
                     {
-                        ers = examRegistrationRepository.GetAllForStudent(examParameters, searchTermSubject, student, out hasNext);
+                        Student student = studentRepository.GetStudentsByIndex("").Where(s => s.Email.Equals(userEmail)).FirstOrDefault();
+
+                        if (student != null)
+                            ers = examRegistrationRepository.GetAllForStudent(examParameters, searchTermSubject, student, out hasNext);
+
                     }
                     else
-                    {
                         ers = examRegistrationRepository.GetAll(examParameters, searchTermSubject, searchTermStudent, out hasNext);
-                    }
+
                 }
-                
 
                 ExamRegistrationsViewModel ersViewModel = new()
                 {

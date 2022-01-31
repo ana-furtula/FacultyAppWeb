@@ -10,7 +10,7 @@ namespace FacultyAppWeb.Domains
     {
         const int maxPageSize = 10;
         public int PageNumber { get; set; } = 1;
-        private int _pageSize = 3;
+        private int _pageSize = 6;
         public int PageSize
         {
             get

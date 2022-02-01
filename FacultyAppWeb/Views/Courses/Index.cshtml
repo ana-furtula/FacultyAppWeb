@@ -1,9 +1,10 @@
-﻿
+﻿@using FacultyAppWeb.Models.Courses
+
     @{
     ViewData["Title"] = "Courses";
 }
 
-@model List<Course>
+@model CoursesViewModel
 
 
 @{
@@ -15,76 +16,50 @@
     }
     else
     {
-       
+
         <h1 style="text-align:center;">Hind the best one for you!</h1>
         <div class="choose-category">
-
-      </div>
-      <form method="get" asp-controller="Courses"  style="padding-bottom:0.5rem;">
-    <div class="form-group" style="text-align: center;">
-        <div style="display: inline-block;vertical-align: middle;">
-            <input type="search" class="form-control" name="searchTerm" value="@Course.SearchTerm" placeholder="Course name" />
         </div>
-        <button style="border:none; background-color:white; display: inline-block;vertical-align: middle;">
-            <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" asp-route-searchTerm=@Course.SearchTerm  title="Search"></i>
-        </button>
-    </div>
-     <button style="border:1px solid #73ebbb; margin-left:10px; margin-bottom: 8px; width:100px; color:white; border-radius:5px; background-color:#73ebbb; display: inline-block;vertical-align: middle;" asp-route-searchTerm="" >
-            Reset </button>
-            <select id="searchByCategory" style="display: inline; margin-top:3px; border: 1px solid gray;height: 30px
-; border-radius: 7px;  margin-left:30px;">
-
-            
-                @{
-                    <option name="All">All</option>
-                    List<string> categories = new List<string>();
-                    var i = 1;
-                    @foreach(var course in @Model)
-                {
-                        @foreach (var cat in course.Category)
-                        {
-                            if(!categories.Contains(cat))
-                            {
-                                categories.Add(cat);
-                            }
-                        }
-                  
-                    
-                }
-                    @foreach(var ctgry in categories)
-                    {
-                        <option name=@ctgry value="@Course.SearchCategory">@ctgry</option>
-                    }
-               } 
-            </select>
-            <button style="border:1px solid #73ebbb; margin-left:10px; margin-bottom: 8px; width:100px; color:white; border-radius:5px; background-color:#73ebbb; display: inline-block;vertical-align: middle;" asp-route-searchTerm="@Course.SearchTerm" asp-route-searchCategory="@Course.SearchCategory";>
-            Search</button>
+        <form method="get" asp-controller="Courses" style="padding-bottom:0.5rem;">
+            <div class="form-group" style="display: inline-block; padding-right: 0.7rem">
+                <div style="display: inline-block;vertical-align: middle;">
+                    <input type="search" class="form-control" name="searchTerm" value="@Model.SearchTerm" placeholder="Course name" />
+                </div>
+            </div>
+            <div class="form-group" style="display: inline-block; padding-right: 0.7rem">
+                <div class="col-md-12">
+                    @Html.DropDownListFor(x => Model.SearchCategory, new SelectList(Model.Categories, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Category"})
+                </div>
+            </div>
+            <button style="border:none; background-color:white; display: inline-block;vertical-align: middle">
+                <i class="bi bi-search" style="font-size: 1.2rem; color: cornflowerblue;" title="Search"></i>
+            </button>
         </form>
-    
-     
+
+
 
 
         <div class="course-cards">
-       
-                @foreach (var course in Model)
-                {
-                     <div class="card" id="courses-card" style="width: 17rem; margin : 10px;">
-                        <img class="card-img-top" src="@course.Thumbnail" alt="Card image cap" style="margin: 5px;">
-                           <div class="card-body">
-                                <h5 class="card-title" style="margin-bottom: 10px; height:90px;">@course.Title</h5>
-                                <p class="card-text" style="margin-bottom: 10px;  height:120px;">@course.Description</p>
-                                <h3 style="color: red; margin-bottom :30px;"class="mb-0 font-weight-semibold">Original price @course.Original_price</h3>
-                                <h5 style="color: green; margin-top : 10px; height:50px;"class="mb-0 font-weight-semibold">Coupon code @course.Coupon_code</h5>
-                               
-                                <p class="card-text"><small class="text-muted" >Last updated: @course.Last_updated</small></p>
-                                <a href="@course.Url" class="btn btn-primary">Go to course</a>
-                            </div>
-                    </div>
-                    
-                 
-                }
-        </div>
-        
 
-}
+            @foreach (var course in Model.Courses)
+            {
+                <div class="card" id="courses-card" style="width: 17rem; margin : 10px;">
+                    <img class="card-img-top" src="@course.Thumbnail" alt="Card image cap" style="margin: 5px;">
+                    <div class="card-body">
+                        <h5 class="card-title" style="margin-bottom: 10px; height:90px;">@course.Title</h5>
+                        <p class="card-text" style="margin-bottom: 10px;  height:120px;">@course.Description</p>
+                        <h3 style="color: red; margin-bottom :30px;" class="mb-0 font-weight-semibold">Original price @course.Original_price</h3>
+                        <h5 style="color: green; margin-top : 10px; height:50px;" class="mb-0 font-weight-semibold">Coupon code @course.Coupon_code</h5>
+
+                        <p class="card-text"><small class="text-muted">Last updated: @course.Last_updated</small></p>
+                        <a href="@course.Url" class="btn btn-primary">Go to course</a>
+                    </div>
+                </div>
+
+
+            }
+        </div>
+
+
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using FacultyAppWeb.Models;
+using FacultyAppWeb.Models.Courses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -16,12 +18,9 @@ namespace FacultyAppWeb.Controllers
             _logger = logger;
         }
 
-
-
-
-        public async Task<IActionResult> Index(string searchTerm = null, string searchCategory = null)
+        [HttpGet]
+        public async Task<IActionResult> Index(CoursesViewModel model = null)
         {
-         
 
             List<Course> courses = new List<Course>();
 
@@ -43,30 +42,80 @@ namespace FacultyAppWeb.Controllers
                     response.EnsureSuccessStatusCode();
                     var body = await response.Content.ReadAsStringAsync();
 
-                    var coursesJSON = System.Text.Json.JsonSerializer.Deserialize<List<Course>>(body, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    var coursesJSON = JsonSerializer.Deserialize<List<Course>>(body, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                     foreach (var course in coursesJSON)
                     {
                         courses.Add(course);
                     }
-                    //if category is undefined
-                    if (searchCategory == null || searchCategory.Equals("All"))
+
+                    List<string> categories = new List<string>();
+
+                    foreach (var course in courses)
                     {
-                        if (string.IsNullOrEmpty(searchTerm))
-                            return View(courses);
-                    
-                    else
-                    {
-                        List<Course> newList = new List<Course>();
-                        foreach (var course in courses)
+                        foreach (var cat in course.Category)
                         {
-                            if (course.Title.ToLower().Contains(searchTerm.ToLower()))
+                            if (!categories.Where(x => x.Equals(cat)).Any())
                             {
-                                newList.Add(course);
+                                categories.Add(cat);
                             }
                         }
-                        return View(newList);
                     }
+
+                    var selectListCategories = new List<SelectListItem>();
+                    selectListCategories.Add(new SelectListItem()
+                    {
+                        Value = "All",
+                        Text = "All"
+                    });
+                    foreach (var element in categories)
+                    {
+                        selectListCategories.Add(new SelectListItem
+                        {
+                            Value = element,
+                            Text = element
+                        });
+                    }
+
+                    if (model == null)
+                        return View(new CoursesViewModel()
+                        {
+                            Courses = courses,
+                            Categories = selectListCategories,
+                            SearchCategory = null,
+                            SearchTerm = null
+                        });
+
+                    //if category is undefined
+                    if (model.SearchCategory == null || model.SearchCategory.Equals("All"))
+                    {
+                        if (string.IsNullOrEmpty(model.SearchTerm))
+                            return View(new CoursesViewModel()
+                            {
+                                Courses = courses,
+                                Categories = selectListCategories,
+                                SearchCategory = null,
+                                SearchTerm = null
+                            });
+
+                        else
+                        {
+                            List<Course> newList = new List<Course>();
+                            foreach (var course in courses)
+                            {
+                                if (course.Title.ToLower().Contains(model.SearchTerm.ToLower()))
+                                {
+                                    newList.Add(course);
+                                }
+                            }
+                            return View(new CoursesViewModel()
+                            {
+                                Courses = newList,
+                                Categories = selectListCategories,
+                                SearchCategory = model.SearchCategory,
+                                SearchTerm = model.SearchTerm
+                            });
+                        }
                     }
                     //if category is defined
                     else
@@ -74,30 +123,42 @@ namespace FacultyAppWeb.Controllers
                         List<Course> newList = new List<Course>();
                         foreach (var course in courses)
                         {
-                            if (course.Category.Contains(searchCategory))
+                            if (course.Category.Contains(model.SearchCategory))
                             {
                                 newList.Add(course);
                             }
                         }
-                        if (string.IsNullOrEmpty(searchTerm))
+                        if (string.IsNullOrEmpty(model.SearchTerm))
                         {
-                         return View(newList);
+                            return View(new CoursesViewModel()
+                            {
+                                Courses = newList,
+                                Categories = selectListCategories,
+                                SearchCategory = model.SearchCategory,
+                                SearchTerm = model.SearchTerm
+                            }); ;
                         }
-                            
+
                         else
                         {
                             List<Course> newList2 = new List<Course>();
                             foreach (var course in newList)
                             {
-                                if (course.Title.ToLower().Contains(searchTerm.ToLower()))
+                                if (course.Title.ToLower().Contains(model.SearchTerm.ToLower()))
                                 {
                                     newList2.Add(course);
                                 }
                             }
-                            return View(newList2);
+                            return View(new CoursesViewModel()
+                            {
+                                Courses = newList2,
+                                Categories = selectListCategories,
+                                SearchCategory = model.SearchCategory,
+                                SearchTerm = model.SearchTerm
+                            });
                         }
                     }
-                   
+
 
 
                 }
@@ -110,7 +171,7 @@ namespace FacultyAppWeb.Controllers
             }
 
 
-           
+
         }
 
         public IActionResult Privacy()

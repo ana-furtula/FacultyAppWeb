@@ -39,7 +39,7 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
 
             builder.Entity<Student>()
                 .HasData(
-                new Student() { Id = 2, Index = "2014/0155", FirstName = "Filip", LastName = "Furtula", JMBG = "2512995280025", Email = "filip1@gmail.com" },
+                new Student() { Id = 2, Index = "2014/0155", FirstName = "Filip", LastName = "Filipovic", JMBG = "2512995280025", Email = "filip1@gmail.com" },
                 new Student() { Id = 3, Index = "2018/0175", FirstName = "Aleksandra", LastName = "Furtula", JMBG = "0207999285019", Email = "ana1@gmail.com" },
                 new Student() { Id = 10002, Index = "2012/0001", FirstName = "Matija", LastName = "Matijevic", JMBG = "1111111111111", Email = "matija@gmail.com" },
                 new Student() { Id = 10003, Index = "2000/2000", FirstName = "Milos", LastName = "Milosevic", JMBG = "2222222222222", Email = "milos@gmail.com" },

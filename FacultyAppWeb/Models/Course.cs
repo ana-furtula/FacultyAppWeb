@@ -11,8 +11,8 @@
         public string Original_price { get; set; }
         public string Coupon_code { get; set; }
         public string Last_updated { get; set; }
-        public static string SearchTerm { get; set; }
-        public static string SearchCategory { get; set; }
+/*        public static string SearchTerm { get; set; }
+        public static string SearchCategory { get; set; }*/
 
 
 

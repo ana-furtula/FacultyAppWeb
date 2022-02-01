@@ -144,7 +144,7 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
 
         }
 
-        public PagedList<Lecture> GetLecturesBySubjectName(LectureParameters param, string index)
+        public PagedList<Lecture> GetLecturesBySubjectName(LectureParameters param, string subjectName)
         {
             try
             {
@@ -152,14 +152,14 @@ namespace FacultyAppWeb.RepositoryServices.EntityFramework
                         .Include(x => x.Professor)
                         .Include(x => x.Subject);
 
-                if (string.IsNullOrEmpty(index))
+                if (string.IsNullOrEmpty(subjectName))
                 {
                     return PagedList<Lecture>.ToPagedList(query,
         param.PageNumber,
         param.PageSize);
 
                 }
-                return PagedList<Lecture>.ToPagedList(query.Where(l => l.Subject.Name.StartsWith(index)),
+                return PagedList<Lecture>.ToPagedList(query.Where(l => l.Subject.Name.StartsWith(subjectName)),
         param.PageNumber,
         param.PageSize);
 
